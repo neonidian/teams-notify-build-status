@@ -1,13 +1,12 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Post message to MS'
+description: 'Post a message to MS Teams using a webhook URL'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  webhookUrl:
+    description: 'Incoming webhook URL'
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  message:
+    description: 'Message to be sent'
+    required: true
 runs:
   using: 'node16'
   main: 'dist/index.js'
