@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+const CustomizeCard = require("./customize-card/CustomizeCard");
 
 let payLoad = function constructPayload(message, options) {
     const isAnyOptionsDefined = Object.keys(options).some(item => options[item] !== '');
@@ -8,7 +9,7 @@ let payLoad = function constructPayload(message, options) {
             "text": String(message)
         };
     } else {
-        core.setFailed('Unable to find a valid combination to construct json');
+        return new CustomizeCard(options).constructJson();
     }
 };
 
