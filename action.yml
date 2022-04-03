@@ -1,5 +1,6 @@
 name: 'Post message to MS'
 description: 'Post build status to MS Teams using a webhook'
+
 inputs:
   webhookUrl:
     description: 'Incoming webhook URL'
@@ -7,6 +8,28 @@ inputs:
   message:
     description: 'Message to be sent'
     required: true
+
+# Optional inputs
+  jobStatus:
+    description: 'Status of the Github job'
+    required: false
+  githubToken:
+    description: 'Github token'
+    required: false
+  successCardColour:
+    description: 'Colour of the message card when status is success. Defaults to green'
+    required: false
+    default: 'green'
+  failureCardColour:
+    description: 'Colour of the message card when status is failure. Defaults to red'
+    required: false
+    default: 'red'
+  cancelledCardColour:
+    description: 'Colour of the message card when status is cancelled. Defaults to yellow'
+    required: false
+    default: 'yellow'
+
+# For environment variables see https://github.com/neonidian/teams-notify-build-status#readme
 
 runs:
   using: 'node16'
