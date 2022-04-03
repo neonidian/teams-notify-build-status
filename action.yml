@@ -6,7 +6,7 @@ inputs:
     description: 'Incoming webhook URL'
     required: true
   message:
-    description: 'Message to be sent'
+    description: 'Message to be sent to Teams'
     required: true
 
 # Optional inputs
