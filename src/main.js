@@ -1,17 +1,13 @@
-const postMessage = require('./requests/post-request');
+const postRequest = require('./requests/post-request');
 const payload = require("./payload/payload");
 
 let main = function (webhookUrl, message) {
-    try {
-        return new Promise((resolve) => {
-            validateUrl(webhookUrl);
-            const requestPayload = payload(message);
-            return postMessage(webhookUrl, requestPayload)
-                .then(responseStatus => resolve(responseStatus));
-        });
-    } catch (error) {
-        throw new Error(error);
-    }
+    return new Promise((resolve) => {
+        validateUrl(webhookUrl);
+        const requestPayload = payload(message);
+        return postRequest(webhookUrl, requestPayload)
+            .then(responseStatus => resolve(responseStatus));
+    });
 };
 
 function validateUrl(url) {
