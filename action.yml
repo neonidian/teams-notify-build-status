@@ -1,4 +1,4 @@
-name: 'Post message to MS'
+name: 'Send message to MS Teams'
 description: 'Post build status to MS Teams using a webhook'
 
 inputs:
