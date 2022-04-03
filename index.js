@@ -22,7 +22,6 @@ async function run() {
             failureCardColour,
             cancelledCardColour,
         };
-        core.info(`Sending message: \n ${message}`);
         await main(webhookUrl, message, options);
         core.info('Message sent successfully');
     } catch (error) {
