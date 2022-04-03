@@ -1,5 +1,5 @@
 name: 'Post message to MS'
-description: 'Post a message to MS Teams using a webhook URL'
+description: 'Post build status to MS Teams using a webhook'
 inputs:
   webhookUrl:
     description: 'Incoming webhook URL'
@@ -7,6 +7,11 @@ inputs:
   message:
     description: 'Message to be sent'
     required: true
+
 runs:
   using: 'node16'
   main: 'dist/index.js'
+
+branding:
+  icon: 'send'
+  color: 'purple'
