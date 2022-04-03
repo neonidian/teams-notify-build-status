@@ -5,7 +5,7 @@ const env = function environmentVariables() {
     let allEnvs = {
         SHOULD_PUBLISH_JOB_STATUS
     };
-    allEnvs.SHOULD_PUBLISH_JOB_STATUS = process.env.SHOULD_PUBLISH_JOB_STATUS;
+    allEnvs.SHOULD_PUBLISH_JOB_STATUS = process.env[SHOULD_PUBLISH_JOB_STATUS];
 
     // Debug logging
     core.debug('Environment variables:');
