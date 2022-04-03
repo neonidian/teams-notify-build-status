@@ -1,6 +1,6 @@
 const postMessage = require('./requests/post-request');
 
-let main = async function (webhookUrl, message) {
+let main = function (webhookUrl, message) {
   return new Promise( (resolve) => {
     validateUrl(webhookUrl);
      return postMessage(webhookUrl, message)

@@ -14,5 +14,11 @@
         "ecmaVersion": 2021
     },
     "rules": {
+        "semi": "error",
+        "require-await": "error",
+        "no-unused-expressions": "error",
+        "no-duplicate-imports": "error",
+        "camelcase": "error",
+        "arrow-spacing": "error"
     }
 }

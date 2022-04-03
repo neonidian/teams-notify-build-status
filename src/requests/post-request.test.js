@@ -1,4 +1,4 @@
-const postRequest = require('./post-request')
+const postRequest = require('./post-request');
 
 describe('Post a minimal message', () => {
     let _teamsIncomingHookUrl;
@@ -6,9 +6,9 @@ describe('Post a minimal message', () => {
     beforeAll(() => {
         _teamsIncomingHookUrl = process.env.TEAMS_TEST_HOOK_URL;
         if(!_teamsIncomingHookUrl) {
-            throw new Error('Teams webhook url not found in environment variable "TEAMS_TEST_HOOK_URL"')
+            throw new Error('Teams webhook url not found in environment variable "TEAMS_TEST_HOOK_URL"');
         }
-    })
+    });
 
     test('Send a string message', async () => {
         const messageToSend = 'Hello Teams!';
@@ -37,4 +37,4 @@ describe('Throws error', () => {
             .toThrow('Error sending POST request to Teams \n' +
             ' Error: getaddrinfo ENOTFOUND ' + siteName);
     });
-})
+});
