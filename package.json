@@ -14,8 +14,11 @@
     "url": "git+https://github.com/neonidian/teams-incoming-webhook.git"
   },
   "keywords": [
-    "GitHub",
-    "Actions",
+    "githubactions",
+    "actions",
+    "buildstatus",
+    "teams",
+    "MSTeams",
     "JavaScript"
   ],
   "author": "",
