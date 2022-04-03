@@ -1,5 +1,5 @@
 {
-  "name": "teams-incoming-webhook",
+  "name": "teams-notify-build-status",
   "version": "0.0.1",
   "description": "Post a message in Teams using webhook",
   "main": "index.js",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neonidian/teams-incoming-webhook.git"
+    "url": "git+https://github.com/neonidian/teams-notify-build-status.git"
   },
   "keywords": [
     "githubactions",
@@ -33,7 +33,7 @@
   "author": "Keerthi Shankar Subramanian",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/neonidian/teams-incoming-webhook/issues"
+    "url": "https://github.com/neonidian/teams-notify-build-status/issues"
   },
-  "homepage": "https://github.com/neonidian/teams-incoming-webhook#readme"
+  "homepage": "https://github.com/neonidian/teams-notify-build-status#readme"
 }
