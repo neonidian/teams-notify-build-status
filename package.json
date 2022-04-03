@@ -10,7 +10,7 @@
   "devDependencies": {
     "@vercel/ncc": "^0.31.1",
     "eslint": "^8.0.0",
-    "jest": "^27.2.5"
+    "jest": "^27.5.1"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
