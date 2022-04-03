@@ -3,7 +3,7 @@ const postMessage = require('./requests/post-request');
 let main = async function (webhookUrl, message) {
   return new Promise( (resolve) => {
     validateUrl(webhookUrl);
-    postMessage(webhookUrl, message)
+     return postMessage(webhookUrl, message)
         .then(() => resolve(message));
   });
 };
