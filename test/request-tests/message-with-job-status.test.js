@@ -11,6 +11,7 @@ describe('Post message with job status', () => {
     };
 
     beforeAll(() => {
+        jest.setTimeout(10000);
         _teamsIncomingHookUrl = process.env.TEAMS_TEST_HOOK_URL;
         if(!_teamsIncomingHookUrl) {
             throw new Error('Teams webhook url not found in environment variable "TEAMS_TEST_HOOK_URL"');

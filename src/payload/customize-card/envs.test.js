@@ -2,6 +2,8 @@ const envs = require('./envs');
 
 describe('Environment variables', () => {
 
+    beforeEach((() => delete process.env.SHOULD_PUBLISH_JOB_STATUS));
+
     test('Send no env variable', () => {
         let response = envs();
         expect(response).toMatchObject({
