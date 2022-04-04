@@ -37,6 +37,8 @@ class CustomizeCard {
                             },
                             {
                                 "type": "ColumnSet",
+                                "separator": true,
+                                "spacing": "extraLarge",
                                 "columns": [
                                     {
                                         "type": "Column",
