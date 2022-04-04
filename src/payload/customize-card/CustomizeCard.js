@@ -37,6 +37,7 @@ class CustomizeCard {
                                 "columns": [
                                     {
                                         "type": "Column",
+                                        "isVisible": !!this.options?.jobStatus?.trim(),
                                         "items": [
                                             {
                                                 "type": "RichTextBlock",
