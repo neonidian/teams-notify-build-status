@@ -8,6 +8,7 @@ class CustomizeCard {
     }
 
     initialize() {
+        this._environmentVariables = envs();
         this._messageObject = {
             "type": "message",
             "attachments": [
@@ -29,29 +30,66 @@ class CustomizeCard {
                                         "wrap": true,
                                         "size": "large"
                                     },
+                                ],
+                            },
+                            {
+                                "type": "ColumnSet",
+                                "columns": [
                                     {
-                                        "type": "RichTextBlock",
-                                        "isVisible": !!this.options?.jobStatus,
-                                        "inlines": [
-                                            "Status: ",
+                                        "type": "Column",
+                                        "items": [
                                             {
-                                                "type": "TextRun",
-                                                "text": this.options?.jobStatus,
-                                                "wrap": true,
-                                                "color": "good",
-                                                "weight": "bolder",
-
+                                                "type": "RichTextBlock",
+                                                "isVisible": !!this.options?.jobStatus?.trim(),
+                                                "inlines": [
+                                                    "Status: ",
+                                                    {
+                                                        "type": "TextRun",
+                                                        "text": this.options?.jobStatus?.trim(),
+                                                        "wrap": true,
+                                                        "color": "good",
+                                                        "weight": "bolder",
+                                                    }
+                                                ]
                                             }
                                         ]
                                     },
+                                    {
+                                        "type": "Column",
+                                        "items": [
+                                            {
+                                                "type": "ActionSet",
+                                                "actions": [
+                                                    {
+                                                        "type": "Action.ShowCard",
+                                                        "title": "Action.ShowCard",
+                                                        "card": {
+                                                            "type": "AdaptiveCard",
+                                                            "body": [
+                                                                {
+                                                                    "type": "TextBlock",
+                                                                    "text": "What do you think?"
+                                                                }
+                                                            ],
+                                                            "actions": [
+                                                                {
+                                                                    "type": "Action.Submit",
+                                                                    "title": "Neat!"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
                                 ]
                             }
                         ]
                     }
                 }
-            ]
+            ],
         };
-        this.environmentVariables = envs();
     }
 
     constructJson() {
