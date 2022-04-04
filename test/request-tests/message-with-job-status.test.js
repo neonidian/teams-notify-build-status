@@ -23,6 +23,12 @@ describe('Post message with job status', () => {
         expect(response).toBe(200);
     });
 
+    test('Send a long message with status', async () => {
+        const messageToSend = 'With label message published SDK version of container 0.1.1 (major) version';
+        let response = await main(_teamsIncomingHookUrl, messageToSend, onlyJobStatusOption);
+        expect(response).toBe(200);
+    });
+
     test('Send a message with no status', async () => {
         const messageToSend = 'With label message';
         let response = await main(_teamsIncomingHookUrl, messageToSend, {});
