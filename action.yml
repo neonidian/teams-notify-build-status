@@ -16,18 +16,6 @@ inputs:
   githubToken:
     description: 'Github token'
     required: false
-  successCardColour:
-    description: 'Colour of the message card when status is success. Defaults to green'
-    required: false
-    default: 'green'
-  failureCardColour:
-    description: 'Colour of the message card when status is failure. Defaults to red'
-    required: false
-    default: 'red'
-  cancelledCardColour:
-    description: 'Colour of the message card when status is cancelled. Defaults to yellow'
-    required: false
-    default: 'yellow'
 
 # For environment variables see https://github.com/neonidian/teams-notify-build-status#readme
 

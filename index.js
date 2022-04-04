@@ -11,16 +11,10 @@ async function run() {
         const githubTokenInputId = 'githubToken';
         const githubToken = core.getInput(githubTokenInputId);
         core.setSecret(githubTokenInputId);
-        const successCardColour = core.getInput('successCardColour');
-        const failureCardColour = core.getInput('failureCardColour');
-        const cancelledCardColour = core.getInput('cancelledCardColour');
 
         const options = {
             jobStatus,
             githubToken,
-            successCardColour,
-            failureCardColour,
-            cancelledCardColour,
         };
         await main(webhookUrl, message, options);
         core.notice('Message has been sent to Teams');
