@@ -22,4 +22,10 @@ describe('Post message with job status', () => {
         let response = await main(_teamsIncomingHookUrl, messageToSend, onlyJobStatusOption);
         expect(response).toBe(200);
     });
+
+    test('Send a message with no status', async () => {
+        const messageToSend = 'With label message';
+        let response = await main(_teamsIncomingHookUrl, messageToSend, {});
+        expect(response).toBe(200);
+    });
 });

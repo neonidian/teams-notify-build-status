@@ -20,8 +20,31 @@ class CustomizeCard {
                         "version": "1.2",
                         "body": [
                             {
-                                "type": "TextBlock",
-                                "text": "For Samples and Templates, see [https://adaptivecards.io/samples](https://adaptivecards.io/samples)"
+                                "type": "Container",
+                                "style": "default",
+                                "items": [
+                                    {
+                                        "type": "TextBlock",
+                                        "text": this.message,
+                                        "wrap": true,
+                                        "size": "large"
+                                    },
+                                    {
+                                        "type": "RichTextBlock",
+                                        "isVisible": !!this.options?.jobStatus,
+                                        "inlines": [
+                                            "Status: ",
+                                            {
+                                                "type": "TextRun",
+                                                "text": this.options?.jobStatus,
+                                                "wrap": true,
+                                                "color": "good",
+                                                "weight": "bolder",
+
+                                            }
+                                        ]
+                                    },
+                                ]
                             }
                         ]
                     }
