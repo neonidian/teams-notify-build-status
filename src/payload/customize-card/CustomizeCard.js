@@ -1,13 +1,16 @@
+const envs = require('./envs');
+
 class CustomizeCard {
 
-    constructor(options) {
+    constructor(message, options) {
+        this.message = message;
         this.options = options;
     }
 
     constructJson() {
-        return {
-            "sometext": ""
-        };
+        this._messageObject = {};
+        this.environmentVariables = envs();
+        return this._messageObject;
     }
 }
 

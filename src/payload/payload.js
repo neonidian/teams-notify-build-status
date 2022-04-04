@@ -9,7 +9,7 @@ let payLoad = function constructPayload(message, options) {
             "text": String(message)
         };
     } else {
-        return new CustomizeCard(options).constructJson();
+        return new CustomizeCard(message, options).constructJson();
     }
 };
 
