@@ -4,13 +4,13 @@ const main = require('./src/main');
 async function run() {
     try {
         const webhookUrlInputId = 'webhookUrl';
-        const webhookUrl = core.getInput(webhookUrlInputId, { required: true });
         core.setSecret(webhookUrlInputId);
+        const webhookUrl = core.getInput(webhookUrlInputId, { required: true });
         const message = core.getInput('message', { required: true });
         const jobStatus = core.getInput('jobStatus');
         const githubTokenInputId = 'githubToken';
-        const githubToken = core.getInput(githubTokenInputId);
         core.setSecret(githubTokenInputId);
+        const githubToken = core.getInput(githubTokenInputId);
 
         const options = {
             jobStatus,
