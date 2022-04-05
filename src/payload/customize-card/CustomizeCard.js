@@ -25,6 +25,7 @@ class CustomizeCard {
                         "body": [
                             {
                                 "type": "Container",
+                                "spacing": "extraLarge",
                                 "style": "default",
                                 "items": [
                                     {
@@ -37,8 +38,6 @@ class CustomizeCard {
                             },
                             {
                                 "type": "ColumnSet",
-                                "separator": true,
-                                "spacing": "extraLarge",
                                 "columns": [
                                     {
                                         "type": "Column",
@@ -62,13 +61,14 @@ class CustomizeCard {
                                     },
                                     {
                                         "type": "Column",
+                                        "width": "auto",
                                         "items": [
                                             {
                                                 "type": "ActionSet",
                                                 "actions": [
                                                     {
                                                         "type": "Action.ShowCard",
-                                                        "title": "Action.ShowCard",
+                                                        "title": "More Info",
                                                         "card": {
                                                             "type": "AdaptiveCard",
                                                             "body": [
