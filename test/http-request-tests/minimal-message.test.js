@@ -18,7 +18,7 @@ describe('Post message', () => {
     });
 
     test('Send a string message', async () => {
-        const messageToSend = 'Hello Teams!';
+        const messageToSend = 'The minimal message!';
         let response = await main(_teamsIncomingHookUrl, messageToSend, emptyOptions);
         expect(response).toBe(200);
     }, 10000);

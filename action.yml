@@ -13,6 +13,7 @@ inputs:
   jobStatus:
     description: 'Status of the Github job'
     required: false
+    default: ${{ job.status }}
   githubToken:
     description: 'Github token'
     required: false
