@@ -1,5 +1,5 @@
 name: 'Send message to MS Teams'
-description: 'Post build status to MS Teams using a webhook'
+description: 'Send message to a channel in MS Teams using webhook'
 
 inputs:
   webhookUrl:
