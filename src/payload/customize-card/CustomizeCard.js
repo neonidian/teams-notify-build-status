@@ -8,7 +8,7 @@ class CustomizeCard {
     }
 
     initialize() {
-        this._environmentVariables = envs();
+        const _environmentVariables = envs();
         this._messageObject = {
             "type": "message",
             "attachments": [
@@ -55,7 +55,7 @@ class CustomizeCard {
                             },
                             {
                                 "type": "ColumnSet",
-                                "isVisible": true,
+                                "isVisible": _environmentVariables.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON,
                                 "columns": [
                                     {
                                         "type": "Column",

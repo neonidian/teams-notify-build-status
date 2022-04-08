@@ -2,10 +2,12 @@ const core = require('@actions/core');
 
 const envs = function environmentVariables() {
     // Environment variable names
-    const SHOULD_PUBLISH_JOB_STATUS = defineEnvironmentVariable('SHOULD_PUBLISH_JOB_STATUS', true);
+    const SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON = defineEnvironmentVariable('SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON', false);
+    const SHOULD_PUBLISH_VIEW_COMMIT_BUTTON = defineEnvironmentVariable('SHOULD_PUBLISH_VIEW_COMMIT_BUTTON', false);
 
     const envVariableNames = [
-        SHOULD_PUBLISH_JOB_STATUS
+        SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON,
+        SHOULD_PUBLISH_VIEW_COMMIT_BUTTON
     ];
 
     // Read env variable values, set to default if value not set

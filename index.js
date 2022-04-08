@@ -7,14 +7,10 @@ async function run() {
         core.setSecret(webhookUrlInputId);
         const webhookUrl = core.getInput(webhookUrlInputId, { required: true });
         const message = core.getInput('message', { required: true });
-        const jobStatus = core.getInput('jobStatus');
-        const githubTokenInputId = 'githubToken';
-        core.setSecret(githubTokenInputId);
-        const githubToken = core.getInput(githubTokenInputId);
+        const status = core.getInput('status');
 
         const options = {
-            jobStatus,
-            githubToken,
+            status,
         };
         await main(webhookUrl, message, options);
         core.notice('Message has been sent to Teams');
