@@ -26,13 +26,11 @@ class CustomizeCard {
                             {
                                 "type": "Container",
                                 "spacing": "extraLarge",
-                                "style": "default",
                                 "items": [
                                     {
                                         "type": "TextBlock",
                                         "text": this.message,
                                         "wrap": true,
-                                        "size": "large"
                                     },
                                 ],
                             },
@@ -46,13 +44,19 @@ class CustomizeCard {
                                                 "type": "RichTextBlock",
                                                 "isVisible": !!this.options?.jobStatus?.trim(),
                                                 "inlines": [
-                                                    "Status: ",
+                                                    {
+                                                        "type": "TextRun",
+                                                        "text": 'Status: ',
+                                                        "wrap": true,
+                                                        "fontType": "monospace"
+                                                    },
                                                     {
                                                         "type": "TextRun",
                                                         "text": this.options?.jobStatus?.trim(),
                                                         "wrap": true,
                                                         "color": "good",
                                                         "weight": "bolder",
+                                                        "fontType": "monospace"
                                                     }
                                                 ]
                                             }
