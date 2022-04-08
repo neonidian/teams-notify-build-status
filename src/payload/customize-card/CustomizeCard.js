@@ -24,8 +24,27 @@ class CustomizeCard {
                         },
                         "body": [
                             {
+                                "type": "RichTextBlock",
+                                "isVisible": !!this.options?.jobStatus?.trim(),
+                                "inlines": [
+                                    {
+                                        "type": "TextRun",
+                                        "text": 'Status: ',
+                                        "wrap": true,
+                                        "fontType": "monospace"
+                                    },
+                                    {
+                                        "type": "TextRun",
+                                        "text": this.options?.jobStatus?.trim(),
+                                        "wrap": true,
+                                        "color": "good",
+                                        "weight": "bolder",
+                                        "fontType": "monospace"
+                                    }
+                                ]
+                            },
+                            {
                                 "type": "Container",
-                                "spacing": "extraLarge",
                                 "items": [
                                     {
                                         "type": "TextBlock",
@@ -39,28 +58,6 @@ class CustomizeCard {
                                 "columns": [
                                     {
                                         "type": "Column",
-                                        "items": [
-                                            {
-                                                "type": "RichTextBlock",
-                                                "isVisible": !!this.options?.jobStatus?.trim(),
-                                                "inlines": [
-                                                    {
-                                                        "type": "TextRun",
-                                                        "text": 'Status: ',
-                                                        "wrap": true,
-                                                        "fontType": "monospace"
-                                                    },
-                                                    {
-                                                        "type": "TextRun",
-                                                        "text": this.options?.jobStatus?.trim(),
-                                                        "wrap": true,
-                                                        "color": "good",
-                                                        "weight": "bolder",
-                                                        "fontType": "monospace"
-                                                    }
-                                                ]
-                                            }
-                                        ]
                                     },
                                     {
                                         "type": "Column",
