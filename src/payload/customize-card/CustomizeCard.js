@@ -55,6 +55,7 @@ class CustomizeCard {
                             },
                             {
                                 "type": "ColumnSet",
+                                "isVisible": true,
                                 "columns": [
                                     {
                                         "type": "Column",
