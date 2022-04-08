@@ -21,17 +21,17 @@ describe('Post message', () => {
         const messageToSend = 'The minimal message!';
         let response = await main(_teamsIncomingHookUrl, messageToSend, emptyOptions);
         expect(response).toBe(200);
-    }, 10000);
+    });
 
     test('Send a boolean type message', async () => {
         const messageToSend = true;
         let response = await main(_teamsIncomingHookUrl, messageToSend, emptyOptions);
         expect(response).toBe(200);
-    }, 10000);
+    });
 
     test('Send a number type message', async () => {
         const messageToSend = 234.56;
         let response = await main(_teamsIncomingHookUrl, messageToSend, emptyOptions);
         expect(response).toBe(200);
-    }, 10000);
+    });
 });
