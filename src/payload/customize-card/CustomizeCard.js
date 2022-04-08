@@ -67,23 +67,9 @@ class CustomizeCard {
                                                 "type": "ActionSet",
                                                 "actions": [
                                                     {
-                                                        "type": "Action.ShowCard",
+                                                        "type": "Action.OpenUrl",
                                                         "title": "View workflow",
-                                                        "card": {
-                                                            "type": "AdaptiveCard",
-                                                            "body": [
-                                                                {
-                                                                    "type": "TextBlock",
-                                                                    "text": "What do you think?"
-                                                                }
-                                                            ],
-                                                            "actions": [
-                                                                {
-                                                                    "type": "Action.Submit",
-                                                                    "title": "Neat!"
-                                                                }
-                                                            ]
-                                                        }
+                                                        "url": "https://google.com"
                                                     }
                                                 ]
                                             }
