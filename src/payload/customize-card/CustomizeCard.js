@@ -7,7 +7,7 @@ class CustomizeCard {
         this.options = options;
     }
 
-    initialize() {
+    _constructJson() {
         const _environmentVariables = envs();
         this._messageObject = {
             "type": "message",
@@ -85,8 +85,8 @@ class CustomizeCard {
         };
     }
 
-    constructJson() {
-        this.initialize();
+    constructCard() {
+        this._constructJson();
         return this._messageObject;
     }
 }

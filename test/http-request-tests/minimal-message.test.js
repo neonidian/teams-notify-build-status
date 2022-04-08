@@ -1,6 +1,6 @@
 const main = require('../../src/main');
 
-describe('Post message', () => {
+describe('Post minimal message', () => {
     let _teamsIncomingHookUrl;
     const emptyOptions = {
         jobStatus: '',
