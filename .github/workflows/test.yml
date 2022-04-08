@@ -28,6 +28,8 @@ jobs:
       # Requires TEAMS_TEST_HOOK_URL to be set as secrets
       - name: Run HTTP request tests
         run: npm run verify
+        env:
+          TEAMS_TEST_HOOK_URL: {{ secrets.TEAMS_TEST_HOOK_URL }}
 
       - run: npm run prepare
 
