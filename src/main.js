@@ -6,7 +6,7 @@ let main = function (webhookUrl, message, options) {
         validateUrl(webhookUrl);
         const requestPayload = constructPayLoad(message, options);
         return postRequest(webhookUrl, requestPayload)
-            .then(responseStatus => resolve(responseStatus));
+            .then(responseData => resolve(responseData));
     });
 };
 

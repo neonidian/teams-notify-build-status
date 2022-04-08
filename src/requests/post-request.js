@@ -8,8 +8,8 @@ let postRequest = async function postMessage(webhookUrl, jsonPayload) {
         core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);
         return await axios.post(webhookUrl, jsonPayload, header)
             .then(response => {
-                core.info(`Received response status: ${response.status} from Teams server`);
-                return response.status;
+                core.debug(`Received response: "${response.data}" from Teams server`);
+                return response.data;
             });
     } catch (error) {
         core.setFailed(`Error while sending POST request to Teams \n ${error}`);

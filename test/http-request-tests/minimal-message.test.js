@@ -2,6 +2,7 @@ const main = require('../../src/main');
 
 describe('Post minimal message', () => {
     let _teamsIncomingHookUrl;
+    const responseBody = 1;
     const emptyOptions = {
         jobStatus: '',
         githubToken: '',
@@ -20,18 +21,18 @@ describe('Post minimal message', () => {
     test('Send a string message', async () => {
         const messageToSend = 'The minimal message!';
         let response = await main(_teamsIncomingHookUrl, messageToSend, emptyOptions);
-        expect(response).toBe(200);
+        expect(response).toBe(responseBody);
     });
 
     test('Send a boolean type message', async () => {
         const messageToSend = true;
         let response = await main(_teamsIncomingHookUrl, messageToSend, emptyOptions);
-        expect(response).toBe(200);
+        expect(response).toBe(responseBody);
     });
 
     test('Send a number type message', async () => {
         const messageToSend = 234.56;
         let response = await main(_teamsIncomingHookUrl, messageToSend, emptyOptions);
-        expect(response).toBe(200);
+        expect(response).toBe(responseBody);
     });
 });
