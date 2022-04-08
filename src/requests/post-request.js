@@ -5,7 +5,7 @@ const header = 'Content-Type: application/json';
 let postRequest = async function postMessage(webhookUrl, jsonPayload) {
     try {
         core.info('Sending POST request');
-        core.debug(`JSON payload: \n ${JSON.stringify(jsonPayload)}`);
+        core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);
         return await axios.post(webhookUrl, jsonPayload, header)
             .then(response => {
                 core.info(`Received response status: ${response.status} from Teams server`);

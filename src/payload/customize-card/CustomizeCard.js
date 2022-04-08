@@ -67,7 +67,7 @@ class CustomizeCard {
                                                 "actions": [
                                                     {
                                                         "type": "Action.ShowCard",
-                                                        "title": "More Info",
+                                                        "title": "View workflow",
                                                         "card": {
                                                             "type": "AdaptiveCard",
                                                             "body": [
