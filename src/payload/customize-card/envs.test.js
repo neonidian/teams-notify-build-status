@@ -2,7 +2,10 @@ const envs = require('./envs');
 
 describe('Environment variables', () => {
 
-    beforeEach((() => delete process.env.SHOULD_PUBLISH_JOB_STATUS));
+    beforeEach(() => {
+        delete process.env.SHOULD_PUBLISH_VIEW_COMMIT_BUTTON;
+        delete process.env.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON;
+    });
 
     test('Send no env variable', () => {
         let response = envs();
