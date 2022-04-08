@@ -7,8 +7,8 @@ on:
       - 'releases/*'
 
 jobs:
-  # unit tests and http-request tests
-  units:
+  unit-and-system-tests:
+    name: Run unit and systemt tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -27,13 +27,15 @@ jobs:
 
       # Requires TEAMS_TEST_HOOK_URL to be set as secrets
       - name: Run HTTP request tests
-      - run: npm run verify
+        run: npm run verify
 
   # test action works running from the graph
   test:
+    name: Test action
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: ./
         with:
           milliseconds: 1000
