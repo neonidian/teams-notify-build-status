@@ -15,7 +15,7 @@ let postRequest = async function postMessage(webhookUrl, jsonPayload) {
                 return response.data;
             });
     } catch (error) {
-        core.setFailed(`Error while sending POST request to Teams. ${error}`);
+        throw new Error(`Error while sending POST request to Teams. ${error}`);
     }
 };
 

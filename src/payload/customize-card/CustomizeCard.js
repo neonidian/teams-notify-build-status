@@ -1,7 +1,6 @@
 const envs = require('./envs');
 
 class CustomizeCard {
-
     constructor(message, options) {
         this.message = message;
         this.options = options;
@@ -25,7 +24,7 @@ class CustomizeCard {
                         "body": [
                             {
                                 "type": "RichTextBlock",
-                                "isVisible": !!this.options?.jobStatus?.trim(),
+                                "isVisible": !!this.options?.jobStatus,
                                 "inlines": [
                                     {
                                         "type": "TextRun",
@@ -35,9 +34,9 @@ class CustomizeCard {
                                     },
                                     {
                                         "type": "TextRun",
-                                        "text": this.options?.jobStatus?.trim(),
+                                        "text": this.options?.jobStatus,
                                         "wrap": true,
-                                        "color": "good",
+                                        "color": !!this.options?.jobStatus && this._statusColour(this.options?.jobStatus.trim()),
                                         "weight": "bolder",
                                         "fontType": "monospace"
                                     }
@@ -55,7 +54,7 @@ class CustomizeCard {
                             },
                             {
                                 "type": "ColumnSet",
-                                "isVisible": _environmentVariables.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON,
+                                "isVisible": _environmentVariables.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON || _environmentVariables.SHOULD_PUBLISH_VIEW_COMMIT_BUTTON,
                                 "columns": [
                                     {
                                         "type": "Column",
@@ -66,11 +65,23 @@ class CustomizeCard {
                                         "items": [
                                             {
                                                 "type": "ActionSet",
+                                                "isVisible": _environmentVariables.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON,
                                                 "actions": [
                                                     {
                                                         "type": "Action.OpenUrl",
                                                         "title": "View workflow",
-                                                        "url": "https://google.com"
+                                                        "url": _environmentVariables.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON && this._workFlowUrl()
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "ActionSet",
+                                                "isVisible": _environmentVariables.SHOULD_PUBLISH_VIEW_COMMIT_BUTTON,
+                                                "actions": [
+                                                    {
+                                                        "type": "Action.OpenUrl",
+                                                        "title": "View commit",
+                                                        "url": _environmentVariables.SHOULD_PUBLISH_VIEW_COMMIT_BUTTON && this._commitUrl()
                                                     }
                                                 ]
                                             }
@@ -85,10 +96,36 @@ class CustomizeCard {
         };
     }
 
+    _workFlowUrl() {
+        return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}`;
+    }
+
+    _commitUrl() {
+        return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}`;
+    }
+
     constructCard() {
         this._constructJson();
         return this._messageObject;
     }
+
+    _statusColour(jobStatus) {
+        if (jobStatus === "success") {
+            return "good";
+        } else if (jobStatus === "failure") {
+            return "attention";
+        } else if (jobStatus === "cancelled") {
+            return "warning";
+        } else if (jobStatus === "skipped") {
+            return "accent";
+        }
+        return "default";
+    }
 }
+
+const GITHUB_SERVER_URL = process.env.GITHUB_SERVER_URL;
+const GITHUB_REPOSITORY = process.env.GITHUB_REPOSITORY;
+const GITHUB_RUN_ID = process.env.GITHUB_RUN_ID;
+const GITHUB_SHA = process.env.GITHUB_SHA;
 
 module.exports = CustomizeCard;
