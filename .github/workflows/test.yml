@@ -33,11 +33,18 @@ jobs:
       - run: npm run prepare
 
       # test action works running from the graph
-      - name:  Test action workflow
+      - name:  Test action workflow - All features
         uses: ./
         with:
           webhookUrl: ${{ secrets.TEAMS_TEST_HOOK_URL }}
           message: Test action workflow
+          status: ${{ job.status }}
         env:
           SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
           SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+
+      - name:  Test action workflow - only message
+        uses: ./
+        with:
+          webhookUrl: ${{ secrets.TEAMS_TEST_HOOK_URL }}
+          message: Test action workflow - ONLY MESSAGE
