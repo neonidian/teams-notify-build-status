@@ -1,14 +1,13 @@
 const main = require('../../src/main');
 
 describe('Post message with job status', () => {
-    let _teamsIncomingHookUrl;
+    const _teamsIncomingHookUrl = process.env.TEAMS_TEST_HOOK_URL;
     const responseBody = 1;
     const onlyJobStatusOption = {
         jobStatus: 'success',
     };
 
     beforeAll(() => {
-        _teamsIncomingHookUrl = process.env.TEAMS_TEST_HOOK_URL;
         if(!_teamsIncomingHookUrl) {
             throw new Error('Teams webhook url not found in environment variable "TEAMS_TEST_HOOK_URL"');
         }
@@ -27,7 +26,7 @@ describe('Post message with job status', () => {
     });
 
     test('Send a message with status- "failure"', async () => {
-        const messageToSend = 'message with failure status (red text)';
+        const messageToSend = 'Message with failure status (red text)';
         const onlyJobStatusOption = {
             jobStatus: 'failure',
         };
@@ -36,7 +35,7 @@ describe('Post message with job status', () => {
     });
 
     test('Send a message with status- "cancelled"', async () => {
-        const messageToSend = 'message with cancelled status (orange text)';
+        const messageToSend = 'Message with cancelled status (orange text)';
         const onlyJobStatusOption = {
             jobStatus: 'cancelled',
         };
@@ -45,7 +44,7 @@ describe('Post message with job status', () => {
     });
 
     test('Send a message with status- "skipped"', async () => {
-        const messageToSend = 'message with skipped status (violet colour text)';
+        const messageToSend = 'Message with skipped status (violet colour text)';
         const onlyJobStatusOption = {
             jobStatus: 'skipped',
         };
@@ -54,7 +53,7 @@ describe('Post message with job status', () => {
     });
 
     test('Send a message with status- "BUILD SUCCESSFUL"', async () => {
-        const messageToSend = 'message with ""BUILD SUCCESSFUL" status (default colour text)';
+        const messageToSend = 'Message with ""BUILD SUCCESSFUL" status (default colour text)';
         const onlyJobStatusOption = {
             jobStatus: 'BUILD SUCCESSFUL',
         };

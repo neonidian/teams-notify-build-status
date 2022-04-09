@@ -36,7 +36,7 @@ class CustomizeCard {
                                         "type": "TextRun",
                                         "text": this.options?.jobStatus,
                                         "wrap": true,
-                                        "color": !!this.options?.jobStatus && this._statusColour(this.options?.jobStatus.trim()),
+                                        "color": !!this.options?.jobStatus && this._statusColour(this.options?.jobStatus),
                                         "weight": "bolder",
                                         "fontType": "monospace"
                                     }
@@ -65,26 +65,8 @@ class CustomizeCard {
                                         "items": [
                                             {
                                                 "type": "ActionSet",
-                                                "isVisible": _environmentVariables.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON,
-                                                "actions": [
-                                                    {
-                                                        "type": "Action.OpenUrl",
-                                                        "title": "View workflow",
-                                                        "url": _environmentVariables.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON && this._workFlowUrl()
-                                                    }
-                                                ]
+                                                "actions": this._constructActionsArray(_environmentVariables)
                                             },
-                                            {
-                                                "type": "ActionSet",
-                                                "isVisible": _environmentVariables.SHOULD_PUBLISH_VIEW_COMMIT_BUTTON,
-                                                "actions": [
-                                                    {
-                                                        "type": "Action.OpenUrl",
-                                                        "title": "View commit",
-                                                        "url": _environmentVariables.SHOULD_PUBLISH_VIEW_COMMIT_BUTTON && this._commitUrl()
-                                                    }
-                                                ]
-                                            }
                                         ]
                                     }
                                 ]
@@ -110,16 +92,33 @@ class CustomizeCard {
     }
 
     _statusColour(jobStatus) {
-        if (jobStatus === "success") {
+        const status = jobStatus?.trim().toLowerCase();
+        if (status === "success") {
             return "good";
-        } else if (jobStatus === "failure") {
+        } else if (status === "failure") {
             return "attention";
-        } else if (jobStatus === "cancelled") {
+        } else if (status === "cancelled") {
             return "warning";
-        } else if (jobStatus === "skipped") {
+        } else if (status === "skipped") {
             return "accent";
         }
         return "default";
+    }
+
+    _constructActionsArray(envVars) {
+        const actionsArray = [];
+        const action = (buttonText, buttonUrl) => ({
+                "type": "Action.OpenUrl",
+                "title": buttonText,
+                "url": buttonUrl
+        });
+        if (envVars.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON) {
+            actionsArray.push(action("View workflow", this._workFlowUrl()));
+        }
+        if (envVars.SHOULD_PUBLISH_VIEW_COMMIT_BUTTON) {
+            actionsArray.push(action("View commit", this._commitUrl()));
+        }
+        return actionsArray;
     }
 }
 

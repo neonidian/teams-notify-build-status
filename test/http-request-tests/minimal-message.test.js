@@ -1,14 +1,13 @@
 const main = require('../../src/main');
 
 describe('Post minimal message', () => {
-    let _teamsIncomingHookUrl;
+    const _teamsIncomingHookUrl = process.env.TEAMS_TEST_HOOK_URL;
     const responseBody = 1;
     const emptyOptions = {
         jobStatus: '',
     };
 
     beforeAll(() => {
-        _teamsIncomingHookUrl = process.env.TEAMS_TEST_HOOK_URL;
         if(!_teamsIncomingHookUrl) {
             throw new Error('Teams webhook url not found in environment variable "TEAMS_TEST_HOOK_URL"');
         }
