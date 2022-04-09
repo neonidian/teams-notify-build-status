@@ -108,7 +108,7 @@ steps:
 ![skipped status with only view run button sample screenshot](screenshots/skipped-only-view-run-button.png)
 
 
-4. Status = "cancelled", "View run" and "View commit" buttons enabled
+4. Status = "cancelled", only "View commit" button enabled
 ![cancelled status sample screenshot](screenshots/cancelled-message.png)
 
 

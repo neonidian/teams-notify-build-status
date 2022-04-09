@@ -7,11 +7,14 @@ describe('Post message with job status', () => {
     const SHOULD_DISPLAY_VIEW_RUN_BUTTON = "SHOULD_DISPLAY_VIEW_RUN_BUTTON";
 
     beforeAll(() => {
-        delete process.env[SHOULD_DISPLAY_VIEW_COMMIT_BUTTON];
-        delete process.env[SHOULD_DISPLAY_VIEW_RUN_BUTTON];
         if(!_teamsIncomingHookUrl) {
             throw new Error('Teams webhook url not found in environment variable "TEAMS_TEST_HOOK_URL"');
         }
+    });
+
+    beforeEach(() => {
+        delete process.env[SHOULD_DISPLAY_VIEW_COMMIT_BUTTON];
+        delete process.env[SHOULD_DISPLAY_VIEW_RUN_BUTTON];
     });
 
     test('Both buttons to be visible with status', async () => {
