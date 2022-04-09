@@ -13,25 +13,27 @@
 
 2. To send a message, add the following in your [workflow YAML](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 ```yaml
-uses: neonidian/teams-notify-build-status@v1
-with:
-  webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-  message: >-
-    Published artifact version ${{ steps.versioning.outputs.semver }}
+steps:
+  - uses: neonidian/teams-notify-build-status@v1
+    with:
+      webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+      message: >-
+        Published artifact version ${{ steps.versioning.outputs.semver }}
 ```
 
 3. Enable status by providing the status input. Enable 'View run' and 'View commit' buttons using environment variables.
 ```yaml
-uses: neonidian/teams-notify-build-status@v1
-if: ${{ always() }}                      # Use this line to always run this action irrespective of previous step failures
-with:
-  webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-  message: >-
-    Published artifact version ${{ steps.versioning.outputs.semver }}       # 'versioning' is the ID of the steps that creates versioning
-  status: ${{ steps.unitTest.outcome }}  # 'unitTest' is the ID of a step
-env:
-  SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
-  SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+steps:
+  - uses: neonidian/teams-notify-build-status@v1
+    if: ${{ always() }}                      # Use this line to always run this action irrespective of previous step failures
+    with:
+      webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+      message: >-
+        Published artifact version ${{ steps.versioning.outputs.semver }}       # 'versioning' is the ID of the steps that creates versioning
+      status: ${{ steps.unitTest.outcome }}  # 'unitTest' is the ID of a step
+    env:
+      SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
+      SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
 ```
 
 See the actions tab in your GitHub repository for runs of this action! :rocket:
@@ -52,27 +54,29 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 ## Examples
 1. Send message only when the job is failing and display only 'View Run' button
 ```yaml
-uses: neonidian/teams-notify-build-status@v1
-if: ${{ failure() }}        # For other statuses, see https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
-with:
-  webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-  message: >-
-    Failed to publish artifact version ${{ steps.versioning.outputs.semver }}
-  status: Failure
-env:
-  SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
+steps:
+  - uses: neonidian/teams-notify-build-status@v1
+    if: ${{ failure() }}        # For other statuses, see https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
+    with:
+      webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+      message: >-
+        Failed to publish artifact version ${{ steps.versioning.outputs.semver }}
+      status: Failure
+    env:
+      SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
 ```
 
 2. Send message only if some jobs have failed, enable 'View run' and 'View commit' buttons
 ```yaml
-uses: neonidian/teams-notify-build-status@v1
-needs: [unitTests, systemTests]          # IDs of jobs
-if: ${{ job.status == 'failure' }}       # Same as 'failure()'
-with:
-  webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-  message: Test run failed
-  status: ${{ job.status }}
-env:
-  SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
-  SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+steps:
+    - uses: neonidian/teams-notify-build-status@v1
+      needs: [unitTests, systemTests]          # IDs of jobs
+      if: ${{ job.status == 'failure' }}       # Same as 'failure()'
+      with:
+        webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+        message: Test run failed
+        status: ${{ job.status }}
+      env:
+        SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
+        SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
 ```
