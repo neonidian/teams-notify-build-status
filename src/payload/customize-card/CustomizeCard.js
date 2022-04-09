@@ -1,14 +1,13 @@
 const envs = require('./envs');
 
 class CustomizeCard {
-
     constructor(message, options) {
         this.message = message;
         this.options = options;
     }
 
-    initialize() {
-        this._environmentVariables = envs();
+    _constructJson() {
+        const _environmentVariables = envs();
         this._messageObject = {
             "type": "message",
             "attachments": [
@@ -24,69 +23,54 @@ class CustomizeCard {
                         },
                         "body": [
                             {
-                                "type": "Container",
-                                "style": "default",
-                                "items": [
+                                "type": "RichTextBlock",
+                                "isVisible": !!this.options?.jobStatus,
+                                "inlines": [
                                     {
-                                        "type": "TextBlock",
-                                        "text": this.message,
+                                        "type": "TextRun",
+                                        "text": 'Status: ',
                                         "wrap": true,
-                                        "size": "large"
+                                        "fontType": "monospace"
                                     },
-                                ],
+                                    {
+                                        "type": "TextRun",
+                                        "text": this.options?.jobStatus,
+                                        "wrap": true,
+                                        "color": !!this.options?.jobStatus && this._statusColour(this.options?.jobStatus),
+                                        "weight": "bolder",
+                                        "fontType": "monospace"
+                                    }
+                                ]
                             },
                             {
                                 "type": "ColumnSet",
-                                "separator": true,
-                                "spacing": "extraLarge",
                                 "columns": [
                                     {
                                         "type": "Column",
-                                        "isVisible": !!this.options?.jobStatus?.trim(),
+                                        "width": "stretch",
+                                        "style": "emphasis",
                                         "items": [
                                             {
-                                                "type": "RichTextBlock",
-                                                "isVisible": !!this.options?.jobStatus?.trim(),
-                                                "inlines": [
-                                                    "Status: ",
-                                                    {
-                                                        "type": "TextRun",
-                                                        "text": this.options?.jobStatus?.trim(),
-                                                        "wrap": true,
-                                                        "color": "good",
-                                                        "weight": "bolder",
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                                "type": "TextBlock",
+                                                "text": this.message,
+                                                "wrap": true,
+                                            },
+                                        ],
                                     },
                                     {
                                         "type": "Column",
+                                        "width": "auto",
+                                        "verticalContentAlignment": "center",
+                                        "isVisible": _environmentVariables.SHOULD_DISPLAY_VIEW_RUN_BUTTON || _environmentVariables.SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
                                         "items": [
                                             {
                                                 "type": "ActionSet",
-                                                "actions": [
-                                                    {
-                                                        "type": "Action.ShowCard",
-                                                        "title": "Action.ShowCard",
-                                                        "card": {
-                                                            "type": "AdaptiveCard",
-                                                            "body": [
-                                                                {
-                                                                    "type": "TextBlock",
-                                                                    "text": "What do you think?"
-                                                                }
-                                                            ],
-                                                            "actions": [
-                                                                {
-                                                                    "type": "Action.Submit",
-                                                                    "title": "Neat!"
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                ]
-                                            }
+                                                "actions": this._constructActionsArray(_environmentVariables.SHOULD_DISPLAY_VIEW_RUN_BUTTON, "View run", this._runUrl())
+                                            },
+                                            {
+                                                "type": "ActionSet",
+                                                "actions": this._constructActionsArray(_environmentVariables.SHOULD_DISPLAY_VIEW_COMMIT_BUTTON, "View commit", this._commitUrl())
+                                            },
                                         ]
                                     }
                                 ]
@@ -98,10 +82,50 @@ class CustomizeCard {
         };
     }
 
-    constructJson() {
-        this.initialize();
+    _runUrl() {
+        return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}`;
+    }
+
+    _commitUrl() {
+        return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}`;
+    }
+
+    constructCard() {
+        this._constructJson();
         return this._messageObject;
     }
+
+    _statusColour(jobStatus) {
+        const status = jobStatus?.trim().toLowerCase();
+        if (status === "success") {
+            return "good";
+        } else if (status === "failure") {
+            return "attention";
+        } else if (status === "cancelled") {
+            return "warning";
+        } else if (status === "skipped") {
+            return "accent";
+        }
+        return "default";
+    }
+
+    _constructActionsArray(envVarOfButton, buttonText, buttonUrl) {
+        const actionsArray = [];
+        const action = {
+                "type": "Action.OpenUrl",
+                "title": buttonText,
+                "url": buttonUrl
+        };
+        if (envVarOfButton) {
+            actionsArray.push(action);
+        }
+        return actionsArray;
+    }
 }
+
+const GITHUB_SERVER_URL = process.env.GITHUB_SERVER_URL;
+const GITHUB_REPOSITORY = process.env.GITHUB_REPOSITORY;
+const GITHUB_RUN_ID = process.env.GITHUB_RUN_ID;
+const GITHUB_SHA = process.env.GITHUB_SHA;
 
 module.exports = CustomizeCard;

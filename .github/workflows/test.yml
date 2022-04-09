@@ -1,4 +1,4 @@
-name: "units-test"
+name: "Quality"
 on:
   pull_request:
   push:
@@ -7,19 +7,44 @@ on:
       - 'releases/*'
 
 jobs:
-  # unit tests
-  units:
+  tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - run: npm ci
-    - run: npm test
+      - uses: actions/checkout@v3
 
-  # test action works running from the graph
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: ./
-      with:
-        milliseconds: 1000
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+      # Requires TEAMS_TEST_HOOK_URL to be set as secrets
+      - name: Run HTTP request tests
+        run: npm run verify
+        env:
+          TEAMS_TEST_HOOK_URL: ${{ secrets.TEAMS_TEST_HOOK_URL }}
+
+      - run: npm run prepare
+
+      # test action works running from the graph
+      - name:  Test action workflow - All features
+        uses: ./
+        with:
+          webhookUrl: ${{ secrets.TEAMS_TEST_HOOK_URL }}
+          message: Test action workflow
+          status: ${{ job.status }}
+        env:
+          SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
+          SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+
+      - name:  Test action workflow - only message
+        uses: ./
+        with:
+          webhookUrl: ${{ secrets.TEAMS_TEST_HOOK_URL }}
+          message: Test action workflow - ONLY MESSAGE

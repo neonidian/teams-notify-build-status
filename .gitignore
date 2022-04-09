@@ -68,3 +68,6 @@ typings/
 
 # dist
 dist
+
+# OS
+.DS_Store
