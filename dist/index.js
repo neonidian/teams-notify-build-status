@@ -5871,7 +5871,7 @@ class CustomizeCard {
                         "body": [
                             {
                                 "type": "RichTextBlock",
-                                "isVisible": !!this.options?.jobStatus,
+                                "isVisible": !!this.options?.status,
                                 "inlines": [
                                     {
                                         "type": "TextRun",
@@ -5881,9 +5881,9 @@ class CustomizeCard {
                                     },
                                     {
                                         "type": "TextRun",
-                                        "text": this.options?.jobStatus,
+                                        "text": this.options?.status,
                                         "wrap": true,
-                                        "color": !!this.options?.jobStatus && this._statusColour(this.options?.jobStatus),
+                                        "color": !!this.options?.status && this._statusColour(this.options?.status),
                                         "weight": "bolder",
                                         "fontType": "monospace"
                                     }
@@ -5942,8 +5942,8 @@ class CustomizeCard {
         return this._messageObject;
     }
 
-    _statusColour(jobStatus) {
-        const status = jobStatus?.trim().toLowerCase();
+    _statusColour(jobOrStepStatus) {
+        const status = jobOrStepStatus?.trim().toLowerCase();
         if (status === "success") {
             return "good";
         } else if (status === "failure") {
