@@ -113,5 +113,6 @@ steps:
 ![cancelled status sample screenshot](screenshots/cancelled-message.png)
 
 
-5. Status = "BUILD SUCCESSFUL" which is a custom status not defined in GitHub statuses.
+5. Status = "BUILD SUCCESSFUL" which is a custom status not defined in GitHub statuses. 
+Font colour is set to default in case of custom status
 ![custom status sample screenshot](screenshots/custom-status-text.png)
