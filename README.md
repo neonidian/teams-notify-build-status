@@ -1,14 +1,11 @@
-# Create a JavaScript Action
+# Send message to Teams
 
-<p align="center">
-  <a href="https://github.com/actions/javascript-action/actions"><img alt="javscript-action status" src="https://github.com/actions/javascript-action/workflows/units-test/badge.svg"></a>
-</p>
+* Send a message to a channel in Teams using a webhook
+![Mimimal message screenshot](screenshots/minmal-message.png)
 
-Use this template to bootstrap the creation of a JavaScript action.:rocket:
 
-This template includes tests, linting, a validation workflow, publishing, and versioning guidance.
-
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+* Additional configuration: Enables status label, buttons that re-direct to run and commit URLs
+![Message with status and URL re-direct buttons](screenshots/message-with-status-buttons.png)
 
 ## Create an action from this template
 
