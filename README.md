@@ -81,3 +81,7 @@ steps:
         SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
         SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
 ```
+
+## Features
+1. Uses Adaptive cards to send JSON payload
+2. 
