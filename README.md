@@ -1,11 +1,11 @@
 # Send message to Teams
 
 * Send a message to a channel in Teams using webhook
-![Mimimal message screenshot](screenshots/minmal-message.png)
+  <img alt="Mimimal message screenshot" src="screenshots/minmal-message.png" width="1904"/>
 
 
 * Additional configuration: Enable status label, buttons that re-direct to run and commit URLs
-![Message with status and URL re-direct buttons](screenshots/message-with-status-buttons.png)
+  <img alt="Message with status and URL re-direct buttons" src="screenshots/message-with-status-buttons.png" width="1904"/>
 
 ## Usage
 
@@ -40,11 +40,12 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ## Inputs and environment variables
 
-| #   | Input ID | Required | Description                        |
-|-----|----------|----------|------------------------------------|
-| 1   |webhookUrl | Yes      | Incoming webhook URL from MS Teams |
-| 2   |message    | Yes      | Message to be sent                 |
-| 3   |status     | No       | Status of a step or a job          |
+| #   | Input ID | Required | Description                                      |
+|-----|----------|----------|--------------------------------------------------|
+| 1   |webhookUrl | Yes      | Incoming webhook URL from MS Teams               |
+| 2   |message    | Yes      | Message to be sent                               |
+| 3   |status     | No       | Status of a step or a job or a custom text       |
+
 
 | #   | Environment variable              | Default value | Description                                                        |
 |-----|-----------------------------------|---------------|--------------------------------------------------------------------|
