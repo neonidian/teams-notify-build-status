@@ -65,7 +65,11 @@ class CustomizeCard {
                                         "items": [
                                             {
                                                 "type": "ActionSet",
-                                                "actions": this._constructActionsArray(_environmentVariables)
+                                                "actions": this._constructActionsArray(_environmentVariables.SHOULD_DISPLAY_VIEW_RUN_BUTTON, "View run", this._runUrl())
+                                            },
+                                            {
+                                                "type": "ActionSet",
+                                                "actions": this._constructActionsArray(_environmentVariables.SHOULD_DISPLAY_VIEW_COMMIT_BUTTON, "View commit", this._commitUrl())
                                             },
                                         ]
                                     }
@@ -78,7 +82,7 @@ class CustomizeCard {
         };
     }
 
-    _workFlowUrl() {
+    _runUrl() {
         return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}`;
     }
 
@@ -105,18 +109,16 @@ class CustomizeCard {
         return "default";
     }
 
-    _constructActionsArray(envVars) {
+    _constructActionsArray(envVarOfButton, buttonText, buttonUrl) {
         const actionsArray = [];
-        const action = (buttonText, buttonUrl) => ({
+        const action = {
                 "type": "Action.OpenUrl",
+                "tooltip": `Clicking on this button, opens the URL to ${buttonText}`,
                 "title": buttonText,
                 "url": buttonUrl
-        });
-        if (envVars.SHOULD_DISPLAY_VIEW_COMMIT_BUTTON) {
-            actionsArray.push(action("View commit", this._commitUrl()));
-        }
-        if (envVars.SHOULD_DISPLAY_VIEW_RUN_BUTTON) {
-            actionsArray.push(action("View run", this._workFlowUrl()));
+        };
+        if (envVarOfButton) {
+            actionsArray.push(action);
         }
         return actionsArray;
     }
