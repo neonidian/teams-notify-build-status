@@ -54,7 +54,7 @@ class CustomizeCard {
                             },
                             {
                                 "type": "ColumnSet",
-                                "isVisible": _environmentVariables.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON || _environmentVariables.SHOULD_PUBLISH_VIEW_COMMIT_BUTTON,
+                                "isVisible": _environmentVariables.SHOULD_DISPLAY_VIEW_RUN_BUTTON || _environmentVariables.SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
                                 "columns": [
                                     {
                                         "type": "Column",
@@ -112,11 +112,11 @@ class CustomizeCard {
                 "title": buttonText,
                 "url": buttonUrl
         });
-        if (envVars.SHOULD_PUBLISH_VIEW_WORKFLOW_BUTTON) {
-            actionsArray.push(action("View workflow", this._workFlowUrl()));
-        }
-        if (envVars.SHOULD_PUBLISH_VIEW_COMMIT_BUTTON) {
+        if (envVars.SHOULD_DISPLAY_VIEW_COMMIT_BUTTON) {
             actionsArray.push(action("View commit", this._commitUrl()));
+        }
+        if (envVars.SHOULD_DISPLAY_VIEW_RUN_BUTTON) {
+            actionsArray.push(action("View run", this._workFlowUrl()));
         }
         return actionsArray;
     }
