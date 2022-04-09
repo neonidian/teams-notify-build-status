@@ -113,7 +113,6 @@ class CustomizeCard {
         const actionsArray = [];
         const action = {
                 "type": "Action.OpenUrl",
-                "tooltip": `Clicking on this button, opens the URL to ${buttonText}`,
                 "title": buttonText,
                 "url": buttonUrl
         };
