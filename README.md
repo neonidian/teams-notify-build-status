@@ -9,9 +9,14 @@
 
 ## Usage
 
-1. Add [incoming webhook URL](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook) from Teams in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/security-guides/encrypted-secrets)
+1.
+Add [incoming webhook URL](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook)
+from Teams
+in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/security-guides/encrypted-secrets)
 
-2. To send a message, add the following in your [workflow YAML](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+2. To send a message, add the following in
+   your [workflow YAML](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+
 ```yaml
 steps:
   - uses: neonidian/teams-notify-build-status@v2
@@ -22,6 +27,7 @@ steps:
 ```
 
 3. Enable status by providing the status input. Enable 'View run' and 'View commit' buttons using environment variables.
+
 ```yaml
 steps:
   - uses: neonidian/teams-notify-build-status@v2
@@ -40,12 +46,11 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ## Inputs and environment variables
 
-| #   | Input ID | Required | Description                                      |
-|-----|----------|----------|--------------------------------------------------|
-| 1   |webhookUrl | Yes      | Incoming webhook URL from MS Teams               |
-| 2   |message    | Yes      | Message to be sent                               |
-| 3   |status     | No       | Status of a step or a job or a custom text       |
-
+| #   | Input ID | Required | Description                                                                                                                               |
+|-----|----------|----------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| 1   |webhookUrl | Yes      | Incoming webhook URL from MS Teams                                                                                                        |
+| 2   |message    | Yes      | Message to be sent                                                                                                                        |
+| 3   |status     | No       | [Status](https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions) of a step or a job, or a custom text |
 
 | #   | Environment variable              | Default value | Description                                                        |
 |-----|-----------------------------------|---------------|--------------------------------------------------------------------|
@@ -53,7 +58,9 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 | 2   | SHOULD_DISPLAY_VIEW_COMMIT_BUTTON | false         | Clicking on this button redirects to SHA commit page in GitHub     |
 
 ## Examples
+
 1. Send message only when the job is failing and display only 'View Run' button
+
 ```yaml
 steps:
   - uses: neonidian/teams-notify-build-status@v2
@@ -68,20 +75,43 @@ steps:
 ```
 
 2. Send message only if some jobs have failed, enable 'View run' and 'View commit' buttons
+
 ```yaml
 steps:
-    - uses: neonidian/teams-notify-build-status@v2
-      needs: [unitTests, systemTests]          # IDs of jobs
-      if: ${{ job.status == 'failure' }}       # Same as 'failure()'
-      with:
-        webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-        message: Test run failed
-        status: ${{ job.status }}
-      env:
-        SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
-        SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+  - uses: neonidian/teams-notify-build-status@v2
+    needs: [ unitTests, systemTests ]          # IDs of jobs
+    if: ${{ job.status == 'failure' }}       # Same as 'failure()'
+    with:
+      webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+      message: Test run failed
+      status: ${{ job.status }}
+    env:
+      SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
+      SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
 ```
 
-## Features
-1. Uses Adaptive cards to send JSON payload
-2. 
+## Tools used
+
+1. [Adaptive cards](https://adaptivecards.io/) has been used for UI
+2. [Axios](https://axios-http.com/) JS library has been used for HTTP communication
+
+## Sample screenshots (Dark mode enabled in Teams)
+
+1. Status = "failure", "View run" and "View commit" buttons enabled
+![failure status with 2 buttons enabled](screenshots/failure-message-screenshot.png)
+
+
+2. Status = "skipped", "View run" and "View commit" buttons are not enabled
+![skipped status with no buttons screenshot](screenshots/skipped-message-no-buttons.png)
+
+
+3. Status = "skipped", only "View run" is enabled
+![skipped status with only view run button sample screenshot](screenshots/skipped-only-view-run-button.png)
+
+
+4. Status = "cancelled", "View run" and "View commit" buttons enabled
+![cancelled status sample screenshot](screenshots/cancelled-message.png)
+
+
+5. Status = "BUILD SUCCESSFUL" which is a custom status not defined in GitHub statuses.
+![custom status sample screenshot](screenshots/custom-status-text.png)
