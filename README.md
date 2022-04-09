@@ -1,113 +1,50 @@
 # Send message to Teams
 
-* Send a message to a channel in Teams using a webhook
+* Send a message to a channel in Teams using webhook
 ![Mimimal message screenshot](screenshots/minmal-message.png)
 
 
 * Additional configuration: Enables status label, buttons that re-direct to run and commit URLs
 ![Message with status and URL re-direct buttons](screenshots/message-with-status-buttons.png)
 
-## Create an action from this template
-
-Click the `Use this Template` and provide the new repo details for your action
-
-## Code in Main
-
-Install the dependencies
-
-```bash
-npm install
-```
-
-Run the tests :heavy_check_mark:
-
-```bash
-$ npm test
-
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-...
-```
-
-## Change action.yml
-
-The action.yml defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-const core = require('@actions/core');
-...
-
-async function run() {
-  try {
-      ...
-  }
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
-
-## Package for distribution
-
-GitHub Actions will run the entry point from the action.yml. Packaging assembles the code into one file that can be checked in to Git, enabling fast and reliable execution and preventing the need to check in node_modules.
-
-Actions are run from GitHub repos.  Packaging the action will create a packaged action in the dist folder.
-
-Run prepare
-
-```bash
-npm run prepare
-```
-
-Since the packaged index.js is run from the dist folder.
-
-```bash
-git add dist
-```
-
-## Create a release branch
-
-Users shouldn't consume the action from master since that would be latest code and actions can break compatibility between major versions.
-
-Checkin to the v1 release branch
-
-```bash
-git checkout -b v1
-git commit -a -m "v1 release"
-```
-
-```bash
-git push origin v1
-```
-
-Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
-
-Your action is now published! :rocket:
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
 ## Usage
 
-You can now consume the action by referencing the v1 branch
+1. Add incoming webhook URL in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/security-guides/encrypted-secrets)
 
+2. To send a message, add the following in your [workflow YAML](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 ```yaml
-uses: actions/javascript-action@v1
+uses: neonidian/teams-notify-build-status@v1
 with:
-  milliseconds: 1000
+  webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+  message: >-
+    Published artifact version ${{ steps.versioning.outputs.semver }}
 ```
 
-See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
+3. Enable status by providing the status input. Enable 'View run' and 'View commit' buttons using environment variables.
+```yaml
+uses: neonidian/teams-notify-build-status@v1
+if: ${{ always() }}                      # Use this line to always run this action irrespective of previous step failures
+with:
+  webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+  message: >-
+    Published artifact version ${{ steps.versioning.outputs.semver }}
+  status: ${{ steps.unitTest.outcome }}  # 'unitTest' is the ID of a step
+env:
+  SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
+  SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+```
+
+See the actions tab in your GitHub repository for runs of this action! :rocket:
+
+## Inputs and environment variables
+
+| #   | Input ID | Required | Description                        |
+|-----|----------|----------|------------------------------------|
+| 1   |webhookUrl | Yes      | Incoming webhook URL from MS Teams |
+| 2   |message    | Yes      | Message to be sent                 |
+| 3   |status     | No       | Status of a step or a job          |
+
+| #   | Environment variable              | Default value | Description                                                          |
+|-----|-----------------------------------|---------------|----------------------------------------------------------------------|
+| 1   | SHOULD_DISPLAY_VIEW_RUN_BUTTON    | false         | Clicking on this button redirects to the action run page in Github   |
+| 2   | SHOULD_DISPLAY_VIEW_COMMIT_BUTTON | false         | Clicking on this button redirects to SHA commit page in Github       |
