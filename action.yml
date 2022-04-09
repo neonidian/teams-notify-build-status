@@ -1,4 +1,4 @@
-name: 'Send message to MS Teams'
+name: 'Send message to MS Teams (webhook)'
 description: 'Send message to a channel in MS Teams using webhook'
 
 inputs:
