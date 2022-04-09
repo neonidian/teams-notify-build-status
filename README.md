@@ -1,4 +1,5 @@
 # Send message to Teams
+[![Quality](https://github.com/neonidian/teams-notify-build-status/actions/workflows/test.yml/badge.svg)](https://github.com/neonidian/teams-notify-build-status/actions/workflows/test.yml)
 
 * Send a message to a channel in Teams using webhook
   <img alt="Mimimal message screenshot" src="screenshots/minmal-message.png" width="1904"/>
