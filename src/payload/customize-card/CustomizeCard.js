@@ -43,25 +43,25 @@ class CustomizeCard {
                                 ]
                             },
                             {
-                                "type": "Container",
-                                "items": [
-                                    {
-                                        "type": "TextBlock",
-                                        "text": this.message,
-                                        "wrap": true,
-                                    },
-                                ],
-                            },
-                            {
                                 "type": "ColumnSet",
-                                "isVisible": _environmentVariables.SHOULD_DISPLAY_VIEW_RUN_BUTTON || _environmentVariables.SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
                                 "columns": [
                                     {
                                         "type": "Column",
+                                        "width": "stretch",
+                                        "style": "emphasis",
+                                        "items": [
+                                            {
+                                                "type": "TextBlock",
+                                                "text": this.message,
+                                                "wrap": true,
+                                            },
+                                        ],
                                     },
                                     {
                                         "type": "Column",
                                         "width": "auto",
+                                        "verticalContentAlignment": "center",
+                                        "isVisible": _environmentVariables.SHOULD_DISPLAY_VIEW_RUN_BUTTON || _environmentVariables.SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
                                         "items": [
                                             {
                                                 "type": "ActionSet",

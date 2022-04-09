@@ -48,6 +48,20 @@ describe('Post message with job status', () => {
         expect(response).toBe(responseBody);
     });
 
+    test('Send a long message with buttons and status', async () => {
+        process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true', [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true' });
+        const messageToSend = 'Long message with failure status(red text) along with buttons. With status message published SDK version of container 8.1.1 (major) version. Pushed the container to docker registry and artifactory';
+        let response = await main(_teamsIncomingHookUrl, messageToSend, { jobStatus: 'failure' });
+        expect(response).toBe(responseBody);
+    });
+
+    test('Send a long message with one of the buttons', async () => {
+        process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true', });
+        const messageToSend = 'Long message with no status status along with view run button. With status message published SDK version of container 14.1.1 (major) version. Pushed the container to docker registry and artifactory';
+        let response = await main(_teamsIncomingHookUrl, messageToSend, {});
+        expect(response).toBe(responseBody);
+    });
+
     test('No buttons to be visible when both buttons are explicity set to false', async () => {
         process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'false', [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'false' });
         const messageToSend = 'No buttons to be visible, with status';
