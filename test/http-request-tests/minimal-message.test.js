@@ -5,10 +5,6 @@ describe('Post minimal message', () => {
     const responseBody = 1;
     const emptyOptions = {
         jobStatus: '',
-        githubToken: '',
-        successCardColour: '',
-        failureCardColour: '',
-        cancelledCardColour: '',
     };
 
     beforeAll(() => {
