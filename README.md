@@ -1,11 +1,11 @@
 # Send message to Teams
 
 * Send a message to a channel in Teams using webhook
-![Mimimal message screenshot](screenshots/minmal-message.png)
+  <img alt="Mimimal message screenshot" src="screenshots/minmal-message.png" width="1280"/>
 
 
 * Additional configuration: Enable status label, buttons that re-direct to run and commit URLs
-![Message with status and URL re-direct buttons](screenshots/message-with-status-buttons.png)
+  <img alt="Message with status and URL re-direct buttons" src="screenshots/message-with-status-buttons.png" width="1280"/>
 
 ## Usage
 
