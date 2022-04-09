@@ -40,11 +40,12 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ## Inputs and environment variables
 
-| #   | Input ID | Required | Description                        |
-|-----|----------|----------|------------------------------------|
-| 1   |webhookUrl | Yes      | Incoming webhook URL from MS Teams |
-| 2   |message    | Yes      | Message to be sent                 |
-| 3   |status     | No       | Status of a step or a job          |
+| #   | Input ID | Required | Description                                      |
+|-----|----------|----------|--------------------------------------------------|
+| 1   |webhookUrl | Yes      | Incoming webhook URL from MS Teams               |
+| 2   |message    | Yes      | Message to be sent                               |
+| 3   |status     | No       | Status of a step or a job or a custom text       |
+
 
 | #   | Environment variable              | Default value | Description                                                        |
 |-----|-----------------------------------|---------------|--------------------------------------------------------------------|
