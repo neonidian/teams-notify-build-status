@@ -14,7 +14,7 @@
 2. To send a message, add the following in your [workflow YAML](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v1
+  - uses: neonidian/teams-notify-build-status@v2
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
       message: >-
@@ -24,7 +24,7 @@ steps:
 3. Enable status by providing the status input. Enable 'View run' and 'View commit' buttons using environment variables.
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v1
+  - uses: neonidian/teams-notify-build-status@v2
     if: ${{ always() }}                      # Use this line to always run this action irrespective of previous step failures
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
@@ -55,7 +55,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 1. Send message only when the job is failing and display only 'View Run' button
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v1
+  - uses: neonidian/teams-notify-build-status@v2
     if: ${{ failure() }}        # For other statuses, see https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
@@ -69,7 +69,7 @@ steps:
 2. Send message only if some jobs have failed, enable 'View run' and 'View commit' buttons
 ```yaml
 steps:
-    - uses: neonidian/teams-notify-build-status@v1
+    - uses: neonidian/teams-notify-build-status@v2
       needs: [unitTests, systemTests]          # IDs of jobs
       if: ${{ job.status == 'failure' }}       # Same as 'failure()'
       with:
