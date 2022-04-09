@@ -4,7 +4,7 @@
 ![Mimimal message screenshot](screenshots/minmal-message.png)
 
 
-* Additional configuration: Enables status label, buttons that re-direct to run and commit URLs
+* Additional configuration: Enable status label, buttons that re-direct to run and commit URLs
 ![Message with status and URL re-direct buttons](screenshots/message-with-status-buttons.png)
 
 ## Usage
