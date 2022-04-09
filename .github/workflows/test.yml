@@ -36,4 +36,8 @@ jobs:
       - name:  Test action workflow
         uses: ./
         with:
-          milliseconds: 1000
+          webhookUrl: ${{ secrets.TEAMS_TEST_HOOK_URL }}
+          message: Test action workflow
+        env:
+          SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
+          SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
