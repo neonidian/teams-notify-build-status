@@ -8,7 +8,7 @@ const expectedPayLoadObject = ({
             "version": "1.2",
             "msteams": {"width": "Full"},
             "body": [{
-                "type": "RichTextBlock", "isVisible": true, "inlines": [{
+                "type": "RichTextBlock", "isVisible": statusText !== '', "inlines": [{
                     "type": "TextRun", "text": "Status: ", "wrap": true, "fontType": "monospace"
                 }, {
                     "type": "TextRun",

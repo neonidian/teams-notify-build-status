@@ -24,7 +24,7 @@ class CustomizeCard {
                         "body": [
                             {
                                 "type": "RichTextBlock",
-                                "isVisible": !!this.status,
+                                "isVisible": this.status !== '',
                                 "inlines": [
                                     {
                                         "type": "TextRun",
@@ -34,9 +34,9 @@ class CustomizeCard {
                                     },
                                     {
                                         "type": "TextRun",
-                                        "text": this.status,
+                                        "text": this.status ?? '',
                                         "wrap": true,
-                                        "color": !!this.status && this._statusColour(this.status),
+                                        "color": this._statusColour(this.status),
                                         "weight": "bolder",
                                         "fontType": "monospace"
                                     }
@@ -96,6 +96,9 @@ class CustomizeCard {
     }
 
     _statusColour(jobOrStepStatus) {
+        if (!jobOrStepStatus) {
+            return "default";
+        }
         const status = jobOrStepStatus?.toLowerCase();
         if (status === "success") {
             return "good";

@@ -5820,10 +5820,10 @@ exports.debug = debug; // for test
 const postRequest = __nccwpck_require__(2585);
 const constructPayLoad = __nccwpck_require__(4645);
 
-let main = function (webhookUrl, message, options) {
+let main = function (webhookUrl, message, { status, }) {
     return new Promise((resolve) => {
         validateUrl(webhookUrl);
-        const requestPayload = constructPayLoad(message, options);
+        const requestPayload = constructPayLoad(message, { status, });
         return postRequest(webhookUrl, requestPayload)
             .then(responseData => resolve(responseData));
     });
@@ -5848,9 +5848,9 @@ module.exports = main;
 const envs = __nccwpck_require__(3263);
 
 class CustomizeCard {
-    constructor(message, options) {
+    constructor(message, { status, }) {
         this.message = message;
-        this.options = options;
+        this.status = status;
     }
 
     _constructJson() {
@@ -5862,7 +5862,7 @@ class CustomizeCard {
                     "contentType": "application/vnd.microsoft.card.adaptive",
                     "contentUrl": null,
                     "content": {
-                        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                        "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
                         "type": "AdaptiveCard",
                         "version": "1.2",
                         "msteams": {
@@ -5871,7 +5871,7 @@ class CustomizeCard {
                         "body": [
                             {
                                 "type": "RichTextBlock",
-                                "isVisible": !!this.options?.status,
+                                "isVisible": this.status !== '',
                                 "inlines": [
                                     {
                                         "type": "TextRun",
@@ -5881,9 +5881,9 @@ class CustomizeCard {
                                     },
                                     {
                                         "type": "TextRun",
-                                        "text": this.options?.status,
+                                        "text": this.status ?? '',
                                         "wrap": true,
-                                        "color": !!this.options?.status && this._statusColour(this.options?.status),
+                                        "color": this._statusColour(this.status),
                                         "weight": "bolder",
                                         "fontType": "monospace"
                                     }
@@ -5943,7 +5943,10 @@ class CustomizeCard {
     }
 
     _statusColour(jobOrStepStatus) {
-        const status = jobOrStepStatus?.trim().toLowerCase();
+        if (!jobOrStepStatus) {
+            return "default";
+        }
+        const status = jobOrStepStatus?.toLowerCase();
         if (status === "success") {
             return "good";
         } else if (status === "failure") {
@@ -5970,10 +5973,12 @@ class CustomizeCard {
     }
 }
 
-const GITHUB_SERVER_URL = process.env.GITHUB_SERVER_URL;
-const GITHUB_REPOSITORY = process.env.GITHUB_REPOSITORY;
-const GITHUB_RUN_ID = process.env.GITHUB_RUN_ID;
-const GITHUB_SHA = process.env.GITHUB_SHA;
+const {
+    GITHUB_SERVER_URL,
+    GITHUB_REPOSITORY,
+    GITHUB_RUN_ID,
+    GITHUB_SHA,
+} = process.env;
 
 module.exports = CustomizeCard;
 
@@ -6038,8 +6043,8 @@ module.exports = envs;
 
 const CustomizeCard = __nccwpck_require__(8111);
 
-let payLoad = function constructPayload(message, options) {
-    return new CustomizeCard(message, options).constructCard();
+let payLoad = function constructPayload(message, { status, }) {
+    return new CustomizeCard(message, { status, }).constructCard();
 };
 
 module.exports = payLoad;
@@ -6240,10 +6245,7 @@ async function run() {
         const message = core.getInput('message', { required: true });
         const status = core.getInput('status');
 
-        const options = {
-            status,
-        };
-        await main(webhookUrl, message, options);
+        await main(webhookUrl, message, { status, });
         core.notice('Message has been sent to Teams');
     } catch (error) {
         core.setFailed(error.message);
