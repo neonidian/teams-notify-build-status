@@ -123,9 +123,11 @@ class CustomizeCard {
     }
 }
 
-const GITHUB_SERVER_URL = process.env.GITHUB_SERVER_URL;
-const GITHUB_REPOSITORY = process.env.GITHUB_REPOSITORY;
-const GITHUB_RUN_ID = process.env.GITHUB_RUN_ID;
-const GITHUB_SHA = process.env.GITHUB_SHA;
+const {
+    GITHUB_SERVER_URL,
+    GITHUB_REPOSITORY,
+    GITHUB_RUN_ID,
+    GITHUB_SHA,
+} = process.env;
 
 module.exports = CustomizeCard;
