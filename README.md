@@ -52,10 +52,10 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 | 2   |message    | Yes      | Message to be sent                                                                                                                        |
 | 3   |status     | No       | [Status](https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions) of a step or a job, or a custom text |
 
-| #   | Environment variable              | Default value | Description                                                        |
-|-----|-----------------------------------|---------------|--------------------------------------------------------------------|
-| 1   | SHOULD_DISPLAY_VIEW_RUN_BUTTON    | false         | Clicking on this button redirects to the action run page in GitHub |
-| 2   | SHOULD_DISPLAY_VIEW_COMMIT_BUTTON | false         | Clicking on this button redirects to SHA commit page in GitHub     |
+| #   | Environment variable              | Allowed values    | Default value | Description                                                        |
+|-----|-----------------------------------|-------------------|---------------|--------------------------------------------------------------------|
+| 1   | SHOULD_DISPLAY_VIEW_RUN_BUTTON    | 'true' or 'false' | false         | Clicking on this button redirects to the action run page in GitHub |
+| 2   | SHOULD_DISPLAY_VIEW_COMMIT_BUTTON | 'true' or 'false' | false         | Clicking on this button redirects to SHA commit page in GitHub     |
 
 ## Examples
 

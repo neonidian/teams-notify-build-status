@@ -1,9 +1,9 @@
 const envs = require('./envs');
 
 class CustomizeCard {
-    constructor(message, options) {
+    constructor(message, { status, }) {
         this.message = message;
-        this.options = options;
+        this.status = status;
     }
 
     _constructJson() {
@@ -15,7 +15,7 @@ class CustomizeCard {
                     "contentType": "application/vnd.microsoft.card.adaptive",
                     "contentUrl": null,
                     "content": {
-                        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                        "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
                         "type": "AdaptiveCard",
                         "version": "1.2",
                         "msteams": {
@@ -24,7 +24,7 @@ class CustomizeCard {
                         "body": [
                             {
                                 "type": "RichTextBlock",
-                                "isVisible": !!this.options?.status,
+                                "isVisible": this.status !== '',
                                 "inlines": [
                                     {
                                         "type": "TextRun",
@@ -34,9 +34,9 @@ class CustomizeCard {
                                     },
                                     {
                                         "type": "TextRun",
-                                        "text": this.options?.status,
+                                        "text": this.status ?? '',
                                         "wrap": true,
-                                        "color": !!this.options?.status && this._statusColour(this.options?.status),
+                                        "color": this._statusColour(this.status),
                                         "weight": "bolder",
                                         "fontType": "monospace"
                                     }
@@ -96,7 +96,10 @@ class CustomizeCard {
     }
 
     _statusColour(jobOrStepStatus) {
-        const status = jobOrStepStatus?.trim().toLowerCase();
+        if (!jobOrStepStatus) {
+            return "default";
+        }
+        const status = jobOrStepStatus?.toLowerCase();
         if (status === "success") {
             return "good";
         } else if (status === "failure") {
@@ -123,9 +126,11 @@ class CustomizeCard {
     }
 }
 
-const GITHUB_SERVER_URL = process.env.GITHUB_SERVER_URL;
-const GITHUB_REPOSITORY = process.env.GITHUB_REPOSITORY;
-const GITHUB_RUN_ID = process.env.GITHUB_RUN_ID;
-const GITHUB_SHA = process.env.GITHUB_SHA;
+const {
+    GITHUB_SERVER_URL,
+    GITHUB_REPOSITORY,
+    GITHUB_RUN_ID,
+    GITHUB_SHA,
+} = process.env;
 
 module.exports = CustomizeCard;

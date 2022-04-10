@@ -29,7 +29,7 @@ describe('Post message with job status', () => {
     test('Both buttons to be visible with no status', async () => {
         process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true', [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true' });
         const messageToSend = 'Both buttons to be visible with no status';
-        let response = await main(_teamsIncomingHookUrl, messageToSend, {});
+        let response = await main(_teamsIncomingHookUrl, messageToSend, { status: '' });
         expect(response).toBe(responseBody);
     });
 
@@ -61,7 +61,7 @@ describe('Post message with job status', () => {
     test('Send a long message with one of the buttons', async () => {
         process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true', });
         const messageToSend = 'Long message with no status status along with view run button. With status message published SDK version of container 14.1.1 (major) version. Pushed the container to docker registry and artifactory';
-        let response = await main(_teamsIncomingHookUrl, messageToSend, {});
+        let response = await main(_teamsIncomingHookUrl, messageToSend, { status: '' });
         expect(response).toBe(responseBody);
     });
 

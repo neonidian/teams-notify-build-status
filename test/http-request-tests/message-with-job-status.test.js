@@ -63,13 +63,13 @@ describe('Post message with job status', () => {
 
     test('Send a long message with no status', async () => {
         const messageToSend = 'Long message with no status. With label message published SDK version of container 0.1.1 (major) version. Pushed the container to docker registry and artifactory';
-        let response = await main(_teamsIncomingHookUrl, messageToSend, {});
+        let response = await main(_teamsIncomingHookUrl, messageToSend, {status: ''});
         expect(response).toBe(responseBody);
     });
 
     test('Send a short message with no status', async () => {
         const messageToSend = 'Short message with no status';
-        let response = await main(_teamsIncomingHookUrl, messageToSend, {});
+        let response = await main(_teamsIncomingHookUrl, messageToSend, {status: ''});
         expect(response).toBe(responseBody);
     });
 });
