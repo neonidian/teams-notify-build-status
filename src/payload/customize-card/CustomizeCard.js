@@ -1,9 +1,9 @@
 const envs = require('./envs');
 
 class CustomizeCard {
-    constructor(message, options) {
+    constructor(message, { status, }) {
         this.message = message;
-        this.options = options;
+        this.status = status;
     }
 
     _constructJson() {
@@ -24,7 +24,7 @@ class CustomizeCard {
                         "body": [
                             {
                                 "type": "RichTextBlock",
-                                "isVisible": !!this.options?.status,
+                                "isVisible": !!this.status,
                                 "inlines": [
                                     {
                                         "type": "TextRun",
@@ -34,9 +34,9 @@ class CustomizeCard {
                                     },
                                     {
                                         "type": "TextRun",
-                                        "text": this.options?.status,
+                                        "text": this.status,
                                         "wrap": true,
-                                        "color": !!this.options?.status && this._statusColour(this.options?.status),
+                                        "color": !!this.status && this._statusColour(this.status),
                                         "weight": "bolder",
                                         "fontType": "monospace"
                                     }
