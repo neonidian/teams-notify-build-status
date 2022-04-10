@@ -96,7 +96,7 @@ class CustomizeCard {
     }
 
     _statusColour(jobOrStepStatus) {
-        const status = jobOrStepStatus?.trim().toLowerCase();
+        const status = jobOrStepStatus?.toLowerCase();
         if (status === "success") {
             return "good";
         } else if (status === "failure") {
