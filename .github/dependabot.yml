@@ -3,9 +3,21 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
+      day: saturday
 
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
+      day: saturday
+    allow:
+      - dependency-type: production
+      
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+      day: saturday
+    allow:
+      - dependency-type: development
