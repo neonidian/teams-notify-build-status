@@ -10,7 +10,7 @@ let postRequest = async function postMessage(webhookUrl, jsonPayload) {
             .then(response => {
                 core.debug(`Received response: "${response.data}" from Teams server`);
                 if (response.data !== 1) {
-                    core.warning(`Message not sent. Received response from Teams: "${response.data}"`);
+                    core.setFailed(`Message not sent. Received response from Teams: "${response.data}"`);
                 }
                 return response.data;
             });
