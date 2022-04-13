@@ -8,8 +8,12 @@ async function run() {
         const webhookUrl = core.getInput(webhookUrlInputId, { required: true });
         const message = core.getInput('message', { required: true });
         const status = core.getInput('status');
+        const title = core.getInput('title');
 
-        await main(webhookUrl, message, { status, });
+        await main(webhookUrl, message, {
+            status,
+            title,
+        });
         core.info('Message has been sent to Teams');
     } catch (error) {
         core.setFailed(error.message);

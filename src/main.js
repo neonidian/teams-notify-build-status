@@ -1,10 +1,16 @@
 const postRequest = require('./requests/post-request');
 const constructPayLoad = require("./payload/payload");
 
-let main = function (webhookUrl, message, { status, }) {
+let main = function (webhookUrl, message, {
+    status,
+    title,
+}) {
     return new Promise((resolve) => {
         validateUrl(webhookUrl);
-        const requestPayload = constructPayLoad(message, { status, });
+        const requestPayload = constructPayLoad(message, {
+            status,
+            title,
+        });
         return postRequest(webhookUrl, requestPayload)
             .then(responseData => resolve(responseData));
     });

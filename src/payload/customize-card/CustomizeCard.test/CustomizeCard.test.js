@@ -6,27 +6,29 @@ describe('Verify JSON payload', () => {
     test('Only message', () => {
         const message = 'Only message';
 
-        const payload = new CustomizeCard(message, { status: '' }).constructCard();
+        const payload = new CustomizeCard(message, { status: '', title: '', }).constructCard();
 
-        expect(payload).toMatchObject(expectedPayLoad({message, statusText: '', statusColour: 'default',}));
+        expect(payload).toMatchObject(expectedPayLoad({message, statusText: '', title: '', statusColour: 'default',}));
     });
 
     test('Message with status success', () => {
         const message = 'Message with success status';
         const statusText = 'Success';
         const statusColour = 'good';
-        const payload = new CustomizeCard(message, {status: statusText,}).constructCard();
+        const title = 'Success message';
+        const payload = new CustomizeCard(message, {status: statusText, title, }).constructCard();
 
-        expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour,}));
+        expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour, title}));
     });
 
     test('Message with custom status', () => {
         const message = 'Message with custom status';
         const statusText = 'Custom status';
         const statusColour = 'default';
-        const payload = new CustomizeCard(message, {status: statusText,}).constructCard();
+        const title = '';
+        const payload = new CustomizeCard(message, {status: statusText,title,}).constructCard();
 
-        expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour,}));
+        expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour,title,}));
     });
 
     describe('With env variables', () => {
@@ -55,9 +57,10 @@ describe('Verify JSON payload', () => {
             const message = 'Message with cancelled status';
             const statusText = 'Cancelled';
             const statusColour = 'warning';
-            const payload = new CustomizeCard(message, {status: statusText,}).constructCard();
+            const title = '';
+            const payload = new CustomizeCard(message, {status: statusText,title,}).constructCard();
 
-            expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour,}));
+            expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour,title,}));
         });
     });
 });

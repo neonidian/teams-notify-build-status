@@ -1,9 +1,13 @@
 const envs = require('./envs');
 
 class CustomizeCard {
-    constructor(message, { status, }) {
+    constructor(message, {
+        status,
+        title,
+    }) {
         this.message = message;
         this.status = status;
+        this.title = title;
     }
 
     _constructJson() {
@@ -22,6 +26,12 @@ class CustomizeCard {
                             "width": "Full"
                         },
                         "body": [
+                            {
+                                "type": "TextBlock",
+                                "isVisible": this.title !== '',
+                                "text": this.title,
+                                "size": "large"
+                            },
                             {
                                 "type": "RichTextBlock",
                                 "isVisible": this.status !== '',

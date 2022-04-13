@@ -5820,10 +5820,16 @@ exports.debug = debug; // for test
 const postRequest = __nccwpck_require__(2585);
 const constructPayLoad = __nccwpck_require__(4645);
 
-let main = function (webhookUrl, message, { status, }) {
+let main = function (webhookUrl, message, {
+    status,
+    title,
+}) {
     return new Promise((resolve) => {
         validateUrl(webhookUrl);
-        const requestPayload = constructPayLoad(message, { status, });
+        const requestPayload = constructPayLoad(message, {
+            status,
+            title,
+        });
         return postRequest(webhookUrl, requestPayload)
             .then(responseData => resolve(responseData));
     });
@@ -5848,9 +5854,13 @@ module.exports = main;
 const envs = __nccwpck_require__(3263);
 
 class CustomizeCard {
-    constructor(message, { status, }) {
+    constructor(message, {
+        status,
+        title,
+    }) {
         this.message = message;
         this.status = status;
+        this.title = title;
     }
 
     _constructJson() {
@@ -5869,6 +5879,12 @@ class CustomizeCard {
                             "width": "Full"
                         },
                         "body": [
+                            {
+                                "type": "TextBlock",
+                                "isVisible": this.title !== '',
+                                "text": this.title,
+                                "size": "large"
+                            },
                             {
                                 "type": "RichTextBlock",
                                 "isVisible": this.status !== '',
@@ -6043,8 +6059,14 @@ module.exports = envs;
 
 const CustomizeCard = __nccwpck_require__(8111);
 
-let payLoad = function constructPayload(message, { status, }) {
-    return new CustomizeCard(message, { status, }).constructCard();
+let payLoad = function constructPayload(message, {
+    status,
+    title,
+}) {
+    return new CustomizeCard(message, {
+        status,
+        title,
+    }).constructCard();
 };
 
 module.exports = payLoad;
@@ -6244,8 +6266,12 @@ async function run() {
         const webhookUrl = core.getInput(webhookUrlInputId, { required: true });
         const message = core.getInput('message', { required: true });
         const status = core.getInput('status');
+        const title = core.getInput('title');
 
-        await main(webhookUrl, message, { status, });
+        await main(webhookUrl, message, {
+            status,
+            title,
+        });
         core.info('Message has been sent to Teams');
     } catch (error) {
         core.setFailed(error.message);

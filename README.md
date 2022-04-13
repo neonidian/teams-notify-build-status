@@ -5,8 +5,8 @@
   <img alt="Mimimal message screenshot" src="screenshots/minmal-message.png" width="1904"/>
 
 
-* Additional configuration enables status label, buttons that re-direct to run and commit URLs
-  <img alt="Message with status and URL re-direct buttons" src="screenshots/message-with-status-buttons.png" width="1904"/>
+* Additional configuration enables title and status labels, buttons that re-direct to run and commit URLs
+  <img alt="Message with status and URL re-direct buttons" src="screenshots/message-with-title-and-buttons.png" width="1904"/>
 
 ## Usage
 
@@ -26,7 +26,8 @@ steps:
         Published artifact version ${{ steps.versioning.outputs.semver }}
 ```
 
-3. Enable status by providing the status input. Enable 'View run' and 'View commit' buttons using environment variables.
+3. Enable title and status labels by providing the title and status input. 
+Enable 'View run' and 'View commit' buttons using environment variables.
 
 ```yaml
 steps:
@@ -34,6 +35,7 @@ steps:
     if: ${{ always() }}                      # Use this line to always run this action irrespective of previous step failures
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+      title: Artifact build and publish
       message: >-
         Published artifact version ${{ steps.versioning.outputs.semver }}       # 'versioning' is the ID of the steps that creates versioning
       status: ${{ steps.unitTest.outcome }}  # 'unitTest' is the ID of a step
@@ -46,11 +48,12 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ## Inputs and environment variables
 
-| #   | Input ID | Required | Description                                                                                                                               |
-|-----|----------|----------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| 1   |webhookUrl | Yes      | Incoming webhook URL from MS Teams                                                                                                        |
-| 2   |message    | Yes      | Message to be sent                                                                                                                        |
-| 3   |status     | No       | [Status](https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions) of a step or a job, or a custom text |
+| #   | Input ID   | Required | Description                                                                                                                               |
+|-----|------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| 1   | webhookUrl | Yes      | Incoming webhook URL from MS Teams                                                                                                        |
+| 2   | message    | Yes      | Message to be sent                                                                                                                        |
+| 3   | title      | No       | Title of the card (displays at the top with a larger text)                                                                                |
+| 4   | status     | No       | [Status](https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions) of a step or a job, or a custom text |
 
 | #   | Environment variable              | Allowed values    | Default value | Description                                                        |
 |-----|-----------------------------------|-------------------|---------------|--------------------------------------------------------------------|
@@ -92,24 +95,28 @@ steps:
 
 ## Tools used
 
-1. [Adaptive cards](https://adaptivecards.io/) has been used for UI
+1. [Adaptive cards](https://adaptivecards.io/) interface of Teams has been used for UI
 2. [Axios](https://axios-http.com/) JS library has been used for HTTP communication
 
 ## Sample screenshots (Dark mode enabled in Teams)
 
-1. Status = "failure", "View run" and "View commit" buttons enabled
+1. status = "failure", "View run" and "View commit" buttons enabled
 ![failure status with 2 buttons enabled](screenshots/failure-message-screenshot.png)
 
 
-2. Status = "skipped", "View run" and "View commit" buttons are not enabled
+2. status = "skipped", "View run" and "View commit" buttons are not enabled
 ![skipped status with no buttons screenshot](screenshots/skipped-message-no-buttons.png)
 
 
-3. Status = "skipped", only "View run" is enabled
+4. No status input provided, title = "Only with title and view run button" with "View Run" button enabled
+![with title and view run button enabled](screenshots/message-with-title-view-run-button.png)
+
+
+6. status = "skipped", only "View run" is enabled
 ![skipped status with only view run button sample screenshot](screenshots/skipped-only-view-run-button.png)
 
 
-4. Status = "cancelled", only "View commit" button enabled
+4. status = "cancelled", only "View commit" button enabled
 ![cancelled status sample screenshot](screenshots/cancelled-message.png)
 
 
