@@ -22,14 +22,14 @@ describe('Title enabled', () => {
         const messageToSend = 'With title and both buttons enabled; success status';
         let response = await main(_teamsIncomingHookUrl, messageToSend, {
             status: 'success',
-            title: 'Docker build workflow'
+            title: 'Docker workflow'
         });
         expect(response).toBe(responseBody);
     });
 
     test('Title enabled with no status, view run button enabled', async () => {
         process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true' });
-        const messageToSend = 'Both buttons to be visible with no status';
+        const messageToSend = "This is a message card with title and view run button. Looks nice, isn't it !! 🚀";
         let response = await main(_teamsIncomingHookUrl, messageToSend, {
             status: '',
             title: 'Only with title and view run button'
