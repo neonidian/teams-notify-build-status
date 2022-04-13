@@ -1,5 +1,5 @@
 const expectedPayLoadObject = ({
-                                   message, statusText, statusColour
+                                   title, message, statusText, statusColour
                                }) => ({
     "type": "message", "attachments": [{
         "contentType": "application/vnd.microsoft.card.adaptive", "contentUrl": null, "content": {
@@ -8,6 +8,8 @@ const expectedPayLoadObject = ({
             "version": "1.2",
             "msteams": {"width": "Full"},
             "body": [{
+                "isVisible": title !== '', "size": "large", "text": title, "type": "TextBlock",
+            }, {
                 "type": "RichTextBlock", "isVisible": statusText !== '', "inlines": [{
                     "type": "TextRun", "text": "Status: ", "wrap": true, "fontType": "monospace"
                 }, {
