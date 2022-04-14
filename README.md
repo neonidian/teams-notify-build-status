@@ -22,8 +22,7 @@ steps:
   - uses: neonidian/teams-notify-build-status@v2.2
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-      message: >-
-        Published artifact version ${{ steps.versioning.outputs.semver }}
+      message: Workflow run passed !!
 ```
 
 3. Enable title and status labels by providing the title and status input. 
