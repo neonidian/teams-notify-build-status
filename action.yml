@@ -17,7 +17,7 @@ inputs:
     description: 'Status of the Github job or step'
     required: false
 
-# For environment variables see https://github.com/neonidian/teams-notify-build-status#readme
+# For environment variables see - https://github.com/neonidian/teams-notify-build-status#environment-variables
 
 runs:
   using: 'node16'
