@@ -11,8 +11,7 @@
 ## Usage
 
 1. Add [incoming webhook URL](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook)
-for Teams. E.g., secret name: TEAMS_INCOMING_WEBHOOK_URL
-in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/security-guides/encrypted-secrets)
+for Teams in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/security-guides/encrypted-secrets)
 
 2. To send a message, add the following in
    your [workflow YAML](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
@@ -21,7 +20,7 @@ in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/s
 steps:
   - uses: neonidian/teams-notify-build-status@v2.2
     with:
-      webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+      webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
       message: Workflow run passed !!
 ```
 
