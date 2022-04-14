@@ -122,3 +122,7 @@ steps:
 5. Status = "BUILD SUCCESSFUL" which is a custom status not defined in GitHub statuses. 
 Font colour is set to default in case of custom status
 ![custom status sample screenshot](screenshots/custom-status-text.png)
+
+
+6. Sample mobile device screenshot (iOS)
+![iOS sample screenshot](screenshots/mobile-screenshot.png)
