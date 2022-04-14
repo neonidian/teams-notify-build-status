@@ -45,7 +45,7 @@ steps:
 See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ## Inputs and environment variables
-
+### Inputs
 | #   | Input ID   | Required | Description                                                                                                                               |
 |-----|------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------|
 | 1   | webhookUrl | Yes      | Incoming webhook URL from MS Teams                                                                                                        |
@@ -53,6 +53,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 | 3   | title      | No       | Title of the card (displays at the top with a larger text)                                                                                |
 | 4   | status     | No       | [Status](https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions) of a step or a job, or a custom text |
 
+### Environment variables
 | #   | Environment variable              | Allowed values    | Default value | Description                                                        |
 |-----|-----------------------------------|-------------------|---------------|--------------------------------------------------------------------|
 | 1   | SHOULD_DISPLAY_VIEW_RUN_BUTTON    | 'true' or 'false' | false         | Clicking on this button redirects to the action run page in GitHub |
