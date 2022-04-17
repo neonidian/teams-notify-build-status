@@ -94,7 +94,7 @@ steps:
 
 ## Tools used
 
-1. [Adaptive cards](https://adaptivecards.io/) interface of Teams has been used for UI
+1. [Adaptive cards](https://docs.microsoft.com/en-gb/microsoftteams/platform/task-modules-and-cards/cards/cards-reference#adaptive-card) interface of Teams has been used for UI
 2. [Axios](https://axios-http.com/) JS library has been used for HTTP communication
 
 ## Sample screenshots (Dark mode enabled in Teams)
