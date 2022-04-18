@@ -5883,7 +5883,8 @@ class CustomizeCard {
                                 "type": "TextBlock",
                                 "isVisible": this.title !== '',
                                 "text": this.title,
-                                "size": "large"
+                                "size": "large",
+                                "style": "heading",
                             },
                             {
                                 "type": "RichTextBlock",
