@@ -1606,6 +1606,10 @@ class CustomizeCard {
 
     _constructJson() {
         const _environmentVariables = envs();
+        const {
+            SHOULD_DISPLAY_VIEW_RUN_BUTTON,
+            SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
+        } = _environmentVariables;
         this._messageObject = {
             "type": "message",
             "attachments": [
@@ -1666,15 +1670,15 @@ class CustomizeCard {
                                         "type": "Column",
                                         "width": "auto",
                                         "verticalContentAlignment": "center",
-                                        "isVisible": _environmentVariables.SHOULD_DISPLAY_VIEW_RUN_BUTTON || _environmentVariables.SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
+                                        "isVisible": SHOULD_DISPLAY_VIEW_RUN_BUTTON || SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
                                         "items": [
                                             {
                                                 "type": "ActionSet",
-                                                "actions": this._constructActionsArray(_environmentVariables.SHOULD_DISPLAY_VIEW_RUN_BUTTON, "View run", this._runUrl())
+                                                "actions": this._constructActionsArray(SHOULD_DISPLAY_VIEW_RUN_BUTTON, "View run", this._runUrl())
                                             },
                                             {
                                                 "type": "ActionSet",
-                                                "actions": this._constructActionsArray(_environmentVariables.SHOULD_DISPLAY_VIEW_COMMIT_BUTTON, "View commit", this._commitUrl())
+                                                "actions": this._constructActionsArray(SHOULD_DISPLAY_VIEW_COMMIT_BUTTON, "View commit", this._commitUrl())
                                             },
                                         ]
                                     }
@@ -1719,13 +1723,12 @@ class CustomizeCard {
 
     _constructActionsArray(envVarOfButton, buttonText, buttonUrl) {
         const actionsArray = [];
-        const action = {
+        if (envVarOfButton) {
+            actionsArray.push({
                 "type": "Action.OpenUrl",
                 "title": buttonText,
                 "url": buttonUrl
-        };
-        if (envVarOfButton) {
-            actionsArray.push(action);
+            });
         }
         return actionsArray;
     }
