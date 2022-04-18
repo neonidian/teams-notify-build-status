@@ -18,7 +18,7 @@ for Teams in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v2.2
+  - uses: neonidian/teams-notify-build-status@v2.3
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
       message: Workflow run passed !!
@@ -29,7 +29,7 @@ Enable 'View run' and 'View commit' buttons using environment variables.
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v2.2
+  - uses: neonidian/teams-notify-build-status@v2.3
     if: ${{ always() }}                      # Use this line to always run this action irrespective of previous step failures
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
@@ -65,7 +65,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v2.2
+  - uses: neonidian/teams-notify-build-status@v2.3
     if: ${{ failure() }}        # For other statuses, see https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
@@ -80,7 +80,7 @@ steps:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v2.2
+  - uses: neonidian/teams-notify-build-status@v2.3
     needs: [ unitTests, systemTests ]          # IDs of jobs
     if: ${{ job.status == 'failure' }}       # Same as 'failure()'
     with:
