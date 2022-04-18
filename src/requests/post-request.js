@@ -1,18 +1,20 @@
-const axios = require("axios");
+const httpClient = require("@actions/http-client");
 const core = require('@actions/core');
-const header = 'Content-Type: application/json';
+const header = {
+    [httpClient.Headers.ContentType]: 'application/json'
+};
 
 let postRequest = async function postMessage(webhookUrl, jsonPayload) {
     try {
         core.info('Sending POST request');
         core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);
-        return await axios.post(webhookUrl, jsonPayload, header)
+        return await new httpClient.HttpClient().postJson(webhookUrl, jsonPayload, header)
             .then(response => {
-                core.debug(`Received response: "${response.data}" from Teams server`);
-                if (response.data !== 1) {
-                    core.setFailed(`Message not sent. Received response from Teams: "${response.data}"`);
+                core.debug(`Received response: "${response.result}" from Teams server`);
+                if (response.result !== 1) {
+                    core.setFailed(`Message not sent. Received response from Teams: "${response.result}"`);
                 }
-                return response.data;
+                return response.result;
             });
     } catch (error) {
         throw new Error(`Error while sending POST request to Teams. ${error}`);
