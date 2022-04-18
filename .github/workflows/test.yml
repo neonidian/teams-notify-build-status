@@ -7,6 +7,7 @@ on:
       - 'releases/*'
     paths-ignore:
       - '**.md'
+      - 'screenshots/**'
 
 jobs:
   tests:
