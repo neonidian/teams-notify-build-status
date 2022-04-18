@@ -11,9 +11,11 @@ on:
       - main
     paths-ignore:
       - '**.md'
+      - 'screenshots/**'
   pull_request:
     paths-ignore:
       - '**.md'
+      - 'screenshots/**'
   workflow_dispatch:
 
 jobs:
