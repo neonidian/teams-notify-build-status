@@ -13,11 +13,10 @@ class CustomizeCard {
     }
 
     _constructJson() {
-        const _environmentVariables = envs();
         const {
             SHOULD_DISPLAY_VIEW_RUN_BUTTON,
             SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
-        } = _environmentVariables;
+        } = envs();
         this._messageObject = {
             "type": "message",
             "attachments": [
