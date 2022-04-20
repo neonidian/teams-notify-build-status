@@ -33,8 +33,8 @@ class CustomizeCard {
                         "body": [
                             {
                                 "type": "Container",
-                                "bleed": true,
-                                "minHeight": "30px",
+                                "bleed": !!this.titleBackgroundColor,
+                                "minHeight": this.titleBackgroundColor ? "50px" : "0px",
                                 "isVisible": !!this.titleBackgroundColor || !!this.title,
                                 "style": this._setTitleBackGroundColour(this.titleBackgroundColor),
                                 "items": [
