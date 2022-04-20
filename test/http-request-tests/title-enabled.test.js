@@ -36,4 +36,31 @@ describe('Title enabled', () => {
         });
         expect(response).toBe(responseBody);
     });
+
+    test('Send a long message with buttons and status with only title bg colour', async () => {
+        process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true', [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true' });
+        const messageToSend = 'With only title bg colour red. Long message with failure status(red text) along with buttons. With status message published SDK version of container 8.1.1 (major) version. Pushed the container to docker registry and artifactory';
+        let response = await main(_teamsIncomingHookUrl, messageToSend,{ status: 'failure', titleBackgroundColor: 'red' });
+        expect(response).toBe(responseBody);
+    });
+
+    test('Send a short message with buttons and status with title and title bg colour', async () => {
+        process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'false', [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true' });
+        const messageToSend = 'With title and title bg colour yellow. A Short short message.';
+        let response = await main(_teamsIncomingHookUrl, messageToSend,{ status: 'cancelled', titleBackgroundColor: 'yellow', title: 'Custom Title', });
+        expect(response).toBe(responseBody);
+    });
+
+    test('Send message with no buttons, with title and title bg colour green', async () => {
+        const messageToSend = 'With title and title bg colour green, no buttons';
+        let response = await main(_teamsIncomingHookUrl, messageToSend,{ titleBackgroundColor: 'success', title: 'Success Title - BG Green', });
+        expect(response).toBe(responseBody);
+    });
+
+    test('Long title message with view run button, with title and title bg colour greens', async () => {
+        process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true', });
+        const messageToSend = 'With title and title bg colour green, only VIEW RUN button';
+        let response = await main(_teamsIncomingHookUrl, messageToSend,{ titleBackgroundColor: 'success', title: 'Success With title and title bg colour green, no buttonsWith title and title bg colour green, no buttonsWith title and title bg colour green, no buttonsess Title - BG Green', });
+        expect(response).toBe(responseBody);
+    });
 });
