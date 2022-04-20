@@ -1629,9 +1629,11 @@ class CustomizeCard {
                         "body": [
                             {
                                 "type": "Container",
-                                "bleed": true,
+                                "bleed": !!this.titleBackgroundColor,
+                                "minHeight": this.titleBackgroundColor ? "50px" : "0px",
                                 "isVisible": !!this.titleBackgroundColor || !!this.title,
                                 "style": this._setTitleBackGroundColour(this.titleBackgroundColor),
+                                "verticalContentAlignment": "center",
                                 "items": [
                                     {
                                         "type": "TextBlock",
@@ -1670,6 +1672,7 @@ class CustomizeCard {
                                         "type": "Column",
                                         "width": "stretch",
                                         "style": "emphasis",
+                                        "minHeight": "40px",
                                         "items": [
                                             {
                                                 "type": "TextBlock",
