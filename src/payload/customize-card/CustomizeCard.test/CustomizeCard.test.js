@@ -6,7 +6,7 @@ describe('Verify JSON payload', () => {
     test('Only message', () => {
         const message = 'Only message';
 
-        const payload = new CustomizeCard(message, { status: '', title: '', }).constructCard();
+        const payload = new CustomizeCard(message, {status: '', title: '',}).constructCard();
 
         expect(payload).toMatchObject(expectedPayLoad({message, statusText: '', title: '', statusColour: 'default',}));
     });
@@ -16,7 +16,7 @@ describe('Verify JSON payload', () => {
         const statusText = 'Success';
         const statusColour = 'good';
         const title = 'Success message';
-        const payload = new CustomizeCard(message, {status: statusText, title, }).constructCard();
+        const payload = new CustomizeCard(message, {status: statusText, title,}).constructCard();
 
         expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour, title}));
     });
@@ -26,9 +26,13 @@ describe('Verify JSON payload', () => {
         const statusText = 'Custom status';
         const statusColour = 'default';
         const title = '';
-        const payload = new CustomizeCard(message, {status: statusText,title,}).constructCard();
+        const payload = new CustomizeCard(message, {status: statusText, title,}).constructCard();
 
-        expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour,title,}));
+        expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour, title,}));
+    });
+
+    describe('Title background colour', () => {
+        test.todo('Test for background colour');
     });
 
     describe('With env variables', () => {
@@ -51,16 +55,18 @@ describe('Verify JSON payload', () => {
 
         test('Payload should not have run URL when view run env variable is set to false', () => {
             process.env = Object.assign(process.env, {
-                [GITHUB_SERVER_URL]: githubServerUrl, [GITHUB_REPOSITORY]: githubRepository, [GITHUB_RUN_ID]: githubRunId,
+                [GITHUB_SERVER_URL]: githubServerUrl,
+                [GITHUB_REPOSITORY]: githubRepository,
+                [GITHUB_RUN_ID]: githubRunId,
                 [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'false'
             });
             const message = 'Message with cancelled status';
             const statusText = 'Cancelled';
             const statusColour = 'warning';
             const title = '';
-            const payload = new CustomizeCard(message, {status: statusText,title,}).constructCard();
+            const payload = new CustomizeCard(message, {status: statusText, title,}).constructCard();
 
-            expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour,title,}));
+            expect(payload).toMatchObject(expectedPayLoad({message, statusText, statusColour, title,}));
         });
     });
 });
