@@ -37,6 +37,7 @@ class CustomizeCard {
                                 "minHeight": this.titleBackgroundColor ? "50px" : "0px",
                                 "isVisible": !!this.titleBackgroundColor || !!this.title,
                                 "style": this._setTitleBackGroundColour(this.titleBackgroundColor),
+                                "verticalContentAlignment": "center",
                                 "items": [
                                     {
                                         "type": "TextBlock",
