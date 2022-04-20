@@ -74,6 +74,7 @@ class CustomizeCard {
                                         "type": "Column",
                                         "width": "stretch",
                                         "style": "emphasis",
+                                        "minHeight": "40px",
                                         "items": [
                                             {
                                                 "type": "TextBlock",

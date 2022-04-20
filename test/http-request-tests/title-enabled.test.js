@@ -60,7 +60,7 @@ describe('Title enabled', () => {
     test('Long title message with view run button, with title and title bg colour greens', async () => {
         process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true', });
         const messageToSend = 'With title and title bg colour green, only VIEW RUN button';
-        let response = await main(_teamsIncomingHookUrl, messageToSend,{ titleBackgroundColor: 'success', title: 'Success With title and title bg colour green, no buttonsWith title and title bg colour green, no buttonsWith title and title bg colour green, no buttonsess Title - BG Green', });
+        let response = await main(_teamsIncomingHookUrl, messageToSend,{ titleBackgroundColor: 'success', title: 'Success With title and title bg colour green, only view run buttons- big textWith title and title bg colour green, buttonsWith title and title bg colour green, no buttonsess Title - BG Green', });
         expect(response).toBe(responseBody);
     });
 });
