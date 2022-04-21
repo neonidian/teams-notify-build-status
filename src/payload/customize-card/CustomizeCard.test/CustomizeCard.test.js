@@ -32,7 +32,16 @@ describe('Verify JSON payload', () => {
     });
 
     describe('Title background colour', () => {
-        test.todo('Test for background colour');
+        test('Add title background color, verify bleed is set true', () => {
+            const message = 'Message with bg color for title';
+            const statusText = 'Cancelled';
+            const statusColour = 'warning';
+            const titleBackgroundColor = 'blue';
+            const title = '';
+            const payload = new CustomizeCard(message, {status: statusText, title, titleBackgroundColor,}).constructCard();
+
+            expect(payload).toMatchObject(expectedPayLoad({message, statusText, title, statusColour, titleBackgroundColor, isBleed: true}));
+        });
     });
 
     describe('With env variables', () => {

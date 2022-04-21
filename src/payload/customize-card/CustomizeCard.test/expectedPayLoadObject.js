@@ -1,5 +1,5 @@
 const expectedPayLoadObject = ({
-                                   title, titleBackgroundColour, message, statusText, statusColour
+                                   title, titleBackgroundColor, message, statusText, statusColour,
                                }) => ({
     "type": "message", "attachments": [{
         "contentType": "application/vnd.microsoft.card.adaptive", "contentUrl": null, "content": {
@@ -10,9 +10,8 @@ const expectedPayLoadObject = ({
             "body": [
                 {
                     "type": "Container",
-                    "bleed": true,
-                    "isVisible": !!titleBackgroundColour || !!title,
-                    // "style": !!titleBackgroundColour && 'default', TODO: add tests for title BG colour
+                    "bleed": !!titleBackgroundColor,
+                    "isVisible": !!titleBackgroundColor || !!title,
                     "items": [
                         {
                             "type": "TextBlock",
