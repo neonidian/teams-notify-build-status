@@ -1570,7 +1570,7 @@ let main = function (webhookUrl, message, {
 }) {
     return new Promise((resolve) => {
         validateUrl(webhookUrl);
-        titleBackgroundColor = titleBackgroundColor.toLowerCase();
+        titleBackgroundColor = titleBackgroundColor?.toLowerCase();
         validateTitleBackgroundColour(titleBackgroundColor);
         const requestPayload = constructPayLoad(message, {
             status,
