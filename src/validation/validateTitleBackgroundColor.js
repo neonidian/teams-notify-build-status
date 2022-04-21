@@ -1,5 +1,5 @@
 function validateTitleBackgroundColour(backGroundColour) {
-    if (backGroundColour.trim()) {
+    if (backGroundColour) {
         const allowedBGColors = [
             'success', 'green',
             'failure', 'red',
