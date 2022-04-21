@@ -39,8 +39,8 @@ describe('Title enabled', () => {
 
     test('Send a long message with buttons and status with only title bg colour', async () => {
         process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true', [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true' });
-        const messageToSend = 'With only title bg colour red. Long message with failure status(red text) along with buttons. With status message published SDK version of container 8.1.1 (major) version. Pushed the container to docker registry and artifactory';
-        let response = await main(_teamsIncomingHookUrl, messageToSend,{ status: 'failure', titleBackgroundColor: 'red' });
+        const messageToSend = 'With only title BG colour red. Long message with failure status(red text) along with buttons. With status message published SDK version of container 8.1.1 (major) version. Pushed the container to docker registry and artifactory';
+        let response = await main(_teamsIncomingHookUrl, messageToSend,{ status: 'Failure', titleBackgroundColor: 'Failure' });
         expect(response).toBe(responseBody);
     });
 

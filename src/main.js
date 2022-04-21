@@ -10,11 +10,12 @@ let main = function (webhookUrl, message, {
 }) {
     return new Promise((resolve) => {
         validateUrl(webhookUrl);
+        titleBackgroundColor = titleBackgroundColor.toLowerCase();
         validateTitleBackgroundColour(titleBackgroundColor);
         const requestPayload = constructPayLoad(message, {
             status,
             title,
-            titleBackgroundColor
+            titleBackgroundColor,
         });
         return postRequest(webhookUrl, requestPayload)
             .then(responseData => resolve(responseData));

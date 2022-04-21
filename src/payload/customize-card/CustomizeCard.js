@@ -129,14 +129,13 @@ class CustomizeCard {
         if (!backGroundColour) {
             return "default";
         }
-        const bgColour = backGroundColour.toLowerCase();
-        if (bgColour === 'red') {
+        if (backGroundColour === 'red') {
             return this._statusColour("failure");
-        } else if (bgColour === 'green') {
+        } else if (backGroundColour === 'green') {
             return this._statusColour("success");
-        } else if (bgColour === 'blue') {
+        } else if (backGroundColour === 'blue') {
             return this._statusColour("skipped");
-        } else if (bgColour === 'yellow') {
+        } else if (backGroundColour === 'yellow') {
             return this._statusColour("cancelled");
         } else {
             return this._statusColour(backGroundColour);

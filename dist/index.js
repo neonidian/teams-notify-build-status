@@ -1560,6 +1560,8 @@ exports.debug = debug; // for test
 
 const postRequest = __nccwpck_require__(585);
 const constructPayLoad = __nccwpck_require__(645);
+const validateUrl = __nccwpck_require__(712);
+const validateTitleBackgroundColour = __nccwpck_require__(348);
 
 let main = function (webhookUrl, message, {
     status,
@@ -1568,23 +1570,17 @@ let main = function (webhookUrl, message, {
 }) {
     return new Promise((resolve) => {
         validateUrl(webhookUrl);
+        titleBackgroundColor = titleBackgroundColor.toLowerCase();
+        validateTitleBackgroundColour(titleBackgroundColor);
         const requestPayload = constructPayLoad(message, {
             status,
             title,
-            titleBackgroundColor
+            titleBackgroundColor,
         });
         return postRequest(webhookUrl, requestPayload)
             .then(responseData => resolve(responseData));
     });
 };
-
-function validateUrl(url) {
-    try {
-        new URL(url);
-    } catch (error) {
-        throw new Error('Webhook url is not a valid url');
-    }
-}
 
 module.exports = main;
 
@@ -1725,14 +1721,13 @@ class CustomizeCard {
         if (!backGroundColour) {
             return "default";
         }
-        const bgColour = backGroundColour.toLowerCase();
-        if (bgColour === 'red') {
+        if (backGroundColour === 'red') {
             return this._statusColour("failure");
-        } else if (bgColour === 'green') {
+        } else if (backGroundColour === 'green') {
             return this._statusColour("success");
-        } else if (bgColour === 'blue') {
+        } else if (backGroundColour === 'blue') {
             return this._statusColour("skipped");
-        } else if (bgColour === 'yellow') {
+        } else if (backGroundColour === 'yellow') {
             return this._statusColour("cancelled");
         } else {
             return this._statusColour(backGroundColour);
@@ -1883,6 +1878,44 @@ let postRequest = async function postMessage(webhookUrl, jsonPayload) {
 };
 
 module.exports = postRequest;
+
+
+/***/ }),
+
+/***/ 348:
+/***/ ((module) => {
+
+function validateTitleBackgroundColour(backGroundColour) {
+    if (backGroundColour) {
+        const allowedBGColors = [
+            'success', 'green',
+            'failure', 'red',
+            'cancelled', 'yellow',
+            'skipped', 'blue',
+        ];
+        if (allowedBGColors.indexOf(backGroundColour) === -1) {
+            throw new Error(`Color: "${backGroundColour}" is not supported. Allowed values: "${allowedBGColors.join(', ')}"`);
+        }
+    }
+}
+
+module.exports = validateTitleBackgroundColour;
+
+
+/***/ }),
+
+/***/ 712:
+/***/ ((module) => {
+
+function validateUrl(url) {
+    try {
+        new URL(url);
+    } catch (error) {
+        throw new Error('Webhook url is not a valid url');
+    }
+}
+
+module.exports = validateUrl;
 
 
 /***/ }),
