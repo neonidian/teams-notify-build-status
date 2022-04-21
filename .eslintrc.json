@@ -19,6 +19,9 @@
         "no-unused-expressions": "error",
         "no-duplicate-imports": "error",
         "camelcase": "error",
-        "arrow-spacing": "error"
+        "arrow-spacing": "error",
+        "no-unused-vars": "error",
+        "prefer-template": "error",
+        "no-useless-rename": "error"
     }
 }
