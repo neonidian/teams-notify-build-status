@@ -1,5 +1,7 @@
 const postRequest = require('./requests/post-request');
 const constructPayLoad = require("./payload/payload");
+const validateUrl = require("./validation/validateUrl");
+const validateTitleBackgroundColour = require("./validation/validateTitleBackgroundColor");
 
 let main = function (webhookUrl, message, {
     status,
@@ -8,6 +10,7 @@ let main = function (webhookUrl, message, {
 }) {
     return new Promise((resolve) => {
         validateUrl(webhookUrl);
+        validateTitleBackgroundColour(titleBackgroundColor);
         const requestPayload = constructPayLoad(message, {
             status,
             title,
@@ -17,13 +20,5 @@ let main = function (webhookUrl, message, {
             .then(responseData => resolve(responseData));
     });
 };
-
-function validateUrl(url) {
-    try {
-        new URL(url);
-    } catch (error) {
-        throw new Error('Webhook url is not a valid url');
-    }
-}
 
 module.exports = main;
