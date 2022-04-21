@@ -1,6 +1,6 @@
 const CustomizeCard = require("./customize-card/CustomizeCard");
 
-let payLoad = function constructPayload(message, {
+const payLoad = function constructPayload(message, {
     status,
     title,
     titleBackgroundColor,

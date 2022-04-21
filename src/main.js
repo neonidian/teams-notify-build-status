@@ -3,7 +3,7 @@ const constructPayLoad = require("./payload/payload");
 const validateUrl = require("./validation/validateUrl");
 const validateTitleBackgroundColour = require("./validation/validateTitleBackgroundColor");
 
-let main = function (webhookUrl, message, {
+const main = function (webhookUrl, message, {
     status,
     title,
     titleBackgroundColor,
