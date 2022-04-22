@@ -4,7 +4,7 @@ const header = {
     [httpClient.Headers.ContentType]: 'application/json'
 };
 
-let postRequest = async function postMessage(webhookUrl, jsonPayload) {
+const postRequest = async function postMessage(webhookUrl, jsonPayload) {
     try {
         core.info('Sending POST request');
         core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);
