@@ -16,7 +16,7 @@
     "lint": "eslint . --max-warnings 0",
     "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
     "test": "jest src/",
-    "verify": "jest --config=test/jest.config.js",
+    "verify": "jest --config=verify/jest.config.js",
     "all": "npm run lint && npm run prepare && npm test && npm run verify"
   },
   "repository": {
