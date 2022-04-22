@@ -1563,7 +1563,7 @@ const constructPayLoad = __nccwpck_require__(645);
 const validateUrl = __nccwpck_require__(712);
 const validateTitleBackgroundColour = __nccwpck_require__(348);
 
-let main = function (webhookUrl, message, {
+const main = function (webhookUrl, message, {
     status,
     title,
     titleBackgroundColor,
@@ -1834,7 +1834,7 @@ module.exports = envs;
 
 const CustomizeCard = __nccwpck_require__(111);
 
-let payLoad = function constructPayload(message, {
+const payLoad = function constructPayload(message, {
     status,
     title,
     titleBackgroundColor,
@@ -1860,7 +1860,7 @@ const header = {
     [httpClient.Headers.ContentType]: 'application/json'
 };
 
-let postRequest = async function postMessage(webhookUrl, jsonPayload) {
+const postRequest = async function postMessage(webhookUrl, jsonPayload) {
     try {
         core.info('Sending POST request');
         core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);
