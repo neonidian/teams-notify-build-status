@@ -7,7 +7,7 @@
 
 * Additional configuration enables title and status labels, title background color, buttons that re-direct to run and
   commit URLs
-  <img alt="Message with status and URL re-direct buttons" src="screenshots/message-with-title-and-buttons.png" width="1904"/>
+  <img alt="Message with status and URL re-direct buttons" src="screenshots/all-features-enabled.png" width="1904"/>
 
 ## Usage
 
@@ -68,7 +68,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ## Examples
 
-1. Send message only when the job is failing and display only 'View Run' button
+1. Send message only when the job is failing, set status input and display only 'View Run' button
 
 ```yaml
 steps:
@@ -83,7 +83,7 @@ steps:
       SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
 ```
 
-2. Send message only if some jobs have failed, enable 'View run' and 'View commit' buttons
+2. Send message only if some jobs have failed, provide status input, enable 'View run' and 'View commit' buttons
 
 ```yaml
 steps:
@@ -100,7 +100,7 @@ steps:
 ```
 
 3. Always send a message even if previous steps have been failed, cancelled or skipped, enable 'View commit' button,
-display title background color without any title text based on the current status of the job.
+display title background color based on the current status of the job.
 
 ```yaml
 steps:
@@ -147,5 +147,12 @@ steps:
    ![custom status sample screenshot](screenshots/custom-status-text.png)
 
 
-6. Mobile device screenshot (iOS)
+6. titleBackgroundColor = "failure", view run button enabled
+   ![title background color red](screenshots/title-bg-color-red.png)
+
+
+7. title and status inputs provided, titleBackgroundColor = "yellow", view run and view commit buttons enabled
+   ![title background yellow with title input provided](screenshots/with-title-and-title-bg-color-yellow.png)
+
+8. Mobile device screenshot (iOS)
    ![iOS sample screenshot](screenshots/mobile-screenshot.png)
