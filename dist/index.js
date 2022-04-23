@@ -1560,29 +1560,27 @@ exports.debug = debug; // for test
 
 const postRequest = __nccwpck_require__(585);
 const constructPayLoad = __nccwpck_require__(645);
+const validateUrl = __nccwpck_require__(712);
+const validateTitleBackgroundColour = __nccwpck_require__(348);
 
-let main = function (webhookUrl, message, {
+const main = function (webhookUrl, message, {
     status,
     title,
+    titleBackgroundColor,
 }) {
     return new Promise((resolve) => {
         validateUrl(webhookUrl);
+        titleBackgroundColor = titleBackgroundColor?.toLowerCase();
+        validateTitleBackgroundColour(titleBackgroundColor);
         const requestPayload = constructPayLoad(message, {
             status,
             title,
+            titleBackgroundColor,
         });
         return postRequest(webhookUrl, requestPayload)
             .then(responseData => resolve(responseData));
     });
 };
-
-function validateUrl(url) {
-    try {
-        new URL(url);
-    } catch (error) {
-        throw new Error('Webhook url is not a valid url');
-    }
-}
 
 module.exports = main;
 
@@ -1598,18 +1596,19 @@ class CustomizeCard {
     constructor(message, {
         status,
         title,
+        titleBackgroundColor,
     }) {
         this.message = message;
         this.status = status;
         this.title = title;
+        this.titleBackgroundColor = titleBackgroundColor;
     }
 
     _constructJson() {
-        const _environmentVariables = envs();
         const {
             SHOULD_DISPLAY_VIEW_RUN_BUTTON,
             SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
-        } = _environmentVariables;
+        } = envs();
         this._messageObject = {
             "type": "message",
             "attachments": [
@@ -1625,15 +1624,26 @@ class CustomizeCard {
                         },
                         "body": [
                             {
-                                "type": "TextBlock",
-                                "isVisible": this.title !== '',
-                                "text": this.title,
-                                "size": "large",
-                                "style": "heading",
+                                "type": "Container",
+                                "bleed": !!this.titleBackgroundColor,
+                                "minHeight": this.titleBackgroundColor ? "50px" : "0px",
+                                "isVisible": !!this.titleBackgroundColor || !!this.title,
+                                "style": this._setTitleBackGroundColour(this.titleBackgroundColor),
+                                "verticalContentAlignment": "center",
+                                "items": [
+                                    {
+                                        "type": "TextBlock",
+                                        "isVisible": !!this.title,
+                                        "text": this.title,
+                                        "size": "large",
+                                        "style": "heading",
+                                        "wrap": true,
+                                    }
+                                ],
                             },
                             {
                                 "type": "RichTextBlock",
-                                "isVisible": this.status !== '',
+                                "isVisible": !!this.status,
                                 "inlines": [
                                     {
                                         "type": "TextRun",
@@ -1643,7 +1653,7 @@ class CustomizeCard {
                                     },
                                     {
                                         "type": "TextRun",
-                                        "text": this.status ?? '',
+                                        "text": this.status,
                                         "wrap": true,
                                         "color": this._statusColour(this.status),
                                         "weight": "bolder",
@@ -1658,6 +1668,7 @@ class CustomizeCard {
                                         "type": "Column",
                                         "width": "stretch",
                                         "style": "emphasis",
+                                        "minHeight": "40px",
                                         "items": [
                                             {
                                                 "type": "TextBlock",
@@ -1674,10 +1685,12 @@ class CustomizeCard {
                                         "items": [
                                             {
                                                 "type": "ActionSet",
+                                                "isVisible": SHOULD_DISPLAY_VIEW_RUN_BUTTON,
                                                 "actions": this._constructActionsArray(SHOULD_DISPLAY_VIEW_RUN_BUTTON, "View run", this._runUrl())
                                             },
                                             {
                                                 "type": "ActionSet",
+                                                "isVisible": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
                                                 "actions": this._constructActionsArray(SHOULD_DISPLAY_VIEW_COMMIT_BUTTON, "View commit", this._commitUrl())
                                             },
                                         ]
@@ -1704,15 +1717,32 @@ class CustomizeCard {
         return this._messageObject;
     }
 
+    _setTitleBackGroundColour(backGroundColour) {
+        if (!backGroundColour) {
+            return "default";
+        }
+        if (backGroundColour === 'red') {
+            return this._statusColour("failure");
+        } else if (backGroundColour === 'green') {
+            return this._statusColour("success");
+        } else if (backGroundColour === 'blue') {
+            return this._statusColour("skipped");
+        } else if (backGroundColour === 'yellow') {
+            return this._statusColour("cancelled");
+        } else {
+            return this._statusColour(backGroundColour);
+        }
+    }
+
     _statusColour(jobOrStepStatus) {
         if (!jobOrStepStatus) {
             return "default";
         }
         const status = jobOrStepStatus?.toLowerCase();
-        if (status === "success") {
-            return "good";
-        } else if (status === "failure") {
+        if (status === "failure") {
             return "attention";
+        } else if (status === "success") {
+            return "good";
         } else if (status === "cancelled") {
             return "warning";
         } else if (status === "skipped") {
@@ -1804,13 +1834,15 @@ module.exports = envs;
 
 const CustomizeCard = __nccwpck_require__(111);
 
-let payLoad = function constructPayload(message, {
+const payLoad = function constructPayload(message, {
     status,
     title,
+    titleBackgroundColor,
 }) {
     return new CustomizeCard(message, {
         status,
         title,
+        titleBackgroundColor,
     }).constructCard();
 };
 
@@ -1828,7 +1860,7 @@ const header = {
     [httpClient.Headers.ContentType]: 'application/json'
 };
 
-let postRequest = async function postMessage(webhookUrl, jsonPayload) {
+const postRequest = async function postMessage(webhookUrl, jsonPayload) {
     try {
         core.info('Sending POST request');
         core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);
@@ -1846,6 +1878,44 @@ let postRequest = async function postMessage(webhookUrl, jsonPayload) {
 };
 
 module.exports = postRequest;
+
+
+/***/ }),
+
+/***/ 348:
+/***/ ((module) => {
+
+function validateTitleBackgroundColour(backGroundColour) {
+    if (backGroundColour) {
+        const allowedBGColors = [
+            'success', 'green',
+            'failure', 'red',
+            'cancelled', 'yellow',
+            'skipped', 'blue',
+        ];
+        if (allowedBGColors.indexOf(backGroundColour) === -1) {
+            throw new Error(`Color: "${backGroundColour}" is not supported. Allowed values: "${allowedBGColors.join(', ')}"`);
+        }
+    }
+}
+
+module.exports = validateTitleBackgroundColour;
+
+
+/***/ }),
+
+/***/ 712:
+/***/ ((module) => {
+
+function validateUrl(url) {
+    try {
+        new URL(url);
+    } catch (error) {
+        throw new Error('Webhook url is not a valid url');
+    }
+}
+
+module.exports = validateUrl;
 
 
 /***/ }),
@@ -1982,10 +2052,12 @@ async function run() {
         const message = core.getInput('message', { required: true });
         const status = core.getInput('status');
         const title = core.getInput('title');
+        const titleBackgroundColor = core.getInput('titleBackgroundColor');
 
         await main(webhookUrl, message, {
             status,
             title,
+            titleBackgroundColor,
         });
         core.info('Message has been sent to Teams');
     } catch (error) {

@@ -13,6 +13,9 @@ inputs:
   title:
     description: 'Title of the message card'
     required: false
+  titleBackgroundColor:
+    description: 'Background color of the title'
+    required: false
   status:
     description: 'Status of the Github job or step'
     required: false

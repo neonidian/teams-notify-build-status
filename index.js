@@ -9,10 +9,12 @@ async function run() {
         const message = core.getInput('message', { required: true });
         const status = core.getInput('status');
         const title = core.getInput('title');
+        const titleBackgroundColor = core.getInput('titleBackgroundColor');
 
         await main(webhookUrl, message, {
             status,
             title,
+            titleBackgroundColor,
         });
         core.info('Message has been sent to Teams');
     } catch (error) {
