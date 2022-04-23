@@ -124,5 +124,5 @@ Font colour is set to default in case of custom status
 ![custom status sample screenshot](screenshots/custom-status-text.png)
 
 
-6. Sample mobile device screenshot (iOS)
+6. Mobile device screenshot (iOS)
 ![iOS sample screenshot](screenshots/mobile-screenshot.png)
