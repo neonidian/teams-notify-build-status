@@ -5,38 +5,41 @@
   <img alt="Mimimal message screenshot" src="screenshots/minmal-message.png" width="1904"/>
 
 
-* Additional configuration enables title and status labels, buttons that re-direct to run and commit URLs
+* Additional configuration enables title and status labels, title background color, buttons that re-direct to run and
+  commit URLs
   <img alt="Message with status and URL re-direct buttons" src="screenshots/message-with-title-and-buttons.png" width="1904"/>
 
 ## Usage
 
 1. Add [incoming webhook URL](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook)
-for Teams in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/security-guides/encrypted-secrets)
+for Teams
+in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/security-guides/encrypted-secrets)
 
 2. To send a message, add the following in
    your [workflow YAML](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v2.3
+  - uses: neonidian/teams-notify-build-status@3.0.0
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
       message: Workflow run passed !!
 ```
 
-3. Enable title and status labels by providing the title and status input. 
-Enable 'View run' and 'View commit' buttons using environment variables.
+3. Enable title and status labels, title background color by providing the title, status, titleBackgroundColor inputs.
+   Enable 'View run' and 'View commit' buttons using environment variables.
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v2.3
-    if: ${{ always() }}                      # Use this line to always run this action irrespective of previous step failures
+  - uses: neonidian/teams-notify-build-status@3.0.0
+    if: ${{ always() }}    # always run this step even if previous steps failed
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
       title: Artifact build and publish
+      titleBackgroundColor: ${{ steps.unitTest.outcome }}    # 'unitTest' is the ID of a step
+      status: ${{ steps.unitTest.outcome }}
       message: >-
         Published artifact version ${{ steps.versioning.outputs.semver }}       # 'versioning' is the ID of the steps that creates versioning
-      status: ${{ steps.unitTest.outcome }}  # 'unitTest' is the ID of a step
     env:
       SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
       SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
@@ -45,15 +48,19 @@ steps:
 See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ## Inputs and environment variables
+
 ### Inputs
-| #   | Input ID   | Required | Description                                                                                                                               |
-|-----|------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| 1   | webhookUrl | Yes      | Incoming webhook URL from MS Teams                                                                                                        |
-| 2   | message    | Yes      | Message to be sent                                                                                                                        |
-| 3   | title      | No       | Title of the card (displays at the top with a larger text)                                                                                |
-| 4   | status     | No       | [Status](https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions) of a step or a job, or a custom text |
+
+| #   | Input ID             | Required | Description                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|-----|----------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1   | webhookUrl           | Yes      | Incoming webhook URL from MS Teams                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 2   | message              | Yes      | Message to be sent                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 3   | title                | No       | Title of the card (displays at the top with a larger text)                                                                                                                                                                                                                                                                                                                                                                                     |
+| 4   | titleBackgroundColor | No       | Background color of the title section. <br/>Allowed values: <br/>'success', 'green', <br/>'failure,' 'red',<br/> 'cancelled', 'yellow',<br/>'skipped','blue'<br/><br/> success, failure, cancelled, skipped can be used dynamically using job or step context. E.g., ${{ job.status }} or ${{ steps.<step_id>.outcome }}.<br/> See [GitHub docs](https://docs.github.com/en/actions/learn-github-actions/contexts#steps-context) for more info |
+| 5   | status               | No       | [Status](https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions) of a step or a job, or a custom text                                                                                                                                                                                                                                                                                                      |
 
 ### Environment variables
+
 | #   | Environment variable              | Allowed values    | Default value | Description                                                        |
 |-----|-----------------------------------|-------------------|---------------|--------------------------------------------------------------------|
 | 1   | SHOULD_DISPLAY_VIEW_RUN_BUTTON    | 'true' or 'false' | false         | Clicking on this button redirects to the action run page in GitHub |
@@ -65,7 +72,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v2.3
+  - uses: neonidian/teams-notify-build-status@3.0.0
     if: ${{ failure() }}        # For other statuses, see https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
@@ -80,7 +87,7 @@ steps:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v2.3
+  - uses: neonidian/teams-notify-build-status@3.0.0
     needs: [ unitTests, systemTests ]          # IDs of jobs
     if: ${{ job.status == 'failure' }}       # Same as 'failure()'
     with:
@@ -92,37 +99,53 @@ steps:
       SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
 ```
 
+3. Always send a message even if previous steps have been failed, cancelled or skipped, enable 'View commit' button,
+display title background color without any title text based on the current status of the job.
+
+```yaml
+steps:
+  - uses: neonidian/teams-notify-build-status@3.0.0
+    if: ${{ always() }}
+    with:
+      webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+      message: Workflow has been run
+      titleBackgroundColor: ${{ job.status }}
+    env:
+      SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+```
+
 ## Tools used
 
-1. [Adaptive cards](https://docs.microsoft.com/en-gb/microsoftteams/platform/task-modules-and-cards/cards/cards-reference#adaptive-card) interface of Teams has been used for UI
+1. [Adaptive cards](https://docs.microsoft.com/en-gb/microsoftteams/platform/task-modules-and-cards/cards/cards-reference#adaptive-card)
+   interface of Teams has been used for UI
 2. [Actions HTTP client](https://github.com/actions/http-client) JS library has been used for HTTP communication
 
 ## Sample screenshots (Dark mode enabled in Teams)
 
 1. status = "failure", "View run" and "View commit" buttons enabled
-![failure status with 2 buttons enabled](screenshots/failure-message-screenshot.png)
+   ![failure status with 2 buttons enabled](screenshots/failure-message-screenshot.png)
 
 
 2. status = "skipped", "View run" and "View commit" buttons are not enabled
-![skipped status with no buttons screenshot](screenshots/skipped-message-no-buttons.png)
+   ![skipped status with no buttons screenshot](screenshots/skipped-message-no-buttons.png)
 
 
 4. No status input provided, title = "Only with title and view run button" with "View Run" button enabled
-![with title and view run button enabled](screenshots/message-with-title-view-run-button.png)
+   ![with title and view run button enabled](screenshots/message-with-title-view-run-button.png)
 
 
 6. status = "skipped", only "View run" is enabled
-![skipped status with only view run button sample screenshot](screenshots/skipped-only-view-run-button.png)
+   ![skipped status with only view run button sample screenshot](screenshots/skipped-only-view-run-button.png)
 
 
 4. status = "cancelled", only "View commit" button enabled
-![cancelled status sample screenshot](screenshots/cancelled-message.png)
+   ![cancelled status sample screenshot](screenshots/cancelled-message.png)
 
 
-5. Status = "BUILD SUCCESSFUL" which is a custom status not defined in GitHub statuses. 
-Font colour is set to default in case of custom status
-![custom status sample screenshot](screenshots/custom-status-text.png)
+5. Status = "BUILD SUCCESSFUL" which is a custom status not defined in GitHub statuses.
+   Font colour is set to default in case of custom status
+   ![custom status sample screenshot](screenshots/custom-status-text.png)
 
 
 6. Mobile device screenshot (iOS)
-![iOS sample screenshot](screenshots/mobile-screenshot.png)
+   ![iOS sample screenshot](screenshots/mobile-screenshot.png)
