@@ -35,11 +35,11 @@ steps:
     if: ${{ always() }}    # always run this step even if previous steps failed
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-      title: Artifact build and publish
+      title: Unit Tests
       titleBackgroundColor: ${{ steps.unitTest.outcome }}    # 'unitTest' is the ID of a step
       status: ${{ steps.unitTest.outcome }}
       message: >-
-        Published artifact version ${{ steps.versioning.outputs.semver }}       # 'versioning' is the ID of the steps that creates versioning
+        Unit tests have been run for version ${{ steps.versioning.outputs.semver }}       # 'versioning' is the ID of the steps that creates versioning
     env:
       SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
       SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
