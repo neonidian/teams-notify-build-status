@@ -83,7 +83,7 @@ steps:
       SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
 ```
 
-2. Send message only if some jobs have failed, provide status input, enable 'View run' and 'View commit' buttons
+2. Send message only if some jobs have failed, provide status input, title containing link to repository, enable 'View run' and 'View commit' buttons
 
 ```yaml
 steps:
@@ -92,6 +92,8 @@ steps:
     if: ${{ job.status == 'failure' }}       # Same as 'failure()'
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+      title: >-
+         [Repository link](${{ github.server_url }}/${{ github.repository }})
       message: Test run failed
       status: ${{ job.status }}
     env:
