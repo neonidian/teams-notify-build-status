@@ -1894,7 +1894,7 @@ function validateTitleBackgroundColour(backGroundColour) {
             'skipped', 'blue',
         ];
         if (allowedBGColors.indexOf(backGroundColour) === -1) {
-            throw new Error(`Color: "${backGroundColour}" is not supported. Allowed values: "${allowedBGColors.join(', ')}"`);
+            throw new Error(`Color: "${backGroundColour}" is not supported. Allowed values: "${allowedBGColors.join('", "')}"`);
         }
     }
 }
