@@ -20,7 +20,7 @@ in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/s
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v3.0.0
+  - uses: neonidian/teams-notify-build-status@v3.0.1
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
       message: Workflow run passed !!
@@ -31,7 +31,7 @@ steps:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v3.0.0
+  - uses: neonidian/teams-notify-build-status@v3.0.1
     if: ${{ always() }}    # always run this step even if previous steps failed
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
@@ -72,7 +72,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v3.0.0
+  - uses: neonidian/teams-notify-build-status@v3.0.1
     if: ${{ failure() }}        # For other statuses, see https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
@@ -87,7 +87,7 @@ steps:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v3.0.0
+  - uses: neonidian/teams-notify-build-status@v3.0.1
     needs: [ unitTests, systemTests ]          # IDs of jobs
     if: ${{ job.status == 'failure' }}       # Same as 'failure()'
     with:
@@ -104,7 +104,7 @@ display title background color based on the current status of the job.
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v3.0.0
+  - uses: neonidian/teams-notify-build-status@v3.0.1
     if: ${{ always() }}
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
@@ -153,6 +153,7 @@ steps:
 
 7. title and status inputs provided, titleBackgroundColor = "yellow", view run and view commit buttons enabled
    ![title background yellow with title input provided](screenshots/with-title-and-title-bg-color-yellow.png)
+
 
 8. Mobile device screenshot (iOS)
    ![iOS sample screenshot](screenshots/mobile-screenshot.png)
