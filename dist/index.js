@@ -1862,7 +1862,7 @@ const header = {
 
 const postRequest = async function postMessage(webhookUrl, jsonPayload) {
     try {
-        core.info('Sending POST request');
+        core.info('Sending POST request to Teams');
         core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);
         return await new httpClient.HttpClient().postJson(webhookUrl, jsonPayload, header)
             .then(response => {
@@ -1873,7 +1873,7 @@ const postRequest = async function postMessage(webhookUrl, jsonPayload) {
                 return response.result;
             });
     } catch (error) {
-        throw new Error(`Error while sending POST request to Teams. ${error}`);
+        core.setFailed(`Sending POST request to Teams failed. ${error}`);
     }
 };
 
