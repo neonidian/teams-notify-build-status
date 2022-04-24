@@ -9,7 +9,7 @@ describe('Validate Title Background color:', () => {
     ];
 
     function titleBgValidationErrorText(invalidColor) {
-        return `Color: "${invalidColor}" is not supported. Allowed values: "${supportedColors.join(', ')}"`;
+        return `Color: "${invalidColor}" is not supported. Allowed values: "${supportedColors.join('", "')}"`;
     }
 
     test('Throws when not a valid title background color - foo', () => {

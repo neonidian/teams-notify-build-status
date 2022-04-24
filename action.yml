@@ -17,7 +17,7 @@ inputs:
     description: 'Background color of the title'
     required: false
   status:
-    description: 'Status of the Github job or step'
+    description: 'Status of the GitHub job or step'
     required: false
 
 # For environment variables see - https://github.com/neonidian/teams-notify-build-status#environment-variables
