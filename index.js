@@ -16,7 +16,6 @@ async function run() {
             title,
             titleBackgroundColor,
         });
-        core.info('Message has been sent to Teams');
     } catch (error) {
         core.setFailed(error.message);
     }
