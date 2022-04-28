@@ -34,7 +34,7 @@
   "author": "Keerthi Shankar Subramanian",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/neonidian/teams-notify-build-status/issues"
+    "url": "https://github.com/neonidian/teams-notify-build-status/labels/bug"
   },
   "homepage": "https://github.com/neonidian/teams-notify-build-status#readme"
 }
