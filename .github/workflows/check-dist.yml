@@ -12,10 +12,12 @@ on:
     paths-ignore:
       - '**.md'
       - 'screenshots/**'
+      - 'LICENSE'
   pull_request:
     paths-ignore:
       - '**.md'
       - 'screenshots/**'
+      - 'LICENSE'
   workflow_dispatch:
 
 jobs:

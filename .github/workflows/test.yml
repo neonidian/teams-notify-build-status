@@ -8,6 +8,7 @@ on:
     paths-ignore:
       - '**.md'
       - 'screenshots/**'
+      - 'LICENSE'
 
 jobs:
   tests:
