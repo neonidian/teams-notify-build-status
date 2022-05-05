@@ -32,7 +32,6 @@ steps:
 ```yaml
 steps:
   - uses: neonidian/teams-notify-build-status@v3.0.3
-    if: ${{ always() }}    # always run this step even if previous steps failed
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
       title: Unit Tests
@@ -68,12 +67,12 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ## Examples
 
-1. Send message only when the job is failing, set status input and display only 'View Run' button
+1. Send message only when the job is not successful, set status label and display only the 'View Run' button
 
 ```yaml
 steps:
   - uses: neonidian/teams-notify-build-status@v3.0.3
-    if: ${{ failure() }}        # For other statuses, see https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
+    if: ${{ !success() }}        # For other statuses, see https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
       message: >-
