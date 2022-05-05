@@ -9,6 +9,7 @@ on:
       - '**.md'
       - 'screenshots/**'
       - 'LICENSE'
+      - '.github/**'
 
 jobs:
   tests:

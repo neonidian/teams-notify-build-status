@@ -13,11 +13,13 @@ on:
       - '**.md'
       - 'screenshots/**'
       - 'LICENSE'
+      - '.github/**'
   pull_request:
     paths-ignore:
       - '**.md'
       - 'screenshots/**'
       - 'LICENSE'
+      - '.github/**'
   workflow_dispatch:
 
 jobs:
