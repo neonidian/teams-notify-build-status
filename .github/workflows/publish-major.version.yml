@@ -1,0 +1,14 @@
+name: Update major version
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  tagging:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Update major version
+      uses: JasonEtco/build-and-tag-action@v1
+      with:
+        tag_name: ${{ github.event.release.tag_name }}
