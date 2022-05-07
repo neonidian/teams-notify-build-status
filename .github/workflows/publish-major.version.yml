@@ -12,3 +12,5 @@ jobs:
       uses: JasonEtco/build-and-tag-action@v1
       with:
         tag_name: ${{ github.event.release.tag_name }}
+      env:
+          GITHUB_TOKEN: ${{ github.token }}
