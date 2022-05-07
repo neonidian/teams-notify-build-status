@@ -2,7 +2,7 @@
   "name": "teams-notify-build-status",
   "version": "1.0.0",
   "description": "Post a message in Teams using webhook",
-  "main": "index.js",
+  "main": "dist/index.js",
   "dependencies": {
     "@actions/core": "^1.7.0",
     "@actions/http-client": "^1.0.11"
