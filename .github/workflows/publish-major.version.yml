@@ -8,9 +8,9 @@ jobs:
   tagging:
     runs-on: ubuntu-latest
     steps:
-    - name: Update major version
-      uses: JasonEtco/build-and-tag-action@v1
-      with:
-        tag_name: ${{ github.event.release.tag_name }}
-      env:
+      - name: Update major version
+        uses: JasonEtco/build-and-tag-action@v1
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+        env:
           GITHUB_TOKEN: ${{ github.token }}
