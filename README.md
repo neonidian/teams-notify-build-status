@@ -20,7 +20,7 @@ in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/s
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v3.0.3
+  - uses: neonidian/teams-notify-build-status@v3
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
       message: Workflow run passed !!
@@ -31,7 +31,7 @@ steps:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v3.0.3
+  - uses: neonidian/teams-notify-build-status@v3
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
       title: Unit Tests
@@ -71,7 +71,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v3.0.3
+  - uses: neonidian/teams-notify-build-status@v3
     if: ${{ !success() }}        # For other statuses, see https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
@@ -86,7 +86,7 @@ steps:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v3.0.3
+  - uses: neonidian/teams-notify-build-status@v3
     needs: [ unitTests, systemTests ]          # IDs of jobs
     if: ${{ job.status == 'failure' }}       # Same as 'failure()'
     with:
@@ -105,7 +105,7 @@ display title background color based on the current status of the job.
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v3.0.3
+  - uses: neonidian/teams-notify-build-status@v3
     if: ${{ always() }}
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
