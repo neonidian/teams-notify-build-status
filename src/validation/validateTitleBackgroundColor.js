@@ -1,11 +1,6 @@
 function validateTitleBackgroundColour(backGroundColour) {
     if (backGroundColour) {
-        const allowedBGColors = [
-            'success', 'green',
-            'failure', 'red',
-            'cancelled', 'yellow',
-            'skipped', 'blue',
-        ];
+        const allowedBGColors = require('./validColorValues.json').validColorValues;
         if (allowedBGColors.indexOf(backGroundColour) === -1) {
             throw new Error(`Color: "${backGroundColour}" is not supported. Allowed values: "${allowedBGColors.join('", "')}"`);
         }
