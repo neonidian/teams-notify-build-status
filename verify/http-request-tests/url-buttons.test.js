@@ -28,7 +28,7 @@ describe('Post message with job status', () => {
 
     test('Both buttons to be visible with no status', async () => {
         process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true', [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true' });
-        const messageToSend = 'Both buttons to be visible with no status';
+        const messageToSend = 'Both buttons to be visible with no status, no title';
         let response = await main(_teamsIncomingHookUrl, messageToSend, { status: '' });
         expect(response).toBe(responseBody);
     });
