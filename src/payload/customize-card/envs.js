@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 
-const envs = function environmentVariables() {
+const envs = () => {
     // Environment variable names
     const SHOULD_DISPLAY_VIEW_RUN_BUTTON = defineEnvironmentVariable('SHOULD_DISPLAY_VIEW_RUN_BUTTON', false);
     const SHOULD_DISPLAY_VIEW_COMMIT_BUTTON = defineEnvironmentVariable('SHOULD_DISPLAY_VIEW_COMMIT_BUTTON', false);
