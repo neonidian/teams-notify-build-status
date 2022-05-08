@@ -1,0 +1,8 @@
+{
+  "validColorValues": [
+    "success", "green",
+    "failure", "red",
+    "cancelled", "yellow",
+    "skipped", "blue"
+  ]
+}

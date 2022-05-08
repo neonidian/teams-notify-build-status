@@ -4,7 +4,7 @@ const header = {
     [httpClient.Headers.ContentType]: 'application/json'
 };
 
-const postRequest = async function postMessage(webhookUrl, jsonPayload) {
+const postRequest = async function (webhookUrl, jsonPayload) {
     try {
         core.info('Sending POST request to Teams');
         core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);

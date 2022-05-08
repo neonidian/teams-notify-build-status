@@ -1,4 +1,5 @@
 const envs = require('./envs');
+const color = require('./color');
 
 class CustomizeCard {
     constructor(message, {
@@ -36,7 +37,7 @@ class CustomizeCard {
                                 "bleed": !!this.titleBackgroundColor,
                                 "minHeight": this.titleBackgroundColor ? "50px" : "0px",
                                 "isVisible": !!this.titleBackgroundColor || !!this.title,
-                                "style": this._setTitleBackGroundColour(this.titleBackgroundColor),
+                                "style": this._setColor(this.titleBackgroundColor),
                                 "verticalContentAlignment": "center",
                                 "items": [
                                     {
@@ -63,7 +64,7 @@ class CustomizeCard {
                                         "type": "TextRun",
                                         "text": this.status,
                                         "wrap": true,
-                                        "color": this._statusColour(this.status),
+                                        "color": this._setColor(this.status),
                                         "weight": "bolder",
                                         "fontType": "monospace"
                                     }
@@ -125,38 +126,12 @@ class CustomizeCard {
         return this._messageObject;
     }
 
-    _setTitleBackGroundColour(backGroundColour) {
-        if (!backGroundColour) {
-            return "default";
-        }
-        if (backGroundColour === 'red') {
-            return this._statusColour("failure");
-        } else if (backGroundColour === 'green') {
-            return this._statusColour("success");
-        } else if (backGroundColour === 'blue') {
-            return this._statusColour("skipped");
-        } else if (backGroundColour === 'yellow') {
-            return this._statusColour("cancelled");
+    _setColor(backGroundColour) {
+        if (backGroundColour) {
+            return color(backGroundColour);
         } else {
-            return this._statusColour(backGroundColour);
-        }
-    }
-
-    _statusColour(jobOrStepStatus) {
-        if (!jobOrStepStatus) {
             return "default";
         }
-        const status = jobOrStepStatus?.toLowerCase();
-        if (status === "failure") {
-            return "attention";
-        } else if (status === "success") {
-            return "good";
-        } else if (status === "cancelled") {
-            return "warning";
-        } else if (status === "skipped") {
-            return "accent";
-        }
-        return "default";
     }
 
     _constructActionsArray(envVarOfButton, buttonText, buttonUrl) {
