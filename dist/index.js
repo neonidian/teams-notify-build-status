@@ -2080,7 +2080,7 @@ module.exports = color;
 
 const core = __nccwpck_require__(186);
 
-const envs = function environmentVariables() {
+const envs = () => {
     // Environment variable names
     const SHOULD_DISPLAY_VIEW_RUN_BUTTON = defineEnvironmentVariable('SHOULD_DISPLAY_VIEW_RUN_BUTTON', false);
     const SHOULD_DISPLAY_VIEW_COMMIT_BUTTON = defineEnvironmentVariable('SHOULD_DISPLAY_VIEW_COMMIT_BUTTON', false);
@@ -2159,7 +2159,7 @@ const header = {
     [httpClient.Headers.ContentType]: 'application/json'
 };
 
-const postRequest = async function postMessage(webhookUrl, jsonPayload) {
+const postRequest = async function (webhookUrl, jsonPayload) {
     try {
         core.info('Sending POST request to Teams');
         core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);
