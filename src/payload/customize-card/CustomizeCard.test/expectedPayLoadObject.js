@@ -44,7 +44,23 @@ const expectedPayLoadObject = ({
                         "width": "auto",
                         "verticalContentAlignment": "center",
                         "isVisible": false,
-                        "items": [{"type": "ActionSet", "actions": []}, {"type": "ActionSet", "actions": []}]
+                        "items": [{
+                            "type": "ActionSet", "actions": [
+                                {
+                                    "title": "View run",
+                                    "type": "Action.OpenUrl",
+                                    "url": "undefined/undefined/actions/runs/undefined",
+                                }
+                            ]
+                        }, {
+                            "type": "ActionSet", "actions": [
+                                {
+                                    "title": "View commit",
+                                    "type": "Action.OpenUrl",
+                                    "url": "undefined/undefined/commit/undefined",
+                                }
+                            ]
+                        }]
                     }]
                 }]
         }

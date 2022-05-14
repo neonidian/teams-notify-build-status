@@ -95,12 +95,12 @@ class CustomizeCard {
                                             {
                                                 "type": "ActionSet",
                                                 "isVisible": SHOULD_DISPLAY_VIEW_RUN_BUTTON,
-                                                "actions": this._constructActionsArray(SHOULD_DISPLAY_VIEW_RUN_BUTTON, "View run", this._runUrl())
+                                                "actions": this._constructActionsArray("View run", this._runUrl())
                                             },
                                             {
                                                 "type": "ActionSet",
                                                 "isVisible": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
-                                                "actions": this._constructActionsArray(SHOULD_DISPLAY_VIEW_COMMIT_BUTTON, "View commit", this._commitUrl())
+                                                "actions": this._constructActionsArray("View commit", this._commitUrl())
                                             },
                                         ]
                                     }
@@ -134,16 +134,14 @@ class CustomizeCard {
         }
     }
 
-    _constructActionsArray(envVarOfButton, buttonText, buttonUrl) {
-        const actionsArray = [];
-        if (envVarOfButton) {
-            actionsArray.push({
+    _constructActionsArray(buttonText, buttonUrl) {
+        return [
+            {
                 "type": "Action.OpenUrl",
                 "title": buttonText,
                 "url": buttonUrl
-            });
-        }
-        return actionsArray;
+            }
+        ];
     }
 }
 
