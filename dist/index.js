@@ -2261,9 +2261,8 @@ const header = {
 const postRequest = async function (webhookUrl, jsonPayload) {
     try {
         core.info('Sending POST request to Teams');
-        const stringifiedJsonPayload = JSON.stringify(jsonPayload);
-        core.debug(`JSON payload: ${stringifiedJsonPayload}`);
-        return await new httpClient.HttpClient().postJson(webhookUrl, stringifiedJsonPayload, header)
+        core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);
+        return await new httpClient.HttpClient().postJson(webhookUrl, jsonPayload, header)
             .then(response => {
                 core.debug(`Received response: "${response.result}" from Teams server`);
                 if (response.result === 1) {
