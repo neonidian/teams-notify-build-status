@@ -10,6 +10,8 @@ on:
       - 'screenshots/**'
       - 'LICENSE'
       - '.github/**'
+      - 'package.json'
+      - 'package-lock.json'
 
 jobs:
   tests:
