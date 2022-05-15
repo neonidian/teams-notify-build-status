@@ -36,7 +36,7 @@ steps:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
       title: Unit Tests
       titleBackgroundColor: ${{ steps.unitTest.outcome }}    # 'unitTest' is the ID of a step
-      status: ${{ steps.unitTest.outcome }}
+      status: ${{ steps.unitTest.outcome }}                  # or use ${{ job.status }} to get the status of the job
       message: >-
         Unit tests have been run for version ${{ steps.versioning.outputs.semver }}       # 'versioning' is the ID of the steps that creates versioning
     env:
