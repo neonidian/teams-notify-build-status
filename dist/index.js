@@ -2079,12 +2079,14 @@ class CustomizeCard {
                                             {
                                                 "type": "ActionSet",
                                                 "isVisible": SHOULD_DISPLAY_VIEW_RUN_BUTTON,
-                                                "actions": this._constructActionsArray("View run", this._runUrl())
+                                                "actions": SHOULD_DISPLAY_VIEW_RUN_BUTTON ?
+                                                    this._constructOpenUrlButton("View run", this._runUrl()) : []
                                             },
                                             {
                                                 "type": "ActionSet",
                                                 "isVisible": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
-                                                "actions": this._constructActionsArray("View commit", this._commitUrl())
+                                                "actions": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON ?
+                                                    this._constructOpenUrlButton("View commit", this._commitUrl()) : []
                                             },
                                         ]
                                     }
@@ -2118,7 +2120,7 @@ class CustomizeCard {
         }
     }
 
-    _constructActionsArray(buttonText, buttonUrl) {
+    _constructOpenUrlButton(buttonText, buttonUrl) {
         return [
             {
                 "type": "Action.OpenUrl",
