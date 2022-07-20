@@ -35,12 +35,10 @@ describe('Title enabled', () => {
             [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true',
             [SHOULD_DISPLAY_ACTOR_LABEL]: 'true',
         });
-        const messageToSend = `All feature enabled:
-        With title and both buttons enabled; success status, 
-        actor label displayed (GITHUB_ACTOR env var needed to display name of the actor)`;
+        const messageToSend = `This card has all the features enabled 🚀`;
         let response = await main(_teamsIncomingHookUrl, messageToSend, {
             status: 'success',
-            title: 'Docker workflow'
+            title: 'All features enabled'
         });
         expect(response).toBe(responseBody);
     });

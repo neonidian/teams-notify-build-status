@@ -97,8 +97,7 @@ class CustomizeCard {
                                                         "type": "TextRun",
                                                         "text": GITHUB_ACTOR,
                                                         "wrap": true,
-                                                        "weight": "bolder",
-                                                        "fontType": "monospace"
+                                                        "size": "medium",
                                                     },
                                                 ]
                                             },
