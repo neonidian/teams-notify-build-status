@@ -55,6 +55,7 @@ jobs:
         env:
           SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
           SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+          SHOULD_DISPLAY_ACTOR_LABEL: true
 
       - name:  Test action workflow - only message
         uses: ./

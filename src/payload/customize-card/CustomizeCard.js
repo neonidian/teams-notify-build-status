@@ -17,6 +17,7 @@ class CustomizeCard {
         const {
             SHOULD_DISPLAY_VIEW_RUN_BUTTON,
             SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
+            SHOULD_DISPLAY_ACTOR_LABEL,
         } = envs();
         this._messageObject = {
             "type": "message",
@@ -51,23 +52,57 @@ class CustomizeCard {
                                 ],
                             },
                             {
-                                "type": "RichTextBlock",
-                                "isVisible": !!this.status,
-                                "inlines": [
+                                "type": "ColumnSet",
+                                "isVisible": !!this.status || SHOULD_DISPLAY_ACTOR_LABEL,
+                                "columns": [
                                     {
-                                        "type": "TextRun",
-                                        "text": 'Status: ',
-                                        "wrap": true,
-                                        "fontType": "monospace"
+                                        "type": "Column",
+                                        "isVisible": !!this.status,
+                                        "items": [
+                                            {
+                                                "type": "RichTextBlock",
+                                                "inlines": [
+                                                    {
+                                                        "type": "TextRun",
+                                                        "text": 'Status: ',
+                                                        "wrap": true,
+                                                        "fontType": "monospace"
+                                                    },
+                                                    {
+                                                        "type": "TextRun",
+                                                        "text": this.status,
+                                                        "wrap": true,
+                                                        "color": this._setColor(this.status),
+                                                        "weight": "bolder",
+                                                        "fontType": "monospace"
+                                                    }
+                                                ]
+                                            }
+                                        ]
                                     },
                                     {
-                                        "type": "TextRun",
-                                        "text": this.status,
-                                        "wrap": true,
-                                        "color": this._setColor(this.status),
-                                        "weight": "bolder",
-                                        "fontType": "monospace"
-                                    }
+                                        "type": "Column",
+                                        "isVisible": SHOULD_DISPLAY_ACTOR_LABEL,
+                                        "items": [
+                                            {
+                                                "type": "RichTextBlock",
+                                                "inlines": [
+                                                    {
+                                                        "type": "TextRun",
+                                                        "text": 'Actor: ',
+                                                        "wrap": true,
+                                                        "fontType": "monospace",
+                                                    },
+                                                    {
+                                                        "type": "TextRun",
+                                                        "text": GITHUB_ACTOR,
+                                                        "wrap": true,
+                                                        "size": "medium",
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    },
                                 ]
                             },
                             {
@@ -153,6 +188,7 @@ const {
     GITHUB_RUN_ID,
     GITHUB_RUN_ATTEMPT,
     GITHUB_SHA,
+    GITHUB_ACTOR,
 } = process.env;
 
 module.exports = CustomizeCard;
