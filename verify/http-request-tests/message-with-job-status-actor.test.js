@@ -3,6 +3,9 @@ const main = require('../../src/main');
 describe('Post message with job status', () => {
     const _teamsIncomingHookUrl = process.env.TEAMS_TEST_HOOK_URL;
     const responseBody = 1;
+    const SHOULD_DISPLAY_VIEW_COMMIT_BUTTON = "SHOULD_DISPLAY_VIEW_COMMIT_BUTTON";
+    const SHOULD_DISPLAY_VIEW_RUN_BUTTON = "SHOULD_DISPLAY_VIEW_RUN_BUTTON";
+    const SHOULD_DISPLAY_ACTOR_LABEL = "SHOULD_DISPLAY_ACTOR_LABEL";
     const options = {
         status: 'success',
     };
@@ -13,9 +16,43 @@ describe('Post message with job status', () => {
         }
     });
 
-    test('Send a message with status', async () => {
-        const messageToSend = 'Short message with status';
+    beforeEach(() => {
+        delete process.env[SHOULD_DISPLAY_VIEW_COMMIT_BUTTON];
+        delete process.env[SHOULD_DISPLAY_VIEW_RUN_BUTTON];
+        delete process.env[SHOULD_DISPLAY_ACTOR_LABEL];
+    });
+
+    test('Send a message with status and no actor', async () => {
+        const messageToSend = 'Short message with status and no actor';
         let response = await main(_teamsIncomingHookUrl, messageToSend, options);
+        expect(response).toBe(responseBody);
+    });
+
+    test('Send a message with status and actor', async () => {
+        process.env = Object.assign(process.env, {
+            [SHOULD_DISPLAY_ACTOR_LABEL]: 'true',
+        });
+        const messageToSend = 'message with status and actor (To display actor name env var GITHUB_ACTOR needs to be set)';
+        let response = await main(_teamsIncomingHookUrl, messageToSend, options);
+        expect(response).toBe(responseBody);
+    });
+
+
+    test('Send a message with only actor and no status', async () => {
+        process.env = Object.assign(process.env, {
+            [SHOULD_DISPLAY_ACTOR_LABEL]: 'true',
+        });
+        const messageToSend = 'Message with only actor (To display actor name env var GITHUB_ACTOR needs to be set)';
+        let response = await main(_teamsIncomingHookUrl, messageToSend, {});
+        expect(response).toBe(responseBody);
+    });
+
+    test('Explicitly disable actor', async () => {
+        process.env = Object.assign(process.env, {
+            [SHOULD_DISPLAY_ACTOR_LABEL]: 'false',
+        });
+        const messageToSend = 'Explicitly disable actor and pass no status. So no actor or status should be displayed';
+        let response = await main(_teamsIncomingHookUrl, messageToSend, {});
         expect(response).toBe(responseBody);
     });
 

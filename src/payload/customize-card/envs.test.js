@@ -3,10 +3,12 @@ const envs = require('./envs');
 describe('Environment variables', () => {
     const SHOULD_DISPLAY_VIEW_COMMIT_BUTTON = "SHOULD_DISPLAY_VIEW_COMMIT_BUTTON";
     const SHOULD_DISPLAY_VIEW_RUN_BUTTON = "SHOULD_DISPLAY_VIEW_RUN_BUTTON";
+    const SHOULD_DISPLAY_ACTOR_LABEL = "SHOULD_DISPLAY_ACTOR_LABEL";
 
     beforeEach(() => {
         delete process.env[SHOULD_DISPLAY_VIEW_COMMIT_BUTTON];
         delete process.env[SHOULD_DISPLAY_VIEW_RUN_BUTTON];
+        delete process.env[SHOULD_DISPLAY_ACTOR_LABEL];
     });
 
     test('Send no env variable', () => {
@@ -14,19 +16,25 @@ describe('Environment variables', () => {
         expect(response).toMatchObject({
             [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: false,
             [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: false,
+            [SHOULD_DISPLAY_ACTOR_LABEL]: false,
         });
     });
 
-    test('Set both env variable to "true"', () => {
-        process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true', [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true' });
+    test('Set all env variable to "true"', () => {
+        process.env = Object.assign(process.env, {
+            [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true',
+            [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true',
+            [SHOULD_DISPLAY_ACTOR_LABEL]: 'true',
+        });
         let response = envs();
         expect(response).toMatchObject({
             [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: true,
             [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: true,
+            [SHOULD_DISPLAY_ACTOR_LABEL]: true,
         });
     });
 
-    test('Set both env variable to "false"', () => {
+    test('Set view commit and view run buttons env variable to "false"', () => {
         process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'false', [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'false'  });
         let response = envs();
         expect(response).toMatchObject({

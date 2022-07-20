@@ -5,6 +5,7 @@ describe('Title enabled', () => {
     const responseBody = 1;
     const SHOULD_DISPLAY_VIEW_COMMIT_BUTTON = "SHOULD_DISPLAY_VIEW_COMMIT_BUTTON";
     const SHOULD_DISPLAY_VIEW_RUN_BUTTON = "SHOULD_DISPLAY_VIEW_RUN_BUTTON";
+    const SHOULD_DISPLAY_ACTOR_LABEL = "SHOULD_DISPLAY_ACTOR_LABEL";
 
     beforeAll(() => {
         if(!_teamsIncomingHookUrl) {
@@ -15,11 +16,28 @@ describe('Title enabled', () => {
     beforeEach(() => {
         delete process.env[SHOULD_DISPLAY_VIEW_COMMIT_BUTTON];
         delete process.env[SHOULD_DISPLAY_VIEW_RUN_BUTTON];
+        delete process.env[SHOULD_DISPLAY_ACTOR_LABEL];
     });
 
     test('Both buttons and title enabled with success status', async () => {
         process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true', [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true' });
         const messageToSend = 'With title and both buttons enabled; success status';
+        let response = await main(_teamsIncomingHookUrl, messageToSend, {
+            status: 'success',
+            title: 'Docker workflow'
+        });
+        expect(response).toBe(responseBody);
+    });
+
+    test('All features enabled', async () => {
+        process.env = Object.assign(process.env, {
+            [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true',
+            [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true',
+            [SHOULD_DISPLAY_ACTOR_LABEL]: 'true',
+        });
+        const messageToSend = `All feature enabled:
+        With title and both buttons enabled; success status, 
+        actor label displayed (GITHUB_ACTOR env var needed to display name of the actor)`;
         let response = await main(_teamsIncomingHookUrl, messageToSend, {
             status: 'success',
             title: 'Docker workflow'
