@@ -116,7 +116,7 @@ class CustomizeCard {
     }
 
     _runUrl() {
-        return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}`;
+        return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/attempts/${GITHUB_RUN_ATTEMPT}`;
     }
 
     _commitUrl() {
@@ -151,6 +151,7 @@ const {
     GITHUB_SERVER_URL,
     GITHUB_REPOSITORY,
     GITHUB_RUN_ID,
+    GITHUB_RUN_ATTEMPT,
     GITHUB_SHA,
 } = process.env;
 
