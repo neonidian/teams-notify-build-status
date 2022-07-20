@@ -1,11 +1,12 @@
 # Send message to Teams
+
 [![Quality](https://github.com/neonidian/teams-notify-build-status/actions/workflows/test.yml/badge.svg)](https://github.com/neonidian/teams-notify-build-status/actions/workflows/test.yml)       [![CodeQL](https://github.com/neonidian/teams-notify-build-status/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/neonidian/teams-notify-build-status/actions/workflows/codeql-analysis.yml)
 
 * Send a message to a channel in Teams using webhook
   <img alt="Mimimal message screenshot" src="screenshots/minmal-message.png" width="1904"/>
 
 
-* Additional configuration enables title and status labels, title background color, buttons that re-direct to run and
+* Additional configuration enables title, status and actor name labels, title background color, buttons that re-direct to run and
   commit URLs
   <img alt="Message with status and URL re-direct buttons" src="screenshots/all-features-enabled.png" width="1904"/>
 
@@ -26,8 +27,8 @@ steps:
       message: Workflow run passed !!
 ```
 
-3. Enable title and status labels, title background color by providing the title, status, titleBackgroundColor inputs.
-   Enable 'View run' and 'View commit' buttons using environment variables.
+3. Display title and status labels, title background color by providing the title, status, titleBackgroundColor inputs.
+   Enable 'Actor' label, 'View run' and 'View commit' buttons using environment variables
 
 ```yaml
 steps:
@@ -40,6 +41,7 @@ steps:
       message: >-
         Unit tests have been run for version ${{ steps.versioning.outputs.semver }}       # 'versioning' is the ID of the steps that creates versioning
     env:
+      SHOULD_DISPLAY_ACTOR_LABEL: true
       SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
       SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
 ```
@@ -64,6 +66,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 |-----|-----------------------------------|-------------------|---------------|--------------------------------------------------------------------|
 | 1   | SHOULD_DISPLAY_VIEW_RUN_BUTTON    | 'true' or 'false' | false         | Clicking on this button redirects to the action run page in GitHub |
 | 2   | SHOULD_DISPLAY_VIEW_COMMIT_BUTTON | 'true' or 'false' | false         | Clicking on this button redirects to SHA commit page in GitHub     |
+| 3   | SHOULD_DISPLAY_ACTOR_LABEL        | 'true' or 'false' | false         | Label to display the username of the workflow initiator            |
 
 ## Examples
 
@@ -82,7 +85,8 @@ steps:
       SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
 ```
 
-2. Send message only if some jobs have failed, provide status input, title containing link to repository, enable 'View run' and 'View commit' buttons
+2. Send message only if some jobs have failed, provide status input, title containing link to repository, enable 'View
+   run' and 'View commit' buttons, display actor label by setting the environment variables to `true`
 
 ```yaml
 steps:
@@ -92,21 +96,22 @@ steps:
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
       title: >-
-         [Repository link](${{ github.server_url }}/${{ github.repository }})
+        [Repository link](${{ github.server_url }}/${{ github.repository }})
       message: Test run failed
       status: ${{ job.status }}
     env:
       SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
       SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+      SHOULD_DISPLAY_ACTOR_LABEL: true
 ```
 
 3. Always send a message even if previous steps have been failed, cancelled or skipped, enable 'View commit' button,
-display title background color based on the current status of the job.
+   display title background color based on the current status of the job.
 
 ```yaml
 steps:
   - uses: neonidian/teams-notify-build-status@v3
-    if: ${{ always() }}
+    if: always()
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
       message: Workflow has been run
@@ -119,7 +124,10 @@ steps:
 
 1. [Adaptive cards](https://docs.microsoft.com/en-gb/microsoftteams/platform/task-modules-and-cards/cards/cards-reference#adaptive-card)
    interface of Teams has been used for UI
-2. [Actions HTTP client](https://github.com/actions/toolkit/tree/main/packages/http-client) JS library from Actions toolkit has been used for HTTP communication
+2. [Actions HTTP client](https://github.com/actions/toolkit/tree/main/packages/http-client) JS library from Actions
+   toolkit has been used for HTTP communication
+3. GitHub data for constructing workflow run URL, commit URL etc. are fetched via
+   the [default GitHub environment variables](https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables)
 
 ## Sample screenshots (Dark mode enabled in Teams)
 
@@ -156,5 +164,9 @@ steps:
    ![title background yellow with title input provided](screenshots/with-title-and-title-bg-color-yellow.png)
 
 
-8. Mobile device screenshot (iOS)
+8. Environment variable `SHOULD_DISPLAY_ACTOR_LABEL` set to `true`; set title
+   ![Should display actor label environment variable is set to true. Title is set](screenshots/with-title-actor-labels.png)
+
+
+9. Mobile device screenshot (iOS)
    ![iOS sample screenshot](screenshots/mobile-screenshot.png)

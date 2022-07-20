@@ -31,14 +31,11 @@ describe('Title enabled', () => {
 
     test('All features enabled', async () => {
         process.env = Object.assign(process.env, {
-            [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true',
-            [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'true',
             [SHOULD_DISPLAY_ACTOR_LABEL]: 'true',
         });
-        const messageToSend = `This card has all the features enabled 🚀`;
+        const messageToSend = `Title and actor labels are displayed in this card`;
         let response = await main(_teamsIncomingHookUrl, messageToSend, {
-            status: 'success',
-            title: 'All features enabled'
+            title: 'Sample title'
         });
         expect(response).toBe(responseBody);
     });
