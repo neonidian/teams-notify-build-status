@@ -64,7 +64,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 | #   | Environment variable              | Allowed values    | Default value | Description                                                        |
 |-----|-----------------------------------|-------------------|---------------|--------------------------------------------------------------------|
-| 1   | SHOULD_DISPLAY_VIEW_RUN_BUTTON    | 'true' or 'false' | false         | Clicking on this button redirects to the action run page in GitHub |
+| 1   | SHOULD_DISPLAY_VIEW_RUN_BUTTON    | 'true' or 'false' | false         | Clicking on this button redirects to the attempt of the workflow run page in GitHub |
 | 2   | SHOULD_DISPLAY_VIEW_COMMIT_BUTTON | 'true' or 'false' | false         | Clicking on this button redirects to SHA commit page in GitHub     |
 | 3   | SHOULD_DISPLAY_ACTOR_LABEL        | 'true' or 'false' | false         | Label to display the username of the workflow initiator            |
 
