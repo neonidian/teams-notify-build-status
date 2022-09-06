@@ -18,7 +18,7 @@ const colorMapping =
         },
     ];
 
-const color = (inputColor) => {
+const color = inputColor => {
     const index = colorMapping.findIndex(color => color.name.indexOf(inputColor.toLowerCase()) !== -1);
     return index === -1 ? "default" : colorMapping[index].value;
 };
