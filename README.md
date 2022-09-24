@@ -2,6 +2,8 @@
 
 [![Quality](https://github.com/neonidian/teams-notify-build-status/actions/workflows/test.yml/badge.svg)](https://github.com/neonidian/teams-notify-build-status/actions/workflows/test.yml)       [![CodeQL](https://github.com/neonidian/teams-notify-build-status/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/neonidian/teams-notify-build-status/actions/workflows/codeql-analysis.yml)
 
+JavaScript GitHub action to send message to a channel in Microsoft Teams using webhook URL
+
 * Send a message to a channel in Teams using webhook
   <img alt="Mimimal message screenshot" src="screenshots/minmal-message.png" width="1904"/>
 
