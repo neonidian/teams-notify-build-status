@@ -4,7 +4,7 @@
 
 JavaScript GitHub action to send message to a channel in Microsoft Teams using webhook URL
 
-* Send a message to a channel in Teams using webhook
+* Send a one line message
   <img alt="Mimimal message screenshot" src="screenshots/minmal-message.png" width="1904"/>
 
 
