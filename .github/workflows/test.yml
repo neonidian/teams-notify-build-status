@@ -50,7 +50,10 @@ jobs:
           webhookUrl: ${{ secrets.TEAMS_TEST_HOOK_URL }}
           message: Test action workflow
           status: ${{ job.status }}
-          title: Test action workflow title
+          title: |
+            Test action workflow title
+            second line title
+            third line title
           titleBackgroundColor: ${{ job.status }}
         env:
           SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
