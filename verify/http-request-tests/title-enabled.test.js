@@ -65,8 +65,8 @@ describe('Title enabled', () => {
     });
 
     test('Send message with no buttons, with title and title bg colour green', async () => {
-        const messageToSend = 'With title and title bg colour green, no buttons';
-        let response = await main(_teamsIncomingHookUrl, messageToSend,{ titleBackgroundColor: 'success', title: 'Success Title - BG Green', });
+        const messageToSend = 'With multiple lines of title and title bg colour green, no buttons';
+        let response = await main(_teamsIncomingHookUrl, messageToSend,{ titleBackgroundColor: 'success', title: `Success Title - BG Green\nsecond line\nthird line`, });
         expect(response).toBe(responseBody);
     });
 
