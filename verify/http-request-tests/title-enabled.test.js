@@ -63,7 +63,7 @@ describe('Title enabled', () => {
 
     test('Send a short message with buttons and status with title and title bg colour', async () => {
         process.env = Object.assign(process.env, { [SHOULD_DISPLAY_VIEW_RUN_BUTTON]: 'false', [SHOULD_DISPLAY_VIEW_COMMIT_BUTTON]: 'true' });
-        const messageToSend = 'With title and title bg colour yellow. with view commit button.';
+        const messageToSend = 'With title and title bg colour yellow. with view commit button and status label cancelled.';
         let response = await main(_teamsIncomingHookUrl, messageToSend,{ status: 'cancelled', titleBackgroundColor: 'yellow', title: 'Custom Title', });
         expect(response).toEqual(responseBody);
     });
