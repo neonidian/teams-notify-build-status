@@ -140,7 +140,6 @@ const file_command_1 = __nccwpck_require__(717);
 const utils_1 = __nccwpck_require__(278);
 const os = __importStar(__nccwpck_require__(37));
 const path = __importStar(__nccwpck_require__(17));
-const uuid_1 = __nccwpck_require__(840);
 const oidc_utils_1 = __nccwpck_require__(41);
 /**
  * The code to exit an action
@@ -170,20 +169,9 @@ function exportVariable(name, val) {
     process.env[name] = convertedVal;
     const filePath = process.env['GITHUB_ENV'] || '';
     if (filePath) {
-        const delimiter = `ghadelimiter_${uuid_1.v4()}`;
-        // These should realistically never happen, but just in case someone finds a way to exploit uuid generation let's not allow keys or values that contain the delimiter.
-        if (name.includes(delimiter)) {
-            throw new Error(`Unexpected input: name should not contain the delimiter "${delimiter}"`);
-        }
-        if (convertedVal.includes(delimiter)) {
-            throw new Error(`Unexpected input: value should not contain the delimiter "${delimiter}"`);
-        }
-        const commandValue = `${name}<<${delimiter}${os.EOL}${convertedVal}${os.EOL}${delimiter}`;
-        file_command_1.issueCommand('ENV', commandValue);
+        return file_command_1.issueFileCommand('ENV', file_command_1.prepareKeyValueMessage(name, val));
     }
-    else {
-        command_1.issueCommand('set-env', { name }, convertedVal);
-    }
+    command_1.issueCommand('set-env', { name }, convertedVal);
 }
 exports.exportVariable = exportVariable;
 /**
@@ -201,7 +189,7 @@ exports.setSecret = setSecret;
 function addPath(inputPath) {
     const filePath = process.env['GITHUB_PATH'] || '';
     if (filePath) {
-        file_command_1.issueCommand('PATH', inputPath);
+        file_command_1.issueFileCommand('PATH', inputPath);
     }
     else {
         command_1.issueCommand('add-path', {}, inputPath);
@@ -241,7 +229,10 @@ function getMultilineInput(name, options) {
     const inputs = getInput(name, options)
         .split('\n')
         .filter(x => x !== '');
-    return inputs;
+    if (options && options.trimWhitespace === false) {
+        return inputs;
+    }
+    return inputs.map(input => input.trim());
 }
 exports.getMultilineInput = getMultilineInput;
 /**
@@ -274,8 +265,12 @@ exports.getBooleanInput = getBooleanInput;
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function setOutput(name, value) {
+    const filePath = process.env['GITHUB_OUTPUT'] || '';
+    if (filePath) {
+        return file_command_1.issueFileCommand('OUTPUT', file_command_1.prepareKeyValueMessage(name, value));
+    }
     process.stdout.write(os.EOL);
-    command_1.issueCommand('set-output', { name }, value);
+    command_1.issueCommand('set-output', { name }, utils_1.toCommandValue(value));
 }
 exports.setOutput = setOutput;
 /**
@@ -404,7 +399,11 @@ exports.group = group;
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function saveState(name, value) {
-    command_1.issueCommand('save-state', { name }, value);
+    const filePath = process.env['GITHUB_STATE'] || '';
+    if (filePath) {
+        return file_command_1.issueFileCommand('STATE', file_command_1.prepareKeyValueMessage(name, value));
+    }
+    command_1.issueCommand('save-state', { name }, utils_1.toCommandValue(value));
 }
 exports.saveState = saveState;
 /**
@@ -470,13 +469,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.issueCommand = void 0;
+exports.prepareKeyValueMessage = exports.issueFileCommand = void 0;
 // We use any as a valid input type
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const fs = __importStar(__nccwpck_require__(147));
 const os = __importStar(__nccwpck_require__(37));
+const uuid_1 = __nccwpck_require__(840);
 const utils_1 = __nccwpck_require__(278);
-function issueCommand(command, message) {
+function issueFileCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
         throw new Error(`Unable to find environment variable for file command ${command}`);
@@ -488,7 +488,22 @@ function issueCommand(command, message) {
         encoding: 'utf8'
     });
 }
-exports.issueCommand = issueCommand;
+exports.issueFileCommand = issueFileCommand;
+function prepareKeyValueMessage(key, value) {
+    const delimiter = `ghadelimiter_${uuid_1.v4()}`;
+    const convertedValue = utils_1.toCommandValue(value);
+    // These should realistically never happen, but just in case someone finds a
+    // way to exploit uuid generation let's not allow keys or values that contain
+    // the delimiter.
+    if (key.includes(delimiter)) {
+        throw new Error(`Unexpected input: name should not contain the delimiter "${delimiter}"`);
+    }
+    if (convertedValue.includes(delimiter)) {
+        throw new Error(`Unexpected input: value should not contain the delimiter "${delimiter}"`);
+    }
+    return `${key}<<${delimiter}${os.EOL}${convertedValue}${os.EOL}${delimiter}`;
+}
+exports.prepareKeyValueMessage = prepareKeyValueMessage;
 //# sourceMappingURL=file-command.js.map
 
 /***/ }),
@@ -2678,16 +2693,17 @@ exports["default"] = _default;
 
 const postRequest = __nccwpck_require__(585);
 const constructPayLoad = __nccwpck_require__(645);
-const validateUrl = __nccwpck_require__(712);
+const validateUrls = __nccwpck_require__(712);
 const validateTitleBackgroundColour = __nccwpck_require__(348);
 
-const main = function (webhookUrl, message, {
+const main = function (webhookUrlInput, message, {
     status,
     title,
     titleBackgroundColor,
 }) {
     return new Promise((resolve) => {
-        validateUrl(webhookUrl);
+        const webhookUrls = extractWebhookUrls(webhookUrlInput);
+        validateUrls(webhookUrls);
         titleBackgroundColor = titleBackgroundColor?.toLowerCase();
         validateTitleBackgroundColour(titleBackgroundColor);
         const requestPayload = constructPayLoad(message, {
@@ -2695,10 +2711,20 @@ const main = function (webhookUrl, message, {
             title,
             titleBackgroundColor,
         });
-        return postRequest(webhookUrl, requestPayload)
+        return postRequest(webhookUrls, requestPayload)
             .then(responseData => resolve(responseData));
     });
 };
+
+function extractWebhookUrls(webhookUrls) {
+    const webHookUrlsSplit = webhookUrls
+        .split(/[\n\s]/)
+        .filter(urls => urls.trim() !== '');
+    if (webHookUrlsSplit.length > 1) {
+        return webHookUrlsSplit.map(webhookUrl => webhookUrl.trim());
+    }
+    return webHookUrlsSplit;
+}
 
 module.exports = main;
 
@@ -3025,11 +3051,12 @@ const header = {
     [httpClient.Headers.ContentType]: 'application/json'
 };
 
-const postRequest = async function (webhookUrl, jsonPayload) {
+const postRequest = async function (webhookUrls, jsonPayload) {
     try {
         core.info('Sending POST request to Teams');
         core.debug(`JSON payload: ${JSON.stringify(jsonPayload)}`);
-        return await new httpClient.HttpClient().postJson(webhookUrl, jsonPayload, header)
+        return await Promise.all(webhookUrls.map(async webhookUrl =>
+            await new httpClient.HttpClient().postJson(webhookUrl, jsonPayload, header)
             .then(response => {
                 core.debug(`Received response: "${response.result}" from Teams server`);
                 if (response.result === 1) {
@@ -3038,7 +3065,7 @@ const postRequest = async function (webhookUrl, jsonPayload) {
                     throw new Error(`Message not sent. Received response from Teams: "${response.result}"`);
                 }
                 return response.result;
-            });
+            })));
     } catch (error) {
         throw new Error(`Sending POST request to Teams failed\n${error}`);
     }
@@ -3069,12 +3096,14 @@ module.exports = validateTitleBackgroundColour;
 /***/ 712:
 /***/ ((module) => {
 
-function validateUrl(url) {
-    try {
-        new URL(url);
-    } catch (error) {
-        throw new Error('Webhook url is not a valid url');
-    }
+function validateUrl(urls) {
+    urls.forEach(url => {
+        try {
+            new URL(url);
+        } catch (error) {
+            throw new Error(`Webhook url: "${url}" is not a valid url`);
+        }
+    });
 }
 
 module.exports = validateUrl;
@@ -3226,13 +3255,13 @@ async function run() {
     try {
         const webhookUrlInputId = 'webhookUrl';
         core.setSecret(webhookUrlInputId);
-        const webhookUrl = core.getInput(webhookUrlInputId, { required: true });
+        const webhookUrlInput = core.getInput(webhookUrlInputId, { required: true });
         const message = core.getInput('message', { required: true });
         const status = core.getInput('status');
         const title = core.getInput('title');
         const titleBackgroundColor = core.getInput('titleBackgroundColor');
 
-        await main(webhookUrl, message, {
+        await main(webhookUrlInput, message, {
             status,
             title,
             titleBackgroundColor,

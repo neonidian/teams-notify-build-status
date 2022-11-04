@@ -9,7 +9,21 @@ describe('Main:', () => {
     ];
 
     test('Throws when not a valid webhook url', async () => {
-        await expect(main('foo', '', { status: '' })).rejects.toThrow('Webhook url is not a valid url');
+        const webhookUrlInput = 'foo';
+        await expect(main(webhookUrlInput, '', { status: '' })).rejects.toThrow(`Webhook url: "${webhookUrlInput}" is not a valid url`);
+    });
+
+    test('Throws when one of the url is not a valid webhook url seperated by new line', async () => {
+        const webhookUrlInput = 'https://valid-url.se';
+        const webhookUrlInput2 = 'foo';
+        await expect(main(`${webhookUrlInput}
+        ${webhookUrlInput2}`, '', { status: '' })).rejects.toThrow(`Webhook url: "${webhookUrlInput2}" is not a valid url`);
+    });
+
+    test('Throws when one of the url is not a valid webhook url seperated by space', async () => {
+        const webhookUrlInput = 'https://valid-url.se';
+        const webhookUrlInput2 = 'foo';
+        await expect(main(`${webhookUrlInput} ${webhookUrlInput2}`, '', { status: '' })).rejects.toThrow(`Webhook url: "${webhookUrlInput2}" is not a valid url`);
     });
 
     function titleBgValidationErrorText(invalidColor) {
