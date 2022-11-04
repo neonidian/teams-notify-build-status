@@ -1,5 +1,5 @@
 name: 'Send message to MS Teams (webhook)'
-description: 'Send message to a channel in MS Teams using webhook'
+description: 'Send message to channels in MS Teams using webhook'
 author: 'Keerthi Shankar Subramanian'
 
 inputs:
