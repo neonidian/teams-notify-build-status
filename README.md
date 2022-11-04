@@ -18,9 +18,10 @@ JavaScript GitHub action to send message to a channel in Microsoft Teams using w
 for Teams
 in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/security-guides/encrypted-secrets)
 
-2. To send a message, add the following in
+2. To send a minimal message, add the following in
    your [workflow YAML](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 
+E.g.,
 ```yaml
 steps:
   - uses: neonidian/teams-notify-build-status@v3
@@ -29,20 +30,28 @@ steps:
       message: Workflow run passed !!
 ```
 
-3. Display title and status labels, title background color by providing the title, status, titleBackgroundColor inputs.
-   Enable 'Actor' label, 'View run' and 'View commit' buttons using environment variables
+3. All features:
+   * Send to multiple channels by specifying multiple webhook URLs
+   * Display title header
+   * Display actor label(GitHub user ID who triggered the workflow) 
+   * Display status label
+   * Display title background color
+   * Enable 'View run' and 'View commit' buttons
 
+E.g.,
 ```yaml
 steps:
   - uses: neonidian/teams-notify-build-status@v3
     with:
-      webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-      title: Unit Tests
-      titleBackgroundColor: ${{ steps.unitTest.outcome }}    # 'unitTest' is the ID of a step
-      status: ${{ steps.unitTest.outcome }}                  # or use ${{ job.status }} to get the status of the job
+      webhookUrl: |                                         # Send to multiple channels in MS Teams
+        ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL_1 }}
+        ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL_2 }}
+      title: Unit Tests                                      # Specify a title header
+      titleBackgroundColor: ${{ steps.unitTest.outcome }}    # Specify title background color. 'unitTest' is the ID of a step
+      status: ${{ steps.unitTest.outcome }}                  # Specify what should be displayed in the status label
       message: >-
         Unit tests have been run for version ${{ steps.versioning.outputs.semver }}       # 'versioning' is the ID of the steps that creates versioning
-    env:
+    env:                                                     # Enable actor labels and buttons using environment variables
       SHOULD_DISPLAY_ACTOR_LABEL: true
       SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
       SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
@@ -56,7 +65,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 | #   | Input ID             | Required | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 |-----|----------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1   | webhookUrl           | Yes      | Incoming webhook URL from MS Teams                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| 1   | webhookUrl           | Yes      | Teams webhook URL(s). If more than 1 webhook URL, use YAML multi-line strings                                                                                                                                                                                                                                                                                                                                                                                           |
 | 2   | message              | Yes      | Message to be sent                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | 3   | title                | No       | Title of the card (displays at the top with a larger text)                                                                                                                                                                                                                                                                                                                                                                                                              |
 | 4   | titleBackgroundColor | No       | Background color of the title section. <br/>Allowed values: <br/>'success', 'green', <br/>'failure', 'red',<br/> 'cancelled', 'yellow',<br/>'skipped', 'blue'<br/><br/> success, failure, cancelled, skipped can be used dynamically in the workflow using job or step context.<br/> E.g., `${{ job.status }}` or `${{ steps.<step_id>.outcome }}`<br/> See [GitHub docs](https://docs.github.com/en/actions/learn-github-actions/contexts#steps-context) for more info |
@@ -64,11 +73,11 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ### Environment variables
 
-| #   | Environment variable              | Allowed values    | Default value | Description                                                        |
-|-----|-----------------------------------|-------------------|---------------|--------------------------------------------------------------------|
+| #   | Environment variable              | Allowed values    | Default value | Description                                                                         |
+|-----|-----------------------------------|-------------------|---------------|-------------------------------------------------------------------------------------|
 | 1   | SHOULD_DISPLAY_VIEW_RUN_BUTTON    | 'true' or 'false' | false         | Clicking on this button redirects to the attempt of the workflow run page in GitHub |
-| 2   | SHOULD_DISPLAY_VIEW_COMMIT_BUTTON | 'true' or 'false' | false         | Clicking on this button redirects to SHA commit page in GitHub     |
-| 3   | SHOULD_DISPLAY_ACTOR_LABEL        | 'true' or 'false' | false         | Label to display the username of the workflow initiator            |
+| 2   | SHOULD_DISPLAY_VIEW_COMMIT_BUTTON | 'true' or 'false' | false         | Clicking on this button redirects to SHA commit page in GitHub                      |
+| 3   | SHOULD_DISPLAY_ACTOR_LABEL        | 'true' or 'false' | false         | Label to display the username of the workflow initiator                             |
 
 ## Examples
 
@@ -115,7 +124,10 @@ steps:
   - uses: neonidian/teams-notify-build-status@v3
     if: always()
     with:
-      webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+      webhookUrl: |
+       ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL_1 }}
+       ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL_2 }}
+       ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL_3 }}
       message: Workflow has been run
       titleBackgroundColor: ${{ job.status }}
     env:

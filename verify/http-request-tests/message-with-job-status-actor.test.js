@@ -2,7 +2,7 @@ const main = require('../../src/main');
 
 describe('Post message with job status', () => {
     const _teamsIncomingHookUrl = process.env.TEAMS_TEST_HOOK_URL;
-    const responseBody = 1;
+    const responseBody = [1];
     const SHOULD_DISPLAY_VIEW_COMMIT_BUTTON = "SHOULD_DISPLAY_VIEW_COMMIT_BUTTON";
     const SHOULD_DISPLAY_VIEW_RUN_BUTTON = "SHOULD_DISPLAY_VIEW_RUN_BUTTON";
     const SHOULD_DISPLAY_ACTOR_LABEL = "SHOULD_DISPLAY_ACTOR_LABEL";
@@ -25,7 +25,7 @@ describe('Post message with job status', () => {
     test('Send a message with status and no actor', async () => {
         const messageToSend = 'Short message with status and no actor';
         let response = await main(_teamsIncomingHookUrl, messageToSend, options);
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 
     test('Send a message with status and actor', async () => {
@@ -34,7 +34,7 @@ describe('Post message with job status', () => {
         });
         const messageToSend = 'message with status and actor (To display actor name env var GITHUB_ACTOR needs to be set)';
         let response = await main(_teamsIncomingHookUrl, messageToSend, options);
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 
 
@@ -44,7 +44,7 @@ describe('Post message with job status', () => {
         });
         const messageToSend = 'Message with only actor (To display actor name env var GITHUB_ACTOR needs to be set)';
         let response = await main(_teamsIncomingHookUrl, messageToSend, {});
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 
     test('Explicitly disable actor', async () => {
@@ -53,13 +53,13 @@ describe('Post message with job status', () => {
         });
         const messageToSend = 'Explicitly disable actor and pass no status. So no actor or status should be displayed';
         let response = await main(_teamsIncomingHookUrl, messageToSend, {});
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 
     test('Send a long message with status', async () => {
         const messageToSend = 'Long message with success status(green text). With status message published SDK version of container 0.1.1 (major) version. Pushed the container to docker registry and artifactory';
         let response = await main(_teamsIncomingHookUrl, messageToSend, options);
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 
     test('Send a message with status- "failure"', async () => {
@@ -68,7 +68,7 @@ describe('Post message with job status', () => {
             status: 'failure',
         };
         let response = await main(_teamsIncomingHookUrl, messageToSend, option);
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 
     test('Send a message with status- "cancelled"', async () => {
@@ -77,7 +77,7 @@ describe('Post message with job status', () => {
             status: 'cancelled',
         };
         let response = await main(_teamsIncomingHookUrl, messageToSend, option);
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 
     test('Send a message with status- "skipped"', async () => {
@@ -86,7 +86,7 @@ describe('Post message with job status', () => {
             status: 'skipped',
         };
         let response = await main(_teamsIncomingHookUrl, messageToSend, option);
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 
     test('Send a message with status- "BUILD SUCCESSFUL"', async () => {
@@ -95,18 +95,18 @@ describe('Post message with job status', () => {
             status: 'BUILD SUCCESSFUL',
         };
         let response = await main(_teamsIncomingHookUrl, messageToSend, option);
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 
     test('Send a long message with no status', async () => {
         const messageToSend = 'Long message with no status. With label message published SDK version of container 0.1.1 (major) version. Pushed the container to docker registry and artifactory';
         let response = await main(_teamsIncomingHookUrl, messageToSend, {status: ''});
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 
     test('Send a short message with no status', async () => {
         const messageToSend = 'Short message with no status';
         let response = await main(_teamsIncomingHookUrl, messageToSend, {status: ''});
-        expect(response).toBe(responseBody);
+        expect(response).toEqual(responseBody);
     });
 });

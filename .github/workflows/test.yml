@@ -39,6 +39,8 @@ jobs:
         run: npm run verify
         env:
           TEAMS_TEST_HOOK_URL: ${{ secrets.TEAMS_TEST_HOOK_URL }}
+          TEAMS_TEST_HOOK_URL_2: ${{ secrets.TEAMS_TEST_HOOK_URL_2 }}
+          TEAMS_TEST_HOOK_URL_3: ${{ secrets.TEAMS_TEST_HOOK_URL_3 }}
 
       - run: npm run prepare
 
@@ -49,6 +51,23 @@ jobs:
         with:
           webhookUrl: ${{ secrets.TEAMS_TEST_HOOK_URL }}
           message: Test action workflow
+          status: ${{ job.status }}
+          title: Test action workflow title
+          titleBackgroundColor: ${{ job.status }}
+        env:
+          SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
+          SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+          SHOULD_DISPLAY_ACTOR_LABEL: true
+
+      - name: Test action workflow - Multiple webhook URLs
+        uses: ./
+        if: ${{ always() }}
+        with:
+          webhookUrl: |
+            ${{ secrets.TEAMS_TEST_HOOK_URL }}
+            ${{ secrets.TEAMS_TEST_HOOK_URL_2 }}
+            ${{ secrets.TEAMS_TEST_HOOK_URL_3 }}
+          message: Multiple webhook URLs. Test action workflow
           status: ${{ job.status }}
           title: Test action workflow title
           titleBackgroundColor: ${{ job.status }}
