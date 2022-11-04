@@ -39,6 +39,8 @@ jobs:
         run: npm run verify
         env:
           TEAMS_TEST_HOOK_URL: ${{ secrets.TEAMS_TEST_HOOK_URL }}
+          TEAMS_TEST_HOOK_URL_2: ${{ secrets.TEAMS_TEST_HOOK_URL_2 }}
+          TEAMS_TEST_HOOK_URL_3: ${{ secrets.TEAMS_TEST_HOOK_URL_3 }}
 
       - run: npm run prepare
 
