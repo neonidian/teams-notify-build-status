@@ -12,12 +12,13 @@ const postRequest = async function (webhookUrls, jsonPayload) {
             new Promise(resolve => resolve(new httpClient.HttpClient().postJson(webhookUrl, jsonPayload, header))));
         return await Promise.all(requestsPromises)
             .then(response =>
-                response.map(response => {
-                    core.debug(`Received response: "${response.result}" from Teams server`);
+                response.map((response, index) => {
+                    const webhookUrlNumber = index + 1;
+                    core.debug(`Received response: "${response.result}" from Teams server ${webhookUrlNumber !== 1 ? `for webhook URL number "${webhookUrlNumber}"` : ""}`);
                     if (response.result === 1) {
-                        core.info('Message has been sent to Teams');
+                        core.info(`Message has been sent to Teams ${webhookUrlNumber !== 1 ? `for webhook URL number "${webhookUrlNumber}"` : ""}`);
                     } else {
-                        throw new Error(`Message not sent. Received response from Teams: "${response.result}"`);
+                        throw new Error(`Message not sent. Received response from Teams: "${response.result}" ${webhookUrlNumber !== 1 ? `for webhook URL number "${webhookUrlNumber}"` : ""}`);
                     }
                     return response.result;
                 })
