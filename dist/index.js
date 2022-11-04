@@ -3061,11 +3061,11 @@ const postRequest = async function (webhookUrls, jsonPayload) {
             .then(response =>
                 response.map((response, index) => {
                     const webhookUrlNumber = index + 1;
-                    core.debug(`Received response: "${response.result}" from Teams server ${webhookUrlNumber !== 1 ? `for webhook URL number "${webhookUrlNumber}"` : ""}`);
+                    core.debug(`Received response: "${response.result}" from Teams server ${forWebHookUrlText(webhookUrlNumber)}`);
                     if (response.result === 1) {
-                        core.info(`Message has been sent to Teams ${webhookUrlNumber !== 1 ? `for webhook URL number "${webhookUrlNumber}"` : ""}`);
+                        core.info(`Message has been sent to Teams ${forWebHookUrlText(webhookUrlNumber)}`);
                     } else {
-                        throw new Error(`Message not sent. Received response from Teams: "${response.result}" ${webhookUrlNumber !== 1 ? `for webhook URL number "${webhookUrlNumber}"` : ""}`);
+                        throw new Error(`Message not sent. Received response from Teams: "${response.result}" ${forWebHookUrlText(webhookUrlNumber)}`);
                     }
                     return response.result;
                 })
@@ -3074,6 +3074,10 @@ const postRequest = async function (webhookUrls, jsonPayload) {
         throw new Error(`Sending POST request to Teams failed\n${error}`);
     }
 };
+
+function forWebHookUrlText(webhookUrlNumber) {
+    return webhookUrlNumber === 1 ? '' : `for webhook URL number "${webhookUrlNumber}`;
+}
 
 module.exports = postRequest;
 
