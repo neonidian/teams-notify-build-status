@@ -8,22 +8,20 @@ const main = async function (webhookUrlInput, message, {
     title,
     titleBackgroundColor,
 }) {
-    return await new Promise((resolve) => {
-        const webhookUrls = extractWebhookUrls(webhookUrlInput);
-        validateUrls(webhookUrls);
-        titleBackgroundColor = titleBackgroundColor?.toLowerCase();
-        validateTitleBackgroundColour(titleBackgroundColor);
-        const requestPayload = constructPayLoad(message, {
-            status,
-            title,
-            titleBackgroundColor,
-        });
-        return postRequest(webhookUrls, requestPayload)
-            .then(responseData => resolve(responseData))
-            .catch(error => {
-                throw new Error(error);
-            });
+    const webhookUrls = extractWebhookUrls(webhookUrlInput);
+    validateUrls(webhookUrls);
+    titleBackgroundColor = titleBackgroundColor?.toLowerCase();
+    validateTitleBackgroundColour(titleBackgroundColor);
+    const requestPayload = constructPayLoad(message, {
+        status,
+        title,
+        titleBackgroundColor,
     });
+    return await postRequest(webhookUrls, requestPayload)
+        .then(responseData => responseData)
+        .catch(error => {
+            throw new Error(error);
+        });
 };
 
 function extractWebhookUrls(webhookUrls) {
