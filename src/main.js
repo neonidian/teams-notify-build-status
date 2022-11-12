@@ -3,12 +3,12 @@ const constructPayLoad = require("./payload/payload");
 const validateUrls = require("./validation/validateUrl");
 const validateTitleBackgroundColour = require("./validation/validateTitleBackgroundColor");
 
-const main = function (webhookUrlInput, message, {
+const main = async function (webhookUrlInput, message, {
     status,
     title,
     titleBackgroundColor,
 }) {
-    return new Promise((resolve) => {
+    return await new Promise((resolve) => {
         const webhookUrls = extractWebhookUrls(webhookUrlInput);
         validateUrls(webhookUrls);
         titleBackgroundColor = titleBackgroundColor?.toLowerCase();
@@ -19,7 +19,10 @@ const main = function (webhookUrlInput, message, {
             titleBackgroundColor,
         });
         return postRequest(webhookUrls, requestPayload)
-            .then(responseData => resolve(responseData));
+            .then(responseData => resolve(responseData))
+            .catch(error => {
+                throw new Error(error);
+            });
     });
 };
 
