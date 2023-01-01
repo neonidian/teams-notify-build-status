@@ -17,6 +17,6 @@ jobs:
         run: npm ci && npm run prepare
 
       - name: Update major version
-        uses: JasonEtco/build-and-tag-action@5220ac2e69814ad86f9139a33d4f2de17c2272ea
+        uses: JasonEtco/build-and-tag-action@dd5e4991048c325f6d85b4155e586fc211c644da
         env:
           GITHUB_TOKEN: ${{ github.token }}
