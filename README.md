@@ -143,6 +143,11 @@ steps:
 3. GitHub data for constructing workflow run URL, commit URL etc. are fetched via
    the [default GitHub environment variables](https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables)
 
+## Features
+
+1. Minimal [payload](dist/) size: Less 200 KB
+2. Uses JavaScript GitHub action. So containers are not needed to run this action
+
 ## Sample screenshots (Dark mode enabled in Teams)
 
 1. status = "failure", "View run" and "View commit" buttons enabled
