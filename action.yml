@@ -24,7 +24,7 @@ inputs:
 # For environment variables see - https://github.com/neonidian/teams-notify-build-status#environment-variables
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
 
 branding:
