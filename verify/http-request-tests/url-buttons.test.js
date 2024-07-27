@@ -2,7 +2,7 @@ const main = require('../../src/main');
 
 describe('Post message with job status', () => {
     const _teamsIncomingHookUrl = process.env.TEAMS_TEST_HOOK_URL;
-    const responseBody = [1];
+    const responseBody = [null];
     const SHOULD_DISPLAY_VIEW_COMMIT_BUTTON = "SHOULD_DISPLAY_VIEW_COMMIT_BUTTON";
     const SHOULD_DISPLAY_VIEW_RUN_BUTTON = "SHOULD_DISPLAY_VIEW_RUN_BUTTON";
 
