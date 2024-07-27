@@ -2,7 +2,7 @@ const main = require('../../src/main');
 
 describe('Post minimal message', () => {
     const _teamsIncomingHookUrl = process.env.TEAMS_TEST_HOOK_URL;
-    const responseBody = [1];
+    const responseBody = [null];
     const emptyOptions = {
         status: '',
     };
