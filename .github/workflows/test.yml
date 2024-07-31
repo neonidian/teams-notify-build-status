@@ -50,7 +50,7 @@ jobs:
         if: ${{ always() }}
         with:
           webhookUrl: ${{ secrets.TEAMS_TEST_HOOK_URL }}
-          message: Test action workflow
+          message: "1. Test action workflow\r2. Second line should not be displayed since its wrapped"
           status: ${{ job.status }}
           title: Test action workflow title
           titleBackgroundColor: ${{ job.status }}
@@ -67,7 +67,7 @@ jobs:
             ${{ secrets.TEAMS_TEST_HOOK_URL }}
             ${{ secrets.TEAMS_TEST_HOOK_URL_2 }}
             ${{ secrets.TEAMS_TEST_HOOK_URL_3 }}
-          message: Multiple webhook URLs. Test action workflow
+          message: "- Multiple webhook URLs\r- Test action workflow"
           status: ${{ job.status }}
           title: Test action workflow title
           titleBackgroundColor: ${{ job.status }}
@@ -75,6 +75,7 @@ jobs:
           SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
           SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
           SHOULD_DISPLAY_ACTOR_LABEL: true
+          SHOULD_WRAP_MESSAGE: false
 
       - name:  Test action workflow - only message
         uses: ./

@@ -18,6 +18,7 @@ class CustomizeCard {
             SHOULD_DISPLAY_VIEW_RUN_BUTTON,
             SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
             SHOULD_DISPLAY_ACTOR_LABEL,
+            SHOULD_WRAP_MESSAGE,
         } = envs();
         this._messageObject = {
             "type": "message",
@@ -117,7 +118,7 @@ class CustomizeCard {
                                             {
                                                 "type": "TextBlock",
                                                 "text": this.message,
-                                                "wrap": true,
+                                                "wrap": SHOULD_WRAP_MESSAGE,
                                             },
                                         ],
                                     },
