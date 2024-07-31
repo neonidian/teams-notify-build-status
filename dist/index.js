@@ -25869,8 +25869,8 @@ const envs = () => {
     // Read env variable values, set to default if value not set
     const allEnvs = {};
     envVariableNames.forEach(envName => {
-        const envElement = process.env[envName[0]];
-        allEnvs[envName[0]] = envElement ? validateEnvVariableName(envName[0], envElement) : envName[1];
+            const envElement = process.env[envName[0]];
+            allEnvs[envName[0]] = envElement ? validateEnvVariableName(envName[0], envElement) : envName[1];
         }
     );
 

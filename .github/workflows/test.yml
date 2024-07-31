@@ -50,7 +50,7 @@ jobs:
         if: ${{ always() }}
         with:
           webhookUrl: ${{ secrets.TEAMS_TEST_HOOK_URL }}
-          message: Test action workflow
+          message: "1. Test action workflow\r2. Second line should be displayed"
           status: ${{ job.status }}
           title: Test action workflow title
           titleBackgroundColor: ${{ job.status }}
@@ -67,7 +67,7 @@ jobs:
             ${{ secrets.TEAMS_TEST_HOOK_URL }}
             ${{ secrets.TEAMS_TEST_HOOK_URL_2 }}
             ${{ secrets.TEAMS_TEST_HOOK_URL_3 }}
-          message: Multiple webhook URLs. Test action workflow
+          message: "- Multiple webhook URLs\r- Test action workflow displayed in second line"
           status: ${{ job.status }}
           title: Test action workflow title
           titleBackgroundColor: ${{ job.status }}
