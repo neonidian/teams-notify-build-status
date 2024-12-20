@@ -147,7 +147,7 @@ steps:
 
 ## Features
 
-1. Minimal [payload](dist/) size: Less than 200 KB
+1. Minimal [payload](dist/) size: Less than 1 MB
 2. Uses JavaScript GitHub action. So containers are not needed to run this action
 
 ## Sample screenshots (Dark mode enabled in Teams)
