@@ -25754,14 +25754,14 @@ class CustomizeCard {
                                                     this._constructOpenUrlButton("View run", this._runUrl()) : []
                                             },
                                             {
-                                                "type": "ActionSet",
-                                                "isVisible": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
-                                                "actions": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON
-                                                    ? this._constructOpenUrlButton(
-                                                        process.env.GITHUB_EVENT_NAME === 'release' ? "View Release" : "View Commit",
-                                                        process.env.GITHUB_EVENT_NAME === 'release' ? this._releaseUrl() : this._commitUrl()
-                                                    )
-                                                    : []
+                                        "type": "ActionSet",
+                                            "isVisible": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
+                                            "actions": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON
+                                                ? this._constructOpenUrlButton(
+                                                    process.env.GITHUB_EVENT_NAME === 'release' ? "View Release" : "View Commit",
+                                                    process.env.GITHUB_EVENT_NAME === 'release' ? this._releaseUrl() : this._commitUrl()
+                                                )
+                                                : []
                                             },
                                         ]
                                     }
@@ -25781,7 +25781,9 @@ class CustomizeCard {
     _commitUrl() {
         return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}`;
     }
-   
+    _releaseUrl() {
+    return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${GITHUB_REF_NAME}`;
+}
     _releaseUrl() {
         return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${GITHUB_REF_NAME || 'latest'}`;
     }
