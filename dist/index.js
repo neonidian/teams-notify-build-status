@@ -25756,8 +25756,12 @@ class CustomizeCard {
                                             {
                                                 "type": "ActionSet",
                                                 "isVisible": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
-                                                "actions": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON ?
-                                                    this._constructOpenUrlButton("View commit", this._commitUrl()) : []
+                                                "actions": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON
+                                                    ? this._constructOpenUrlButton(
+                                                        process.env.GITHUB_EVENT_NAME === 'release' ? "View Release" : "View Commit",
+                                                        process.env.GITHUB_EVENT_NAME === 'release' ? this._releaseUrl() : this._commitUrl()
+                                                    )
+                                                    : []
                                             },
                                         ]
                                     }
@@ -25776,6 +25780,10 @@ class CustomizeCard {
 
     _commitUrl() {
         return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}`;
+    }
+   
+    _releaseUrl() {
+        return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${GITHUB_REF_NAME || 'latest'}`;
     }
 
     constructCard() {
@@ -26268,36 +26276,12 @@ module.exports = JSON.parse('{"K":["success","green","failure","red","cancelled"
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-const core = __nccwpck_require__(2186);
-const main = __nccwpck_require__(1713);
-
-async function run() {
-    try {
-        const webhookUrlInputId = 'webhookUrl';
-        core.setSecret(webhookUrlInputId);
-        const webhookUrlInput = core.getInput(webhookUrlInputId, { required: true });
-        const message = core.getInput('message', { required: true });
-        const status = core.getInput('status');
-        const title = core.getInput('title');
-        const titleBackgroundColor = core.getInput('titleBackgroundColor');
-
-        await main(webhookUrlInput, message, {
-            status,
-            title,
-            titleBackgroundColor,
-        });
-    } catch (error) {
-        core.setFailed(error.message);
-    }
-}
-
-run();
-
-})();
-
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(1713);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;

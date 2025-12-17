@@ -17,7 +17,8 @@
     "prepare": "ncc build index.js -o dist --license licenses.txt",
     "test": "jest src/",
     "verify": "jest --config=verify/jest.config.js",
-    "all": "npm run lint && npm run prepare && npm test && npm run verify"
+    "all": "npm run lint && npm run prepare && npm test && npm run verify",
+    "build": "ncc build src/main.js -o dist"
   },
   "repository": {
     "type": "git",
