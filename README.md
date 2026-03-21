@@ -26,7 +26,7 @@ in [GitHub secrets](https://docs.github.com/en/enterprise-cloud@latest/actions/s
 E.g.,
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v4
+  - uses: neonidian/teams-notify-build-status@v5
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
       message: Workflow run passed !!
@@ -43,7 +43,7 @@ steps:
 E.g.,
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v4
+  - uses: neonidian/teams-notify-build-status@v5
     with:
       webhookUrl: |                                         # Send to multiple channels in MS Teams
         ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL_1 }}
@@ -87,7 +87,7 @@ See the actions tab in your GitHub repository for runs of this action! :rocket:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v4
+  - uses: neonidian/teams-notify-build-status@v5
     if: ${{ !success() }}        # For other statuses, see https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
     with:
       webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
@@ -103,7 +103,7 @@ steps:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v4
+  - uses: neonidian/teams-notify-build-status@v5
     needs: [ unitTests, systemTests ]          # IDs of jobs
     if: ${{ job.status == 'failure' }}       # Same as 'failure()'
     with:
@@ -123,7 +123,7 @@ steps:
 
 ```yaml
 steps:
-  - uses: neonidian/teams-notify-build-status@v4
+  - uses: neonidian/teams-notify-build-status@v5
     if: always()
     with:
       webhookUrl: |
@@ -147,7 +147,7 @@ steps:
 
 ## Features
 
-1. Minimal [payload](dist/) size: Less than 1 MB
+1. Minimal [payload](dist/) size: Approximately 1 MB
 2. Uses JavaScript GitHub action. So containers are not needed to run this action
 
 ## Sample screenshots (Dark mode enabled in Teams)
