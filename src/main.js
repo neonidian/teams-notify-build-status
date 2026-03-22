@@ -3,7 +3,7 @@ const constructPayLoad = require("./payload/payload");
 const validateUrls = require("./validation/validateUrl");
 const validateTitleBackgroundColour = require("./validation/validateTitleBackgroundColor");
 
-const main = async function (webhookUrlInput, message, {
+const main = async function (webhookUrlInput, message, annotations, {
     status,
     title,
     titleBackgroundColor,
@@ -12,7 +12,7 @@ const main = async function (webhookUrlInput, message, {
     validateUrls(webhookUrls);
     titleBackgroundColor = titleBackgroundColor?.toLowerCase();
     validateTitleBackgroundColour(titleBackgroundColor);
-    const requestPayload = constructPayLoad(message, {
+    const requestPayload = constructPayLoad(message, annotations, {
         status,
         title,
         titleBackgroundColor,

@@ -11,6 +11,9 @@ inputs:
     required: true
 
 # Optional inputs
+  annotations:
+    description: 'Code block of additional annotations to send'
+    required: false
   title:
     description: 'Title of the message card'
     required: false

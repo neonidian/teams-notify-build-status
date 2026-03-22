@@ -1,11 +1,11 @@
 const CustomizeCard = require("./customize-card/CustomizeCard");
 
-const payLoad = function constructPayload(message, {
+const payLoad = function constructPayload(message, annotations {
     status,
     title,
     titleBackgroundColor,
 }) {
-    return new CustomizeCard(message, {
+    return new CustomizeCard(message, annotations, {
         status,
         title,
         titleBackgroundColor,

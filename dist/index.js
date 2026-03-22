@@ -31138,7 +31138,7 @@ const constructPayLoad = __nccwpck_require__(7814);
 const validateUrls = __nccwpck_require__(1278);
 const validateTitleBackgroundColour = __nccwpck_require__(3454);
 
-const main = async function (webhookUrlInput, message, {
+const main = async function (webhookUrlInput, message, annotations, {
     status,
     title,
     titleBackgroundColor,
@@ -31147,7 +31147,7 @@ const main = async function (webhookUrlInput, message, {
     validateUrls(webhookUrls);
     titleBackgroundColor = titleBackgroundColor?.toLowerCase();
     validateTitleBackgroundColour(titleBackgroundColor);
-    const requestPayload = constructPayLoad(message, {
+    const requestPayload = constructPayLoad(message, annotations, {
         status,
         title,
         titleBackgroundColor,
@@ -31181,12 +31181,13 @@ const envs = __nccwpck_require__(2421);
 const color = __nccwpck_require__(4446);
 
 class CustomizeCard {
-    constructor(message, {
+    constructor(message, annotations, {
         status,
         title,
         titleBackgroundColor,
     }) {
         this.message = message;
+        this.annotations = annotations;
         this.status = status;
         this.title = title;
         this.titleBackgroundColor = titleBackgroundColor;
@@ -31321,7 +31322,12 @@ class CustomizeCard {
                                         ]
                                     }
                                 ]
-                            }
+                            },
+                            ...(this.annotations ? [{
+                              "type": "CodeBlock",
+                              "codeSnippet": this.annotations,
+                              "language": "PlainText"
+                          }] : [])
                         ]
                     }
                 }
@@ -31468,12 +31474,12 @@ module.exports = envs;
 
 const CustomizeCard = __nccwpck_require__(9720);
 
-const payLoad = function constructPayload(message, {
+const payLoad = function constructPayload(message, annotations, {
     status,
     title,
     titleBackgroundColor,
 }) {
-    return new CustomizeCard(message, {
+    return new CustomizeCard(message, annotations, {
         status,
         title,
         titleBackgroundColor,
@@ -31885,11 +31891,12 @@ async function run() {
         core.setSecret(webhookUrlInputId);
         const webhookUrlInput = core.getInput(webhookUrlInputId, { required: true });
         const message = core.getInput('message', { required: true });
+        const annotations = core.getInput('annotations');
         const status = core.getInput('status');
         const title = core.getInput('title');
         const titleBackgroundColor = core.getInput('titleBackgroundColor');
 
-        await main(webhookUrlInput, message, {
+        await main(webhookUrlInput, message, annotations, {
             status,
             title,
             titleBackgroundColor,
