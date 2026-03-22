@@ -17,6 +17,8 @@ class CustomizeCard {
         const {
             SHOULD_DISPLAY_VIEW_RUN_BUTTON,
             SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
+            SHOULD_DISPLAY_VIEW_TAG_BUTTON,
+            SHOULD_DISPLAY_VIEW_RELEASE_BUTTON,
             SHOULD_DISPLAY_ACTOR_LABEL,
         } = envs();
         this._messageObject = {
@@ -125,7 +127,7 @@ class CustomizeCard {
                                         "type": "Column",
                                         "width": "auto",
                                         "verticalContentAlignment": "center",
-                                        "isVisible": SHOULD_DISPLAY_VIEW_RUN_BUTTON || SHOULD_DISPLAY_VIEW_COMMIT_BUTTON,
+                                        "isVisible": SHOULD_DISPLAY_VIEW_RUN_BUTTON || SHOULD_DISPLAY_VIEW_COMMIT_BUTTON || SHOULD_DISPLAY_VIEW_TAG_BUTTON || SHOULD_DISPLAY_VIEW_RELEASE_BUTTON,
                                         "items": [
                                             {
                                                 "type": "ActionSet",
@@ -139,6 +141,18 @@ class CustomizeCard {
                                                 "actions": SHOULD_DISPLAY_VIEW_COMMIT_BUTTON ?
                                                     this._constructOpenUrlButton("View commit", this._commitUrl()) : []
                                             },
+                                            {
+                                                "type": "ActionSet",
+                                                "isVisible": SHOULD_DISPLAY_VIEW_TAG_BUTTON,
+                                                "actions": SHOULD_DISPLAY_VIEW_TAG_BUTTON ?
+                                                    this._constructOpenUrlButton("View tag", this._tagUrl()) : []
+                                            },
+                                            {
+                                                "type": "ActionSet",
+                                                "isVisible": SHOULD_DISPLAY_VIEW_RELEASE_BUTTON,
+                                                "actions": SHOULD_DISPLAY_VIEW_RELEASE_BUTTON ?
+                                                    this._constructOpenUrlButton("View release", this._releaseUrl()) : []
+                                            }
                                         ]
                                     }
                                 ]
@@ -158,6 +172,14 @@ class CustomizeCard {
         return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}`;
     }
 
+    _tagUrl() {
+        return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${GITHUB_REF}`;
+    }
+
+    _releaseUrl() {
+        const tagName = GITHUB_REF.replace(/^refs\/tags\//, '');
+        return `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${tagName}`;
+    }
     constructCard() {
         this._constructJson();
         return this._messageObject;
@@ -189,6 +211,7 @@ const {
     GITHUB_RUN_ATTEMPT,
     GITHUB_SHA,
     GITHUB_ACTOR,
+    GITHUB_REF,
 } = process.env;
 
 module.exports = CustomizeCard;
