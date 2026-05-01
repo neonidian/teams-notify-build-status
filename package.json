@@ -4,7 +4,7 @@
   "description": "Post a message in Teams using webhook",
   "main": "dist/index.js",
   "dependencies": {
-    "@actions/core": "^2.0.3",
+    "@actions/core": "^3.0.1",
     "@actions/http-client": "^3.0.2"
   },
   "devDependencies": {
